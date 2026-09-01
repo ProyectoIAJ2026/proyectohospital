@@ -1,27 +1,45 @@
 <!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>A.D.M.I.N. - Registarse</title>
-    <link rel="stylesheet" href="index.css">
+    <title>A.D.M.I.N. - Registrarse</title>
+    <link rel="stylesheet" href="../css/Registro.css">
 </head>
 <body>
     <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
     <a href="IniciarSesion.html" title="Enlace a iniciar sesion">¿Ya tienes una cuenta? Inicia sesión</a>
-    <h2>Registro</h2>
-    <form class ="Registro">
-        <p>Nombre de usuario</p>
-        <input class="Registro_input" type="text" placeholder="Nombre de usuario" required>
-        <p>Email</p>
-        <input class="Registro_input" type="email" placeholder="Email" required>
-        <p>Contraseña</p>
-        <input class="Registro_input" type="password" placeholder="Contraseña" required>
-        <p>Fecha de Nacimiento</p>
-        <input class="Registro_input" type="date" required>
-        <p>Cedula de Identidad</p>
-        <input class="Registro_input" type="cedula" placeholder="Cedula de Identidad" required>
-        <p>Aceptas términos y condiciones</p>
-        <input type="checkbox" required>
-        <input class="Registro_input" type="submit" value="Registrarse">
-    </form>
+    <h2>Registro de pacientes y personal</h2>
+    <form class="Registro">
+        <label for="rol">Rol / Cargo en la institución</label>
+        <select class="Registro_input" id="rol" required>
+            <option value="" disabled selected>Seleccione un rol</option>
+            <option value="paciente">Paciente</option>
+            <option value="administrador">Administrador / Funcionario</option>
+            <option value="medico">Médico / Equipo de Salud</option>
+            <option value="chofer">Chofer de Ambulancia</option>
+        </select>
 
+        <label for="usuario">Nombre de usuario</label>
+        <input class="Registro_input" type="text" id="usuario" placeholder="Ingrese usuario" required>
+        
+        <label for="email">Email</label>
+        <input class="Registro_input" type="email" id="email" placeholder="Ingrese email" required>
+        
+        <label for="password">Contraseña</label>
+        <input class="Registro_input" type="password" id="password" placeholder="Ingrese contraseña" required>
+        
+        <label for="fecha">Fecha de Nacimiento</label>
+        <input class="Registro_input" type="date" id="fecha" required>
+        
+        <label for="cedula">Cédula de Identidad</label>
+        <input class="Registro_input" type="text" id="cedula" placeholder="Ingrese cédula (Solo con números)" required>
+        
+        <label for="foto_cedula">Foto de Cédula de Identidad</label>
+        <input class="Registro_input" type="file" id="foto_cedula" accept="image/*, .pdf" required>
+        
+        <label for="terminos">Aceptas términos y condiciones</label>
+        <input type="checkbox" id="terminos" required>
+        
+        <input class="Registro_input Registro_submit" type="submit" value="Registrarse">
+    </form>
 </body>
 </html>

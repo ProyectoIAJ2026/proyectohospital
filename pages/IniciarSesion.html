@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+
     <title>A.D.M.I.N. - Iniciar Sesión</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../css/IniciarSesion.css">
 </head>
 <body>
-    <a href="index.html" title="Enlace a inicio">Regresar al inicio</a>
+    <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
     <a href="Registro.html">¿Aun no tienes cuenta? Regístrate</a>
-    <h2>Iniciar Sesión</h2>
+
+<h2>Iniciar Sesión</h2>
     <form class="IniciarSesion">
-        <p>Nombre de usuario</p>
-        <input class="IniciarSesion_input" type="text" placeholder="Nombre de usuario" required>
-        <p>Contraseña</p>
-        <input class="IniciarSesion_input" type="password" placeholder="Contraseña" required>
+        <label for="usuario">Nombre de usuario</label>
+        <input class="IniciarSesion_input" type="text" id="usuario" placeholder="Ingrese usuario" required>
+        
+        <label for="password">Contraseña</label>
+        <input class="IniciarSesion_input" type="password" id="password" placeholder="Ingrese contraseña" required>
+        
         <input class="IniciarSesion_input IniciarSesion_submit" type="submit" value="Iniciar Sesión">
-    </form>
+    </form>    
     
 </body>
 </html>

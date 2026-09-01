@@ -1,0 +1,67 @@
+body {
+    background-color: rgb(8, 164, 226);
+    font-family: sans-serif;
+}
+
+a {
+    color: white;
+    background-color: rgb(102, 209, 241);
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+}
+
+h2 {
+    color: white;
+    background-color: rgb(102, 209, 241);
+    text-decoration: underline;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px auto;
+    text-align: center;
+    width: 160px;
+    padding: 10px;
+}
+
+.IniciarSesion {
+    background-color: rgb(102, 209, 241);
+    padding: 20px;
+    width: 350px;
+    margin: 10px auto;
+    border: 10px solid rgb(164, 237, 255);
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+label {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin-top: 10px;
+}
+
+.IniciarSesion_input[type="text"],
+.IniciarSesion_input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.IniciarSesion_submit {
+    background-color: rgb(8, 164, 226);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px;
+    margin-top: 15px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}

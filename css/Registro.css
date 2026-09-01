@@ -1,0 +1,72 @@
+body {
+    background-color: rgb(8, 164, 226);
+    font-family: sans-serif;
+}
+
+a {
+    color: white;
+    background-color: rgb(102, 209, 241);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: underline;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+}
+
+h2 {
+    color: white;
+    background-color: rgb(102, 209, 241);
+    text-decoration: underline;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px auto;
+    text-align: center;
+    width: 400px;
+    padding: 10px;
+}
+
+.Registro {
+    background-color: rgb(102, 209, 241);
+    padding: 20px;
+    width: 350px;
+    margin: 10px auto;
+    border: 10px solid rgb(164, 237, 255);
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+label {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    display: block;
+}
+
+.Registro_input[type="text"],
+.Registro_input[type="email"],
+.Registro_input[type="password"],
+.Registro_input[type="date"],
+.Registro_input[type="file"],
+select.Registro_input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.Registro_submit {
+    background-color: rgb(8, 164, 226);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px;
+    margin-top: 15px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}

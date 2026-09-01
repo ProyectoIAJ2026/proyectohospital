@@ -1,53 +1,55 @@
 body {
-    background-color: rgb(8, 164, 226);
+     background-color: rgb(8, 164, 226);
+    font-family: sans-serif;
 }
+
+img {
+    width: 100px; 
+    float: left;  
+    height: auto;  
+    margin-right: 15px;  
+    padding: 10px;
+}
+
 h1 {
     color: white;
-    font-family: sans-serif;
     font-size: 32px;
-    font-weight:800;
     text-align: center;
+    font-weight:800;
+    margin: 10px;
+    padding: 10px;
 }
+
 h2 {
     color: white;
-    font-family: sans-serif;
+    background-color: rgb(102, 209, 241);
+    text-decoration: underline;
     font-size: 24px;
     font-weight:600;
-    font-style: italic;
+    margin: 10px;
+    width: 350px;
+    padding: 10px;
 }
-a {
-    text-decoration: none;
-}
+
 p {
     color: white;
-    font-family: sans-serif;
+    background-color: rgb(102, 209, 241);
     font-size: 16px;
-    font-weight:400;
+    font-weight: 400;
     font-style: italic;
     text-align: left;
     text-align: justify;
-    line-height: 1.5;
+    width: 900px;
+    margin: 10px;
+    padding: 15px;
 }
 
-.IniciarSesion {
-    background-color: rgb(113, 208, 236);
-    padding: 30px;
-}
-
-.IniciarSesion_input {
-    padding: 5px 10px;
-    width: 50%;
-}
-
-.IniciarSesion_submit {
-    letter-spacing: 2px;
-}
-
-.Registro {
-    background-color: rgb(113, 208, 236);
-    padding: 10px
-}
-
-.Registro_input {
-    padding: 10px
+.box {
+    background-color: rgb(102, 209, 241);
+    padding: 20px;
+    width: 250px;
+    margin: 10px;
+    border: 10px solid rgb(164, 237, 255);
+    border-radius: 25px;
+    box-sizing: border-box;
 }

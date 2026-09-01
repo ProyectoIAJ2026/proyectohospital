@@ -1,11 +1,42 @@
 <!DOCTYPE html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
     <title>A.D.M.I.N. - Pacientes</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../css/Pacientes.css">
 </head>
 <body>
-    <a href="index.html" title="Enlace a inicio">Regresar al inicio</a>
+    <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
     <h2>Pacientes</h2>
 
+    <div class="box">
+        <h3>Buscar Paciente</h3>
+        <form id="formBuscar">
+            <label for="cedula">Cédula:</label>
+            <input type="text" id="cedula" name="cedula" placeholder="Ingrese cedula (Solo con numeros)" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <div class="box">
+        <h3>Registrar Nuevo Paciente</h3>
+        <form id="formRegistro">
+            <label for="reg_cedula">Cédula:</label>
+            <input type="text" id="reg_cedula" name="cedula" placeholder="Ingrese cedula (Solo con numeros)"required>
+
+            <label for="reg_nombre">Nombre:</label>
+            <input type="text" id="reg_nombre" name="nombre" placeholder="Ingrese nombre"required>
+
+            <label for="reg_telefono">Teléfono:</label>
+            <input type="tel" id="reg_telefono" name="telefono" placeholder="Ingrese telefono"required>
+
+            <label for="reg_email">Email:</label>
+            <input type="email" id="reg_email" name="email" placeholder="Ingrese email" required>
+
+            <button type="submit">Guardar Paciente</button>
+        </form>
+    </div>
+
+    <script src="../js/Pacientes.js"></script>
 </body>
 </html>

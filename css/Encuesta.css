@@ -1,0 +1,77 @@
+body {
+    background-color: rgb(8, 164, 226);
+    font-family: sans-serif;
+}
+
+a {
+    color: white;
+    background-color: rgb(102, 209, 241);
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+}
+
+.box {
+    background-color: rgb(102, 209, 241);
+    padding: 20px;
+    width: 500px;
+    margin: 30px auto;
+    border: 10px solid rgb(164, 237, 255);
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+h2 {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+
+p {
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+    margin: 0 0 15px 0;
+}
+
+label {
+    display: block;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 15px 0 5px;
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid rgb(164, 237, 255);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.radio label {
+    display: inline;
+    font-weight: normal;
+    margin-right: 15px;
+}
+
+button {
+    width: 100%;
+    background-color: rgb(8, 164, 226);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+}

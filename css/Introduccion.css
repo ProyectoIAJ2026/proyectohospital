@@ -1,0 +1,76 @@
+body {
+    background-color: rgb(8, 164, 226);
+    font-family: sans-serif;
+}
+
+a {
+    color: white;
+    background-color: rgb(102, 209, 241);
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+}
+
+h1 {
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    font-weight: 800;
+    margin: 10px;
+    padding: 10px;
+}
+
+h2 {
+    color: white;
+    background-color: rgb(102, 209, 241);
+    text-decoration: underline;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px;
+    width: 360px;
+    padding: 10px;
+}
+
+p {
+    color: white;
+    background-color: rgb(102, 209, 241);
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    text-align: justify;
+    width: 1250px;
+    margin: 10px;
+    padding: 15px;
+}
+
+header {
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.servicios {
+    margin: 20px 0px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 10px;
+    width: 900px;
+}
+
+li {
+    color: white;
+    background-color: rgb(102, 209, 241);
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-left: 5px solid rgb(164, 237, 255);
+}
+
+strong {
+    color: white;
+    font-weight: 800;
+}

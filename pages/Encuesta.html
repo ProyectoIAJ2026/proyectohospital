@@ -1,11 +1,46 @@
 <!DOCTYPE html>
+<html>
 <head>
     <title>A.D.M.I.N. - Encuesta</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../css/Encuesta.css">
 </head>
 <body>
-    <a href="index.html" title="Enlace a inicio">Regresar al inicio</a>
-    <h2>Encuesta</h2>
+    <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
 
+    <div class="box">
+        <h2 title="Titulo de la encuesta">Encuesta de Satisfacción</h2>
+        <p title="Descripcion">Tu opinión nos ayuda a mejorar la atención.</p>
+
+        <form>
+            <label title="Cedula de identidad">Cédula de Identidad (opcional):</label>
+            <input type="text" placeholder="Ej: 54285503" title="Ingrese su cedula">
+
+            <label title="Pregunta 1">1. ¿Cómo califica la atención recibida?</label>
+            <select required title="Seleccione calificacion">
+                <option value="">Selecciona una opción</option>
+                <option>Excelente</option>
+                <option>Buena</option>
+                <option>Regular</option>
+                <option>Mala</option>
+            </select>
+
+            <label title="Pregunta 2">2. ¿El tiempo de espera fue adecuado?</label>
+            <div class="radio">
+                <label><input type="radio" name="tiempo" required title="Opcion Si"> Sí</label>
+                <label><input type="radio" name="tiempo" title="Opcion No"> No</label>
+            </div>
+
+            <label title="Pregunta 3">3. ¿Utilizó el sistema QR o el sitio web?</label>
+            <div class="radio">
+                <label><input type="radio" name="qr" required title="Opcion Si"> Sí</label>
+                <label><input type="radio" name="qr" title="Opcion No"> No</label>
+            </div>
+
+            <label title="Pregunta 4">4. Comentarios o sugerencias:</label>
+            <textarea rows="3" placeholder="Escribe aquí..." title="Ingrese comentarios" required></textarea>
+
+            <button type="submit" title="Boton enviar">Enviar Encuesta</button>
+        </form>
+    </div>
 </body>
 </html>
