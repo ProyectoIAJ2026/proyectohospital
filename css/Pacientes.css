@@ -1,50 +1,52 @@
 body {
-    background-color: rgb(8, 164, 226);
+    background-color: rgb(252, 252, 252);
     font-family: sans-serif;
 }
 
 a {
-    color: white;
-    background-color: rgb(102, 209, 241);
+    color: rgb(4, 29, 255);
+    background-color: rgb(189, 217, 250);
     font-size: 16px;
     font-weight: 600;
     margin: 10px;
     padding: 10px;
     display: inline-block;
+    text-decoration: none;
 }
 
 h2 {
-    color: white;
-    background-color: rgb(102, 209, 241);
+    color: rgb(4, 29, 255);
+    background-color: rgb(189, 217, 250);
     text-decoration: underline;
     font-size: 24px;
     font-weight: 600;
     margin: 10px auto;
     text-align: center;
-    width: 140px;
+    width: 350px;
     padding: 10px;
 }
 
 h3 {
-    color: white;
+    color: rgb(4, 29, 255);
     font-size: 18px;
     font-weight: 600;
     margin-top: 0;
     text-align: center;
+
 }
 
 .box {
-    background-color: rgb(102, 209, 241);
+    background-color: rgb(189, 217, 250);
     padding: 20px;
     width: 350px;
     margin: 20px auto;
-    border: 10px solid rgb(164, 237, 255);
+    border: 10px solid rgb(4, 113, 255);
     border-radius: 25px;
     box-sizing: border-box;
 }
 
 label {
-    color: white;
+    color: rgb(4, 29, 255);
     font-size: 16px;
     font-weight: 600;
     display: block;
@@ -63,8 +65,8 @@ input[type="email"] {
 }
 
 button[type="submit"] {
-    background-color: rgb(8, 164, 226);
-    color: white;
+    background-color: rgb(4, 113, 255);
+    color: rgb(252, 252, 252);
     font-size: 16px;
     font-weight: 600;
     padding: 10px;

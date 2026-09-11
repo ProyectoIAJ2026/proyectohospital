@@ -1,11 +1,89 @@
 <!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>A.D.M.I.N. - Pacientes</title>
-    <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A.D.M.I.N. - Traslados</title>
+  
+  <!-- CSS de Leaflet y CSS Propio -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="../css/Traslados.css">
 </head>
 <body>
-    <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
-    <h2>Traslados</h2>
 
+  <!-- MODAL LOGIN -->
+  <div class="login-modal" id="login-modal">
+    <div class="login-box">
+      <h2>Iniciar Sesión</h2>
+      <form onsubmit="iniciarSesion(event)">
+        <label for="login-email">Correo:</label>
+        <input type="email" id="login-email" required>
+        <label for="login-password">Contraseña:</label>
+        <input type="password" id="login-password" required>
+        <button type="submit" class="btn-ingresar">Ingresar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ENCABEZADO -->
+  <header>
+    <h1>A.D.M.I.N.</h1>
+    <div>
+      <span id="user-display">Invitado</span>
+      <button class="btn-logout" id="btn-logout" onclick="cerrarSesion()" style="display:none;">Salir</button>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="container">
+    <div class="sidebar">
+      
+      <!-- FORMULARIO ADMIN -->
+      <div class="form-container" id="admin-form-container" style="display: none;">
+        <h2 id="form-title">Nuevo Traslado</h2>
+        <form id="traslado-form" onsubmit="guardarTraslado(event)">
+          <input type="hidden" id="traslado-id">
+
+          <label for="unidad">Ambulancia:</label>
+          <input type="text" id="unidad" required>
+
+          <label for="origen">Origen:</label>
+          <select id="origen" required></select>
+
+          <label for="destino">Destino:</label>
+          <select id="destino" required></select>
+
+          <label for="acompanante">Acompañante:</label>
+          <input type="text" id="acompanante" required>
+
+          <label for="hora-salida">Hora Salida:</label>
+          <input type="time" id="hora-salida" required>
+
+          <label for="hora-llegada">Hora Llegada:</label>
+          <input type="time" id="hora-llegada" required>
+
+          <label for="estado">Estado:</label>
+          <select id="estado">
+            <option value="En camino">En camino</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Finalizado">Finalizado</option>
+          </select>
+
+          <button type="submit" class="btn-add" id="btn-submit">Guardar</button>
+          <button type="button" class="btn-cancel" id="btn-cancel" onclick="limpiarFormulario()" style="display:none;">Cancelar</button>
+        </form>
+      </div>
+
+      <h2>Traslados Activos</h2>
+      <div id="lista-traslados"></div>
+    </div>
+
+    <!-- MAPA GPS -->
+    <div id="map"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="Traslados.js"></script>
 </body>
 </html>

@@ -1,20 +1,26 @@
 body {
-    background-color: rgb(8, 164, 226);
+    background-color: rgb(252, 252, 252);
     font-family: sans-serif;
 }
 
+header {
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
 a {
-    color: white;
-    background-color: rgb(102, 209, 241);
+    color: rgb(4, 29, 255);
+    background-color: rgb(189, 217, 250);
     font-size: 16px;
     font-weight: 600;
     margin: 10px;
     padding: 10px;
     display: inline-block;
+    text-decoration: none;
 }
 
 h1 {
-    color: white;
+    color: rgb(4, 29, 255);
     font-size: 32px;
     text-align: center;
     font-weight: 800;
@@ -23,8 +29,7 @@ h1 {
 }
 
 h2 {
-    color: white;
-    background-color: rgb(102, 209, 241);
+    color: rgb(4, 29, 255);
     text-decoration: underline;
     font-size: 24px;
     font-weight: 600;
@@ -34,20 +39,15 @@ h2 {
 }
 
 p {
-    color: white;
-    background-color: rgb(102, 209, 241);
+    background-color: rgb(189, 217, 250);
+    color: rgb(4, 29, 255);
     font-size: 16px;
     font-weight: 400;
     font-style: italic;
     text-align: justify;
-    width: 1250px;
+    width: 900px;
     margin: 10px;
     padding: 15px;
-}
-
-header {
-    overflow: hidden;
-    margin-bottom: 30px;
 }
 
 .servicios {
@@ -62,15 +62,15 @@ ul {
 }
 
 li {
-    color: white;
-    background-color: rgb(102, 209, 241);
+    color: rgb(4, 29, 255);
+    background-color: rgb(189, 217, 250);
     font-size: 16px;
     margin-bottom: 10px;
     padding: 15px;
-    border-left: 5px solid rgb(164, 237, 255);
+    border-left: 5px solid rgb(4, 113, 255);
 }
 
 strong {
-    color: white;
+    color: rgb(4, 29, 255);
     font-weight: 800;
 }
