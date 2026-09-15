@@ -44,8 +44,8 @@ label {
     margin-top: 10px;
 }
 
-.IniciarSesion_input[type="text"],
-.IniciarSesion_input[type="password"] {
+.IniciarSesion_contraseña[type="text"],
+.IniciarSesion_contraseña[type="text"][type="password"] {
     width: 100%;
     padding: 10px;
     margin-top: 5px;

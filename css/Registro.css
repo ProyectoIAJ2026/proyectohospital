@@ -1,29 +1,58 @@
 body {
     background-color: rgb(252, 252, 252);
-    font-family: sans-serif;
-}
-
-a {
-    color: rgb(4, 29, 255);
-    background-color: rgb(189, 217, 250);
-    font-size: 16px;
-    font-weight: 600;
-    text-decoration: underline;
-    margin: 10px;
+    font-family: 'Montserrat', sans-serif;
     padding: 10px;
-    display: inline-block;
+    margin: 0;
 }
 
 h2 {
     color: rgb(4, 29, 255);
     background-color: rgb(189, 217, 250);
     text-decoration: underline;
-    font-size: 24px;
-    font-weight: 600;
-    margin: 10px auto;
     text-align: center;
-    width: 350px;
+    font-size: 24px;
+    width: 300px;
+    margin: 10px auto;
     padding: 10px;
+}
+
+.box-inicio {
+    background-color: rgb(4, 176, 255);
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    width: 180px;
+    margin: 5px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+}
+
+.box-registro {
+    background-color: rgb(4, 176, 255);
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    width: 350px;
+    margin: 5px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+}
+
+.box-inicio:hover {
+    background-color: rgb(4, 29, 255);
+}
+
+.box-registro:hover {
+    background-color: rgb(4, 29, 255);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .Registro {
@@ -31,7 +60,7 @@ h2 {
     padding: 20px;
     width: 350px;
     margin: 10px auto;
-    border: 10px solid rgb(4, 113, 255);
+    border: 10px solid rgb(0, 97, 177);
     border-radius: 25px;
     box-sizing: border-box;
 }
@@ -44,12 +73,7 @@ label {
     display: block;
 }
 
-.Registro_input[type="text"],
-.Registro_input[type="email"],
-.Registro_input[type="password"],
-.Registro_input[type="date"],
-.Registro_input[type="file"],
-select.Registro_input {
+.Registro-input {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -58,19 +82,23 @@ select.Registro_input {
     box-sizing: border-box;
 }
 
-input[type="checkbox"] {
+.terminos {
     margin-top: 10px;
 }
 
-.Registro_submit {
-    background-color: rgb(4, 113, 255);
-    color: rgb(252, 252, 252);
+.Registro_boton {
+    background-color: rgb(4, 176, 255);
+    color: white;
     font-size: 16px;
-    font-weight: 600;
-    padding: 10px;
+    font-weight: bold;
+    padding: 12px;
     margin-top: 15px;
     width: 100%;
     border: none;
-    border-radius: 10px;
+    border-radius: 25px;
     cursor: pointer;
+}
+
+.Registro_boton:hover {
+    background-color: rgb(4, 29, 255);
 }

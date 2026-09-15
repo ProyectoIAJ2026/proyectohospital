@@ -1,54 +1,100 @@
 body {
-     background-color: rgb(252, 252, 252);
-    font-family: sans-serif;
+    background-color: rgb(252, 252, 252);
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px;
+    margin: 0;
 }
 
-img {
-    width: 100px; 
+.img-logo {
+    width: 200px; 
     float: left;  
     height: auto;  
-    margin-right: 15px;  
+    margin-right: 10px;  
+    padding: 5px;
+}
+
+.img-edificio {
+    width: 100%;
+    clear: both;
+    display: block;
+    height: auto;
+}
+
+.img-recepcion {
+    float: right;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin-left: 20px;
+    margin-bottom: 15px;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 h1 {
     color: rgb(4, 29, 255);
     font-size: 32px;
     text-align: center;
-    font-weight:800;
+    font-weight: 800;
     margin: 10px;
-    padding: 10px;
+    padding: 20px;
 }
 
 h2 {
     color: rgb(4, 29, 255);
     text-decoration: underline;
     font-size: 24px;
-    font-weight:600;
-    margin: 10px;
-    width: 350px;
+    font-weight: 600; 
+    margin: 10px 0;
     padding: 10px;
 }
 
-p {
+.servicios-li {
     background-color: rgb(189, 217, 250);
     color: rgb(4, 29, 255);
     font-size: 16px;
     font-weight: 400;
     font-style: italic;
-    text-align: left;
     text-align: justify;
-    width: 900px;
-    margin: 10px;
+    width: 100%;
+    max-width: 1170px;
+    box-sizing: border-box;
+    margin: 10px 0;
+    padding: 15px;
+}
+
+.contacto-li {
+    background-color: rgb(189, 217, 250);
+    color: rgb(4, 29, 255);
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    text-align: justify;
+    width: 410px;        
+    max-width: 450px;      
+    box-sizing: border-box;
+    margin: 10px 0;
     padding: 15px;
 }
 
 .box {
-    background-color: rgb(189, 217, 250);
-    padding: 20px;
-    width: 250px;
-    margin: 10px;
-    border: 10px solid  rgb(4, 113, 255);
+    background-color: rgb(4, 176, 255);
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    width: 145px;
+    margin: 5px;
     border-radius: 25px;
     box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+}
+
+.box:hover {
+    background-color:  rgb(4, 29, 255);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
