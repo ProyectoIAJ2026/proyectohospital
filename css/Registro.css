@@ -80,10 +80,7 @@ label {
     border: none;
     border-radius: 10px;
     box-sizing: border-box;
-}
-
-.terminos {
-    margin-top: 10px;
+    font-family: inherit;
 }
 
 .Registro_boton {

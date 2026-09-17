@@ -7,16 +7,17 @@
 <body>
     <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
 
+    <h2 title="Titulo de la encuesta">Encuesta de Satisfacción</h2>
+
     <div class="box">
-        <h2 title="Titulo de la encuesta">Encuesta de Satisfacción</h2>
         <p title="Descripcion">Tu opinión nos ayuda a mejorar la atención.</p>
 
         <form>
             <label title="Email">Email (Opcional):</label>
-            <input type="text" placeholder="Ingrese email" title="Ingrese su cedula">
+            <input type="email" class="box-input" placeholder="Ingrese email" title="Ingrese su email">
 
             <label title="Pregunta 1">1. ¿Cómo califica la atención recibida?</label>
-            <select required title="Seleccione calificacion">
+            <select class="box-input" required title="Seleccione calificacion">
                 <option value="">Selecciona una opción</option>
                 <option>Excelente</option>
                 <option>Buena</option>
@@ -30,16 +31,16 @@
                 <label><input type="radio" name="tiempo" title="Opcion No"> No</label>
             </div>
 
-            <label title="Pregunta 3">3. ¿Utilizó el sistema QR o el sitio web?</label>
+            <label title="Pregunta 3">3. ¿Cómo accedió a esta encuesta?</label>
             <div class="radio">
-                <label><input type="radio" name="qr" required title="Opcion Si"> Sí</label>
-                <label><input type="radio" name="qr" title="Opcion No"> No</label>
+                <label><input type="radio" name="qr" required title="qr"> Escaneando el código QR</label>
+                <label><input type="radio" name="qr" title="Sitio Web"> Navegando en el sitio web</label>
             </div>
 
             <label title="Pregunta 4">4. Comentarios o sugerencias:</label>
-            <textarea rows="3" placeholder="Escribe aquí..." title="Ingrese comentarios" required></textarea>
+            <textarea class="box-input" rows="3" placeholder="Escribe aquí..." title="Ingrese comentarios" required></textarea>
 
-            <button type="submit" title="Boton enviar">Enviar Encuesta</button>
+            <button type="submit" class="box-submit" title="Boton enviar">Enviar Encuesta</button>
         </form>
     </div>
 </body>

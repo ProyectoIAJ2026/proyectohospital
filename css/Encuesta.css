@@ -1,77 +1,114 @@
 body {
-    background-color: rgb(8, 164, 226);
-    font-family: sans-serif;
+    background-color: rgb(252, 252, 252);
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px;
+    margin: 0;
+}
+
+h2 {
+    color: rgb(4, 29, 255);
+    background-color: rgb(189, 217, 250);
+    text-decoration: underline;
+    text-align: center;
+    font-size: 24px;
+    width: 280px;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+p {
+    color: rgb(0, 60, 130);
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 20px;
 }
 
 a {
+    text-decoration: none;
     color: white;
-    background-color: rgb(102, 209, 241);
-    font-size: 16px;
-    font-weight: 600;
-    margin: 10px;
-    padding: 10px;
+    background-color: rgb(4, 176, 255);
+    font-weight: bold;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 25px;
+    box-sizing: border-box;
     display: inline-block;
+    text-align: center;
+}
+
+a:hover {
+    background-color: rgb(4, 29, 255);
 }
 
 .box {
-    background-color: rgb(102, 209, 241);
+    background-color: rgb(189, 217, 250);
     padding: 20px;
-    width: 500px;
-    margin: 30px auto;
-    border: 10px solid rgb(164, 237, 255);
+    width: 450px;
+    margin: 10px auto;
+    border: 10px solid rgb(0, 97, 177);
     border-radius: 25px;
     box-sizing: border-box;
 }
 
-h2 {
-    color: white;
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    margin: 0 0 10px 0;
-}
-
-p {
-    color: white;
-    font-size: 15px;
-    font-weight: 400;
-    text-align: center;
-    margin: 0 0 15px 0;
-}
-
 label {
-    display: block;
-    color: white;
-    font-weight: bold;
+    color: rgb(4, 29, 255);
     font-size: 16px;
-    margin: 15px 0 5px;
+    font-weight: 600;
+    margin-top: 15px;
+    display: block;
 }
 
-input[type="text"],
-select,
-textarea {
+.box-input {
     width: 100%;
-    padding: 8px;
-    border: 1px solid rgb(164, 237, 255);
-    border-radius: 4px;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
     box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+select.box-input {
+    background-color: white;
+    cursor: pointer;
+}
+
+textarea.box-input {
+    resize: vertical;
+}
+
+.radio {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
 }
 
 .radio label {
-    display: inline;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: rgb(0, 40, 150);
     font-weight: normal;
-    margin-right: 15px;
+    margin-top: 0;
+    cursor: pointer;
 }
 
-button {
+.box-submit {
     width: 100%;
-    background-color: rgb(8, 164, 226);
+    background-color: rgb(4, 176, 255);
     color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px;
     font-size: 16px;
     font-weight: bold;
+    padding: 12px;
     margin-top: 20px;
+    border: none;
+    border-radius: 25px;
     cursor: pointer;
+    font-family: inherit;
+}
+
+.box-submit:hover {
+    background-color: rgb(4, 29, 255);
 }

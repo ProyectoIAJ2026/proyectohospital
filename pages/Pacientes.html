@@ -13,25 +13,28 @@
         <h3>Buscar Paciente</h3>
         <form id="formBuscar">
             <label for="cedula">Cédula:</label>
-            <input type="text" id="cedula" name="cedula" placeholder="Ingrese cedula" required>
+            <input class="registro-input" type="text" id="cedula" name="cedula" placeholder="Ingrese cédula" required>
             <button type="submit">Buscar</button>
         </form>
+
+        <!-- Contenedor donde se mostrarán los datos del paciente buscado -->
+        <div id="resultadoBusqueda"></div>
     </div>
 
     <div class="box">
         <h3>Registrar Nuevo Paciente</h3>
         <form id="formRegistro">
-            <label for="reg_cedula">Cédula:</label>
-            <input type="text" id="reg_cedula" name="cedula" placeholder="Ingrese cedula"required>
+            <label for="reg-cedula">Cédula:</label>
+            <input class="registro-input" type="text" id="reg-cedula" name="cedula" placeholder="Ingrese cédula" required>
 
-            <label for="reg_nombre">Nombre:</label>
-            <input type="text" id="reg_nombre" name="nombre" placeholder="Ingrese nombre"required>
+            <label for="reg-nombre">Nombre:</label>
+            <input class="registro-input" type="text" id="reg-nombre" name="nombre" placeholder="Ingrese nombre completo" required>
 
-            <label for="reg_telefono">Teléfono:</label>
-            <input type="tel" id="reg_telefono" name="telefono" placeholder="Ingrese telefono"required>
+            <label for="reg-telefono">Teléfono:</label>
+            <input class="registro-input" type="tel" id="reg-telefono" name="telefono" placeholder="Ingrese teléfono" required>
 
-            <label for="reg_email">Email:</label>
-            <input type="email" id="reg_email" name="email" placeholder="Ingrese email" required>
+            <label for="reg-email">Email:</label>
+            <input class="registro-input" type="email" id="reg-email" name="email" placeholder="Ingrese email" required>
 
             <button type="submit">Guardar Paciente</button>
         </form>

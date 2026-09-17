@@ -1,68 +1,71 @@
+@charset "UTF-8";
+
 body {
-    background-color: rgb(252, 252, 252);
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
 }
 
 a {
-    color: rgb(4, 29, 255);
-    background-color: rgb(189, 217, 250);
-    font-size: 16px;
-    font-weight: 600;
-    margin: 10px;
-    padding: 10px;
     display: inline-block;
+    padding: 10px 15px;
+    background-color: #0099ff;
+    color: white;
     text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-bottom: 20px;
 }
 
 h2 {
-    color: rgb(4, 29, 255);
-    background-color: rgb(189, 217, 250);
-    text-decoration: underline;
-    font-size: 24px;
-    font-weight: 600;
-    margin: 10px auto;
     text-align: center;
-    width: 350px;
+    color: #0044cc;
+    background-color: #cce0ff;
     padding: 10px;
+    width: 200px;
+    margin: 0 auto 20px auto;
 }
 
 .IniciarSesion {
-    background-color: rgb(189, 217, 250);
+    background-color: #bce0fd;
+    border: 5px solid #0056b3;
+    border-radius: 15px;
+    width: 320px;
+    margin: 0 auto;
     padding: 20px;
-    width: 250px;
-    margin: 10px auto;
-    border: 10px solid rgb(4, 113, 255);
-    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
 }
 
-label {
-    color: rgb(4, 29, 255);
-    font-size: 16px;
-    font-weight: 600;
-    display: block;
+.IniciarSesion label {
+    color: #002699;
+    font-weight: bold;
     margin-top: 10px;
+    margin-bottom: 5px;
 }
 
-.IniciarSesion_contraseña[type="text"],
-.IniciarSesion_contraseña[type="text"][type="password"] {
-    width: 100%;
+.IniciarSesion-input {
     padding: 10px;
-    margin-top: 5px;
-    border: none;
-    border-radius: 10px;
-    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
 }
 
-.IniciarSesion_submit {
-    background-color: rgb(4, 113, 255);
-    color: rgb(252, 252, 252);
-    font-size: 16px;
-    font-weight: 600;
-    padding: 10px;
-    margin-top: 15px;
-    width: 100%;
+.IniciarSesion-submit {
+    background-color: #00aeef;
+    color: white;
+    font-weight: bold;
     border: none;
-    border-radius: 10px;
+    margin-top: 20px;
     cursor: pointer;
+    border-radius: 20px;
+    padding: 12px;
+}
+
+.IniciarSesion-submit:hover {
+    background-color: #0088cc;
 }

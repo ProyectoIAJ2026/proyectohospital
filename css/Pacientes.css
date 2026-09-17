@@ -1,46 +1,50 @@
 body {
     background-color: rgb(252, 252, 252);
-    font-family: sans-serif;
-}
-
-a {
-    color: rgb(4, 29, 255);
-    background-color: rgb(189, 217, 250);
-    font-size: 16px;
-    font-weight: 600;
-    margin: 10px;
+    font-family: 'Montserrat', sans-serif;
     padding: 10px;
-    display: inline-block;
-    text-decoration: none;
+    margin: 0;
 }
 
 h2 {
     color: rgb(4, 29, 255);
     background-color: rgb(189, 217, 250);
     text-decoration: underline;
-    font-size: 24px;
-    font-weight: 600;
-    margin: 10px auto;
     text-align: center;
-    width: 350px;
+    font-size: 24px;
+    width: 120px;
+    margin: 10px auto;
     padding: 10px;
 }
 
 h3 {
     color: rgb(4, 29, 255);
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 0;
     text-align: center;
+    margin-top: 0;
+}
 
+a {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(4, 176, 255);
+    font-weight: bold;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+}
+
+a:hover {
+    background-color: rgb(4, 29, 255);
 }
 
 .box {
     background-color: rgb(189, 217, 250);
     padding: 20px;
     width: 350px;
-    margin: 20px auto;
-    border: 10px solid rgb(4, 113, 255);
+    margin: 10px auto;
+    border: 10px solid rgb(0, 97, 177);
     border-radius: 25px;
     box-sizing: border-box;
 }
@@ -49,30 +53,34 @@ label {
     color: rgb(4, 29, 255);
     font-size: 16px;
     font-weight: 600;
-    display: block;
     margin-top: 10px;
+    display: block;
 }
 
-input[type="text"],
-input[type="tel"],
-input[type="email"] {
+.registro-input {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
     border: none;
     border-radius: 10px;
     box-sizing: border-box;
+    font-family: inherit;
 }
 
-button[type="submit"] {
-    background-color: rgb(4, 113, 255);
-    color: rgb(252, 252, 252);
+button {
+    background-color: rgb(4, 176, 255);
+    color: white;
     font-size: 16px;
-    font-weight: 600;
-    padding: 10px;
+    font-weight: bold;
+    padding: 12px;
     margin-top: 15px;
     width: 100%;
     border: none;
-    border-radius: 10px;
+    border-radius: 25px;
     cursor: pointer;
+    font-family: inherit;
+}
+
+button:hover {
+    background-color: rgb(4, 29, 255);
 }
