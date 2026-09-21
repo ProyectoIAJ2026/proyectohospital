@@ -2,43 +2,96 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A.D.M.I.N. - Registrarse</title>
     <link rel="stylesheet" href="../css/Registro.css">
 </head>
 <body>
     <a href="../index.html" class="box-inicio" title="Enlace a inicio">Regresar al inicio</a>
-    <a href="IniciarSesion.html" class="box-registro" title="Enlace a iniciar sesión">¿Ya tienes una cuenta? Inicia sesión</a>
+    <a href="IniciarSesion.html" class="box-registro" title="Enlace a iniciar sesión">¿Ya tienes cuenta? Inicia sesión</a>
     
-    <h2>Registro de funcionario</h2>
+    <!-- TÍTULO CON LA CLASE INICIAL ASIGNADA -->
+    <h2 id="tituloRegistro" class="titulo-usuario">Registro de Usuario</h2>
     
-    <form class="Registro" id="registro">
-        <label for="cedula">Cédula de Identidad</label>
-        <input class="Registro-input" type="text" id="cedula" name="cedula" placeholder="Ingrese cédula" required>
+    <form class="Registro" id="formRegistro" action="../php/registro.php" method="POST">
+        <!-- SELECCIÓN PRINCIPAL DE TIPO DE USUARIO -->
+        <div>
+            <label for="tipoUsuario">Tipo de usuario</label>
+            <select class="Registro-input" id="tipoUsuario" name="tipoUsuario" required>
+                <option value="" disabled selected>Seleccione su tipo de usuario</option>
+                <option value="paciente">Paciente</option>
+                <option value="funcionario">Funcionario</option>
+                <option value="chofer">Chofer</option>
+            </select>
+        </div>
 
-        <label for="nombre">Nombre</label>
-        <input class="Registro-input" type="text" id="nombre" name="nombre" placeholder="Ingrese nombre" required>
+        <!-- BLOQUE FUNCIONARIO -->
+        <div id="seccionFuncionario" class="campo-oculto">
+            <label for="cedula_func">Cédula de Identidad</label>
+            <input class="Registro-input" type="text" id="cedula_func" name="cedula" placeholder="Ingrese cédula" required>
 
-        <label for="apellido">Apellido</label>
-        <input class="Registro-input" type="text" id="apellido" name="apellido" placeholder="Ingrese apellido" required>
+            <label for="nombre_func">Nombre</label>
+            <input class="Registro-input" type="text" id="nombre_func" name="nombre" placeholder="Ingrese nombre" required>
 
-        <label for="usuario">Nombre de usuario</label>
-        <input class="Registro-input" type="text" id="usuario" name="usuario" placeholder="Ingrese usuario" required>
-        
-        <label for="contrasenia">Contraseña</label>
-        <input class="Registro-input" type="password" id="contrasenia" name="contrasenia" placeholder="Ingrese contraseña" required>
+            <label for="apellido">Apellido</label>
+            <input class="Registro-input" type="text" id="apellido" name="apellido" placeholder="Ingrese apellido" required>
 
-        <label for="rol">Rol</label>
-        <select class="Registro-input" id="rol" name="rol" required>
-            <option value="" disabled selected>Seleccione un rol</option>
-            <option value="Medico">Medicina General</option>
-            <option value="Enfermero">Enfermero</option>
-            <option value="Administrador">Gerencia</option>
-            <option value="Administrativo">Administrativo</option>
-            <option value="Chofer">Chofer</option>
-        </select>
-        
-        <input class="Registro_boton" type="submit" value="Registrarse">
+            <label for="usuario">Nombre de usuario</label>
+            <input class="Registro-input" type="text" id="usuario" name="usuario" placeholder="Ingrese usuario" required>
+
+            <label for="contrasenia_func">Contraseña</label>
+            <input class="Registro-input" type="password" id="contrasenia_func" name="contrasenia" placeholder="Ingrese contraseña" required>
+
+            <label for="cargo">Cargo</label>
+            <select class="Registro-input" id="cargo" name="cargo">
+                <option value="" disabled selected>Seleccione un cargo</option>
+                <option value="Medico">Medicina General</option>
+                <option value="Enfermero">Enfermero</option>
+                <option value="Administrador">Gerencia</option>
+                <option value="Administrativo">Administrativo</option>
+            </select>
+            
+            <input class="Registro_boton" type="submit" value="Registrarse">
+        </div>
+
+        <!-- BLOQUE PACIENTE -->
+        <div id="seccionPaciente" class="campo-oculto">
+            <label for="cedula_pac">Cédula de identidad</label>
+            <input class="Registro-input" type="text" id="cedula_pac" name="cedula" placeholder="Ingrese cédula" required>
+
+            <label for="nombre_pac">Nombre</label>
+            <input class="Registro-input" type="text" id="nombre_pac" name="nombre" placeholder="Ingrese nombre" required>
+
+            <label for="telefono">Teléfono</label>
+            <input class="Registro-input" type="tel" id="telefono" name="telefono" placeholder="Ingrese teléfono" required>
+
+            <label for="email">Email</label>
+            <input class="Registro-input" type="email" id="email" name="email" placeholder="Ingrese correo" required>
+
+            <input class="Registro_boton" type="submit" value="Registrarse">
+        </div>
+
+        <!-- BLOQUE CHOFER -->
+        <div id="seccionChofer" class="campo-oculto">
+            <label for="cedula_cho">Cédula de Identidad</label>
+            <input class="Registro-input" type="text" id="cedula_cho" name="cedula" placeholder="Ingrese cédula">
+
+            <label for="nombre_cho">Nombre</label>
+            <input class="Registro-input" type="text" id="nombre_cho" name="nombre" placeholder="Ingrese nombre">
+
+            <label for="contrasenia_cho">Contraseña</label>
+            <input class="Registro-input" type="password" id="contrasenia_cho" name="contrasenia" placeholder="Ingrese contraseña">
+
+            <label for="disponibilidad">Disponibilidad inicial</label>
+            <select class="Registro-input" id="disponibilidad" name="disponibilidad">
+                <option value="Disponible">Disponible</option>
+                <option value="No Disponible">No Disponible / Fuera de Servicio</option>
+            </select>
+
+            <input class="Registro_boton" type="submit" value="Registrarse">
+        </div>
     </form>
 
+    <script src="../JavaScript/Registro.js"></script>
 </body>
 </html>

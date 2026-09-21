@@ -5,54 +5,67 @@ body {
     margin: 0;
 }
 
+/* ESTILOS BASE PARA LA CAJA CELESTE DEL TÍTULO */
 h2 {
     color: rgb(4, 29, 255);
     background-color: rgb(189, 217, 250);
     text-decoration: underline;
     text-align: center;
     font-size: 24px;
-    width: 300px;
     margin: 10px auto;
-    padding: 10px;
-}
-
-.box-inicio {
-    background-color: rgb(4, 176, 255);
-    color: white;
-    font-weight: bold;
-    padding: 15px;
-    width: 180px;
-    margin: 5px;
-    border-radius: 25px;
+    padding: 10px 15px;
+    border-radius: 10px;
     box-sizing: border-box;
-    display: inline-block;
+    display: block;
+}
+
+/* ==========================================================================
+   MODIFICA AQUÍ EL ANCHO DE CADA TITULO POR SEPARADO
+   ========================================================================== */
+
+/* 1. Ancho exclusivo para "Registro de Usuario" */
+h2.titulo-usuario {
+    width: 280px; 
+}
+
+/* 2. Ancho exclusivo para "Registro de Funcionario" */
+h2.titulo-funcionario {
+    width: 335px; 
+}
+
+/* 3. Ancho exclusivo para "Registro de Paciente" */
+h2.titulo-paciente {
+    width: 300px; 
+}
+
+/* 4. Ancho exclusivo para "Registro de Chofer" */
+h2.titulo-chofer {
+    width: 270px; 
+}
+
+/* ========================================================================== */
+
+h3 {
+    color: rgb(4, 29, 255);
     text-align: center;
-}
-
-.box-registro {
-    background-color: rgb(4, 176, 255);
-    color: white;
-    font-weight: bold;
-    padding: 15px;
-    width: 350px;
-    margin: 5px;
-    border-radius: 25px;
-    box-sizing: border-box;
-    display: inline-block;
-    text-align: center;
-}
-
-.box-inicio:hover {
-    background-color: rgb(4, 29, 255);
-}
-
-.box-registro:hover {
-    background-color: rgb(4, 29, 255);
+    margin-top: 0;
 }
 
 a {
     text-decoration: none;
-    color: inherit;
+    color: white;
+    background-color: rgb(4, 176, 255);
+    font-weight: bold;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+}
+
+a:hover {
+    background-color: rgb(4, 29, 255);
 }
 
 .Registro {
@@ -94,8 +107,13 @@ label {
     border: none;
     border-radius: 25px;
     cursor: pointer;
+    font-family: inherit;
 }
 
 .Registro_boton:hover {
     background-color: rgb(4, 29, 255);
+}
+
+.campo-oculto {
+    display: none;
 }
