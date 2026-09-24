@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         seccionPaciente.classList.add('campo-oculto');
         seccionChofer.classList.add('campo-oculto');
 
-        // Desactivar atributo 'required' en campos ocultos para evitar errores al enviar
+        // Desactivar el required de los bloques ocultos para que el navegador permita enviar el formulario
         document.querySelectorAll('.Registro-input').forEach(input => input.required = false);
         selectTipo.required = true;
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 titulo.textContent = 'Registro de Funcionario';
                 titulo.classList.add('titulo-funcionario');
                 
-                // Activar 'required' en la sección activa
+                // Activar 'required' solo en los campos del bloque visible
                 document.querySelectorAll('#seccionFuncionario input, #seccionFuncionario select').forEach(i => i.required = true);
                 break;
 
@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 titulo.textContent = 'Registro de Paciente';
                 titulo.classList.add('titulo-paciente');
                 
+                // Activar 'required' solo en los campos del bloque visible
                 document.querySelectorAll('#seccionPaciente input').forEach(i => i.required = true);
                 break;
 
@@ -42,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 titulo.textContent = 'Registro de Chofer';
                 titulo.classList.add('titulo-chofer');
                 
-                document.querySelectorAll('#seccionChofer input').forEach(i => i.required = true);
+                // Activar 'required' solo en los campos del bloque visible
+                document.querySelectorAll('#seccionChofer input, #seccionChofer select').forEach(i => i.required = true);
                 break;
 
             default:
@@ -77,12 +79,15 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (rol === 'paciente') {
             formData.append('cedula', document.getElementById('cedula_pac').value);
             formData.append('nombre', document.getElementById('nombre_pac').value);
+            formData.append('apellido', document.getElementById('apellido_pac').value);
             formData.append('telefono', document.getElementById('telefono').value);
             formData.append('email', document.getElementById('email').value);
+            formData.append('contrasenia', document.getElementById('contrasenia_pac').value);
 
         } else if (rol === 'chofer') {
             formData.append('cedula', document.getElementById('cedula_cho').value);
             formData.append('nombre', document.getElementById('nombre_cho').value);
+            formData.append('apellido', document.getElementById('apellido_cho').value);
             formData.append('contrasenia', document.getElementById('contrasenia_cho').value);
             formData.append('disponibilidad', document.getElementById('disponibilidad').value);
         }
