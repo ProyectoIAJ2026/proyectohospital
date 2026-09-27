@@ -10,7 +10,7 @@
     <a href="../index.html" class="box-inicio" title="Enlace a inicio">Regresar al inicio</a>
     <a href="IniciarSesion.html" class="box-registro" title="Enlace a iniciar sesión">¿Ya tienes cuenta? Inicia sesión</a>
     
-    <!-- TÍTULO CON LA CLASE INICIAL ASIGNADA -->
+    <!-- TITULO CON LA CLASE INICIAL -->
     <h2 id="tituloRegistro" class="titulo-usuario">Registro de Usuario</h2>
     
     <form class="Registro" id="formRegistro" action="../php/registro.php" method="POST">
@@ -25,7 +25,7 @@
             </select>
         </div>
 
-        <!-- BLOQUE FUNCIONARIO -->
+        <!-- REGISTRO DE FUNCIONARIO -->
         <div id="seccionFuncionario" class="campo-oculto">
             <label for="cedula_func">Cédula de Identidad</label>
             <input class="Registro-input" type="text" id="cedula_func" name="cedula" placeholder="Ingrese cédula" required>
@@ -38,6 +38,9 @@
 
             <label for="usuario">Nombre de usuario</label>
             <input class="Registro-input" type="text" id="usuario" name="usuario" placeholder="Ingrese usuario" required>
+
+            <label for="email_func">Email</label>
+            <input class="Registro-input" type="email" id="email_func" name="email" placeholder="Ingrese correo" required>
 
             <label for="contrasenia_func">Contraseña</label>
             <input class="Registro-input" type="password" id="contrasenia_func" name="contrasenia" placeholder="Ingrese contraseña" required>
@@ -54,7 +57,7 @@
             <input class="Registro_boton" type="submit" value="Registrarse">
         </div>
 
-        <!-- BLOQUE PACIENTE -->
+        <!-- REGISTRO DE PACIENTE -->
         <div id="seccionPaciente" class="campo-oculto">
             <label for="cedula_pac">Cédula de identidad</label>
             <input class="Registro-input" type="text" id="cedula_pac" name="cedula" placeholder="Ingrese cédula" required>
@@ -69,7 +72,7 @@
             <input class="Registro-input" type="tel" id="telefono" name="telefono" placeholder="Ingrese teléfono" required>
 
             <label for="email">Email</label>
-            <input class="Registro-input" type="email" id="email" name="email" placeholder="Ingrese correo" required>
+            <input class="Registro-input" type="email" id="email_pac" name="email" placeholder="Ingrese correo" required>
 
             <label for="contrasenia_pac">Contraseña</label>
             <input class="Registro-input" type="password" id="contrasenia_pac" name="contrasenia" placeholder="Ingrese contraseña" required>
@@ -77,7 +80,7 @@
             <input class="Registro_boton" type="submit" value="Registrarse">
         </div>
 
-       <!-- BLOQUE CHOFER -->
+       <!-- REGISTRO DE CHOFER -->
         <div id="seccionChofer" class="campo-oculto">
             <label for="cedula_cho">Cédula de Identidad</label>
             <input class="Registro-input" type="text" id="cedula_cho" name="cedula" placeholder="Ingrese cédula" required>
@@ -87,6 +90,9 @@
 
             <label for="apellido_cho">Apellido</label>
             <input class="Registro-input" type="text" id="apellido_cho" name="apellido" placeholder="Ingrese apellido" required>
+
+            <label for="email_cho">Email</label>
+            <input class="Registro-input" type="email" id="email_cho" name="email" placeholder="Ingrese correo" required>
 
             <label for="contrasenia_cho">Contraseña</label>
             <input class="Registro-input" type="password" id="contrasenia_cho" name="contrasenia" placeholder="Ingrese contraseña" required>

@@ -5,7 +5,6 @@ body {
     margin: 0;
 }
 
-/* ESTILOS BASE PARA LA CAJA CELESTE DEL TÍTULO */
 h2 {
     color: rgb(4, 29, 255);
     background-color: rgb(189, 217, 250);
@@ -19,31 +18,21 @@ h2 {
     display: block;
 }
 
-/* ==========================================================================
-   MODIFICA AQUÍ EL ANCHO DE CADA TITULO POR SEPARADO
-   ========================================================================== */
-
-/* 1. Ancho exclusivo para "Registro de Usuario" */
 h2.titulo-usuario {
     width: 280px; 
 }
 
-/* 2. Ancho exclusivo para "Registro de Funcionario" */
 h2.titulo-funcionario {
     width: 335px; 
 }
 
-/* 3. Ancho exclusivo para "Registro de Paciente" */
 h2.titulo-paciente {
     width: 300px; 
 }
 
-/* 4. Ancho exclusivo para "Registro de Chofer" */
 h2.titulo-chofer {
     width: 270px; 
 }
-
-/* ========================================================================== */
 
 h3 {
     color: rgb(4, 29, 255);
