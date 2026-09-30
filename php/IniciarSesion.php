@@ -27,9 +27,9 @@ if (!$con) {
     exit;
 }
 
-$esChofer = false;
+$rolEncontrado = '';
 
-// 3. Consultar la tabla "paciente"
+// --- PASO 1: Consultar la tabla "paciente" ---
 $stmt = $con->prepare("SELECT cedula, nombre, apellido, email, contrasenia FROM paciente WHERE cedula = ? OR email = ?");
 
 if (!$stmt) {
@@ -42,10 +42,12 @@ $stmt->bind_param('ss', $usuario, $usuario);
 $stmt->execute();
 $resultado = $stmt->get_result();
 
-// Si no se encuentra en "paciente", consultar en la tabla "chofer"
-if ($resultado->num_rows === 0) {
+if ($resultado->num_rows > 0) {
+    $rolEncontrado = 'paciente';
+} else {
     $stmt->close();
     
+    // --- PASO 2: Consultar la tabla "chofer" ---
     $stmt = $con->prepare("SELECT ci_chofer AS cedula, nombre, apellido, email, contrasenia FROM chofer WHERE ci_chofer = ? OR email = ?");
     if (!$stmt) {
         ob_end_clean();
@@ -56,21 +58,42 @@ if ($resultado->num_rows === 0) {
     $stmt->bind_param('ss', $usuario, $usuario);
     $stmt->execute();
     $resultado = $stmt->get_result();
-    $esChofer = true;
+    
+    if ($resultado->num_rows > 0) {
+        $rolEncontrado = 'chofer';
+    } else {
+        $stmt->close();
+        
+        // --- PASO 3: Consultar la tabla "funcionario" ---
+        $stmt = $con->prepare("SELECT ci_funcionario AS cedula, nombre, apellido, email, usuario, cargo, contrasenia FROM funcionario WHERE ci_funcionario = ? OR email = ? OR usuario = ?");
+        if (!$stmt) {
+            ob_end_clean();
+            echo json_encode(['error' => 'Error en la consulta: ' . $con->error]);
+            exit;
+        }
+        
+        $stmt->bind_param('sss', $usuario, $usuario, $usuario);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        
+        if ($resultado->num_rows > 0) {
+            $rolEncontrado = 'funcionario';
+        }
+    }
 }
 
-// 4. Verificar si se encontró registro en alguna de las dos tablas
-if ($resultado->num_rows === 0) {
+// 3. Verificar si se encontró el usuario en alguna tabla
+if ($resultado->num_rows === 0 || $rolEncontrado === '') {
     ob_end_clean();
-    echo json_encode(['error' => 'Cédula o correo no registrado']);
-    $stmt->close();
+    echo json_encode(['error' => 'Usuario, cédula o correo no registrado']);
+    if (isset($stmt)) $stmt->close();
     $con->close();
     exit;
 }
 
 $fila = $resultado->fetch_assoc();
 
-// 5. Validar contraseña (compatible con password_hash y texto plano)
+// 4. Validar contraseña (compatible con password_hash y texto plano)
 $passGuardada = $fila['contrasenia'];
 $passwordValida = false;
 
@@ -80,16 +103,22 @@ if (strpos($passGuardada, '$2y$') === 0 || strpos($passGuardada, '$2a$') === 0) 
     $passwordValida = ($contrasenia === $passGuardada);
 }
 
-// 6. Enviar respuesta final en JSON
+// 5. Enviar respuesta final en JSON
 ob_end_clean();
 
 if ($passwordValida) {
-    // Guardar variables de sesión según el rol
+    // Guardar variables de sesión
     $_SESSION['cedula'] = $fila['cedula'];
     $_SESSION['nombre'] = $fila['nombre'];
     $_SESSION['apellido'] = $fila['apellido'];
     $_SESSION['email'] = $fila['email'];
-    $_SESSION['rol'] = $esChofer ? 'chofer' : 'paciente';
+    $_SESSION['rol'] = $rolEncontrado;
+
+    // Datos extra específicos para funcionario
+    if ($rolEncontrado === 'funcionario') {
+        $_SESSION['cargo'] = $fila['cargo'];
+        $_SESSION['usuario_nombre'] = $fila['usuario'];
+    }
 
     echo json_encode([
         'exito' => true,
@@ -98,7 +127,8 @@ if ($passwordValida) {
             'nombre' => $fila['nombre'],
             'apellido' => $fila['apellido'],
             'email' => $fila['email'],
-            'rol' => $_SESSION['rol']
+            'rol' => $rolEncontrado,
+            'cargo' => isset($fila['cargo']) ? $fila['cargo'] : null
         ]
     ]);
 } else {

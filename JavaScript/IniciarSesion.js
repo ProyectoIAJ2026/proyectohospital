@@ -8,7 +8,6 @@ formulario.addEventListener('submit', async (e) => {
     datosI.append('contrasenia', formulario.contrasenia.value.trim());
 
     try {
-        // Usa la ruta relativa asegurando el nombre exacto de tu archivo PHP
         const respuesta = await fetch('../php/IniciarSesion.php', {
             method: 'POST',
             body: datosI
