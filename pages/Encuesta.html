@@ -1,11 +1,127 @@
 <!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>A.D.M.I.N. - Encuesta</title>
-    <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encuesta de Satisfacción / Opinión</title>
+  <!-- Cargamos la librería para generar el código QR de forma automática -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 450px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    /* Contenedor del Código QR */
+    #qrcode {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px auto;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      width: fit-content;
+    }
+
+    /* Botón / Enlace directo */
+    .btn-link {
+      display: inline-block;
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-link:hover {
+      background-color: #0056b3;
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <a href="index.html" title="Enlace a inicio">Regresar al inicio</a>
-    <h2>Encuesta</h2>
+
+  <div class="container">
+    <h1>¡Queremos conocer tu opinión!</h1>
+    <p>Escanea el código QR con la cámara de tu teléfono o haz clic en el botón de abajo para acceder a la encuesta.</p>
+
+    <!-- Aquí se renderiza el código QR automáticamente -->
+    <div id="qrcode"></div>
+
+    <!-- Enlace directo -->
+    <a id="survey-btn" class="btn-link" href="#" target="_blank" rel="noopener noreferrer">
+      Ir a la Encuesta
+    </a>
+
+    <p class="footer-note">Te tomará menos de 2 minutos.</p>
+  </div>
+
+  <script>
+    // ===================================================
+    // CONFIGURACIÓN: CAMBIA ESTA URL POR LA DE TU ENCUESTA
+    // ===================================================
+    const URL_ENCUESTA = "https://forms.google.com/TU_ENCUESTA_AQUI"; 
+
+    // Asignar el enlace al botón
+    const btn = document.getElementById("survey-btn");
+    btn.href = URL_ENCUESTA;
+
+    // Generar el código QR
+    new QRCode(document.getElementById("qrcode"), {
+      text: URL_ENCUESTA,
+      width: 180,
+      height: 180,
+      colorDark : "#000000",
+      colorLight : "#ffffff",
+      correctLevel : QRCode.CorrectLevel.H
+    });
+  </script>
 
 </body>
 </html>
