@@ -1,53 +1,107 @@
 body {
-    background-color: rgb(8, 164, 226);
+    background-color: rgb(252, 252, 252);
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px;
+    margin: 0;
 }
+
+.img-logo {
+    width: 200px; 
+    float: left;  
+    height: auto;  
+    margin-right: 10px;  
+    padding: 5px;
+}
+
+.img-edificio {
+    width: 100%;
+    clear: both;
+    display: block;
+    height: auto;
+}
+
+.img-recepcion {
+    float: right;
+    width: 600px;
+    max-width: 800px;
+    height: auto;
+    margin-left: 0px;
+    margin-bottom: 15px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
 h1 {
-    color: white;
-    font-family: sans-serif;
+    color: rgb(4, 29, 255);
     font-size: 32px;
-    font-weight:800;
     text-align: center;
+    font-weight: 800;
+    margin: 10px;
+    padding: 20px;
 }
+
 h2 {
-    color: white;
-    font-family: sans-serif;
+    color: rgb(4, 29, 255);
+    text-decoration: underline;
     font-size: 24px;
-    font-weight:600;
-    font-style: italic;
+    font-weight: 600; 
+    margin: 10px 0;
+    padding: 10px;
 }
+
+.servicios-li {
+    background-color: rgb(189, 217, 250);
+    color: rgb(4, 29, 255);
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    text-align: justify;
+    width: 100%;
+    max-width: 1300px;
+    box-sizing: border-box;
+    margin: 10px 0;
+    padding: 15px;
+    list-style: none;
+}
+
+.contacto-li {
+    background-color: rgb(189, 217, 250);
+    color: rgb(4, 29, 255);
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    text-align: justify;
+    width: 100%;        
+    max-width: 680px;      
+    box-sizing: border-box;
+    margin: 10px 0;
+    padding: 15px;         
+    list-style: none;
+}
+
+ul {
+    padding-left: 0;
+}
+
+.box {
+    background-color: rgb(4, 176, 255);
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    width: 145px;
+    margin: 5px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.box:hover {
+    background-color:  rgb(4, 29, 255);
+}
+
 a {
     text-decoration: none;
-}
-p {
-    color: white;
-    font-family: sans-serif;
-    font-size: 16px;
-    font-weight:400;
-    font-style: italic;
-    text-align: left;
-    text-align: justify;
-    line-height: 1.5;
-}
-
-.IniciarSesion {
-    background-color: rgb(113, 208, 236);
-    padding: 30px;
-}
-
-.IniciarSesion_input {
-    padding: 5px 10px;
-    width: 50%;
-}
-
-.IniciarSesion_submit {
-    letter-spacing: 2px;
-}
-
-.Registro {
-    background-color: rgb(113, 208, 236);
-    padding: 10px
-}
-
-.Registro_input {
-    padding: 10px
+    color: inherit;
 }

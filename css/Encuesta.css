@@ -1,0 +1,114 @@
+body {
+    background-color: rgb(252, 252, 252);
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px;
+    margin: 0;
+}
+
+h2 {
+    color: rgb(4, 29, 255);
+    background-color: rgb(189, 217, 250);
+    text-decoration: underline;
+    text-align: center;
+    font-size: 24px;
+    width: 330px;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+p {
+    color: rgb(0, 60, 130);
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(4, 176, 255);
+    font-weight: bold;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+}
+
+a:hover {
+    background-color: rgb(4, 29, 255);
+}
+
+.box {
+    background-color: rgb(189, 217, 250);
+    padding: 20px;
+    width: 450px;
+    margin: 10px auto;
+    border: 10px solid rgb(0, 97, 177);
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+label {
+    color: rgb(4, 29, 255);
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 15px;
+    display: block;
+}
+
+.box-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+select.box-input {
+    background-color: white;
+    cursor: pointer;
+}
+
+textarea.box-input {
+    resize: vertical;
+}
+
+.radio {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.radio label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: rgb(0, 40, 150);
+    font-weight: normal;
+    margin-top: 0;
+    cursor: pointer;
+}
+
+.box-submit {
+    width: 100%;
+    background-color: rgb(4, 176, 255);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.box-submit:hover {
+    background-color: rgb(4, 29, 255);
+}
