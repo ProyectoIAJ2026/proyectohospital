@@ -11,7 +11,8 @@ h2 {
     text-decoration: underline;
     text-align: center;
     font-size: 24px;
-    width: 330px;
+    width: 100%;
+    max-width: 330px;
     margin: 10px auto;
     padding: 10px;
     border-radius: 10px;
@@ -44,7 +45,8 @@ a:hover {
 .box {
     background-color: rgb(189, 217, 250);
     padding: 20px;
-    width: 450px;
+    width: 100%;
+    max-width: 450px;
     margin: 10px auto;
     border: 10px solid rgb(0, 97, 177);
     border-radius: 25px;
