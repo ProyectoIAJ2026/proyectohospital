@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 6. Ejecutar la consulta y verificar resultado
         if ($stmt->execute()) {
             echo "<script>
-                    alert('¡Traslado registrado con éxito!');
+                    alert('¡Traslado registrado con éxito!');git
                     window.location.href = '../html/Traslados.html';
                   </script>";
         } else {
