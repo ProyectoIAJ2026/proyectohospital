@@ -7,11 +7,12 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_M
 
 // DOM
 const departamento = document.getElementById('departamento');
-const dirOrigen = document.getElementById('dir');
+const dirOrigen = document.getElementById('origen');
 const dirDestino = document.getElementById('destino');
 
 const ubicarOrigenBtn = document.getElementById('ubicarOrigen');
 const ubicarDestinoBtn = document.getElementById('ubicarDestino');
+const formTraslado = document.getElementById('formTraslado');
 
 // Iconos
 const iconoOrigen = L.icon({
@@ -70,3 +71,29 @@ async function buscarUbicacion(direccionTexto, marcadorTarget) {
 // Eventos de los botones de búsqueda
 ubicarOrigenBtn.addEventListener('click', () => buscarUbicacion(dirOrigen.value, marcadorOrigen));
 ubicarDestinoBtn.addEventListener('click', () => buscarUbicacion(dirDestino.value, marcadorDestino));
+
+// Envío del formulario sin recargar la página (captura la respuesta de Traslados.php)
+formTraslado.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(formTraslado);
+
+    try {
+        const respuesta = await fetch('../php/Traslados.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const resultado = await respuesta.text();
+
+        if (resultado.trim() === 'ok') {
+            alert('¡Traslado registrado con éxito!');
+            formTraslado.reset();
+        } else {
+            alert(resultado);
+        }
+    } catch (error) {
+        console.error('Error al guardar el traslado:', error);
+        alert('Ocurrió un error al comunicarse con el servidor.');
+    }
+});

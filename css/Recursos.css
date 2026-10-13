@@ -1,0 +1,108 @@
+body {
+    background-color: rgb(252, 252, 252);
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px;
+    margin: 0;
+}
+
+h2 {
+    color: rgb(4, 29, 255);
+    background-color: rgb(189, 217, 250);
+    text-decoration: underline;
+    text-align: center;
+    font-size: 22px;
+    width: 100%;
+    max-width: 320px;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+p {
+    color: rgb(0, 60, 130);
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.box-inicio {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(4, 176, 255);
+    font-weight: bold;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+}
+
+.box-inicio:hover {
+    background-color: rgb(4, 29, 255);
+}
+
+/* Contenedor flexible para poner los dos formularios lado a lado o apilados */
+.contenedor-principal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.bloque-formulario {
+    background-color: rgb(189, 217, 250);
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    border: 8px solid rgb(0, 97, 177);
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+label {
+    color: rgb(4, 29, 255);
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 12px;
+    display: block;
+}
+
+.Recursos-input, 
+.Recursos-select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: white;
+}
+
+textarea.Recursos-input {
+    resize: vertical;
+}
+
+.Recursos-submit {
+    background-color: rgb(4, 176, 255);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.3s ease;
+}
+
+.Recursos-submit:hover {
+    background-color: rgb(4, 29, 255);
+}

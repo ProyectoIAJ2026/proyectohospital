@@ -1,158 +1,22 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<<<<<<< HEAD
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Encuesta de Satisfacción / Opinión</title>
-  <!-- Cargamos la librería para generar el código QR de forma automática -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .container {
-      background-color: #ffffff;
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 450px;
-      width: 100%;
-    }
-
-    h1 {
-      color: #333;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    p {
-      color: #666;
-      font-size: 15px;
-      margin-bottom: 25px;
-      line-height: 1.5;
-    }
-
-    /* Contenedor del Código QR */
-    #qrcode {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 20px auto;
-      padding: 15px;
-      background: #f9f9f9;
-      border-radius: 12px;
-      border: 1px solid #eee;
-      width: fit-content;
-    }
-
-    /* Botón / Enlace directo */
-    .btn-link {
-      display: inline-block;
-      width: 100%;
-      background-color: #007bff;
-      color: white;
-      text-decoration: none;
-      padding: 14px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 16px;
-      margin-top: 15px;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-link:hover {
-      background-color: #0056b3;
-    }
-
-    .footer-note {
-      font-size: 12px;
-      color: #aaa;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="container">
-    <h1>¡Queremos conocer tu opinión!</h1>
-    <p>Escanea el código QR con la cámara de tu teléfono o haz clic en el botón de abajo para acceder a la encuesta.</p>
-
-    <!-- Aquí se renderiza el código QR automáticamente -->
-    <div id="qrcode"></div>
-
-    <!-- Enlace directo -->
-    <a id="survey-btn" class="btn-link" href="#" target="_blank" rel="noopener noreferrer">
-      Ir a la Encuesta
-    </a>
-
-    <p class="footer-note">Te tomará menos de 2 minutos.</p>
-  </div>
-
-  <script>
-    // ===================================================
-    // CONFIGURACIÓN: CAMBIA ESTA URL POR LA DE TU ENCUESTA
-    // ===================================================
-    const URL_ENCUESTA = "https://forms.google.com/TU_ENCUESTA_AQUI"; 
-
-    // Asignar el enlace al botón
-    const btn = document.getElementById("survey-btn");
-    btn.href = URL_ENCUESTA;
-
-    // Generar el código QR
-    new QRCode(document.getElementById("qrcode"), {
-      text: URL_ENCUESTA,
-      width: 180,
-      height: 180,
-      colorDark : "#000000",
-      colorLight : "#ffffff",
-      correctLevel : QRCode.CorrectLevel.H
-    });
-  </script>
-=======
-<html>
-=======
-<html lang="es">
->>>>>>> 4409993e41f28849adb5357d70772e2d5b537892
 <head>
     <meta charset="UTF-8">
-    <title>A.D.M.I.N. - Encuesta de satisfacción</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.D.M.I.N. - Encuesta de Satisfacción</title>
+    <!-- Hoja de estilos -->
     <link rel="stylesheet" href="../css/Encuesta.css">
 </head>
 <body>
-<<<<<<< HEAD
-    <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
->>>>>>> 49d45b7d2650211fbd3fd4511f5f14bcd10da462
 
-    <h2 title="Titulo de la encuesta">Encuesta de Satisfacción</h2>
+    <a href="../index.html" class="box-inicio" title="Enlace a inicio">Regresar al inicio</a>
 
-=======
-    <a href="../index.html">Regresar al inicio</a>
-<<<<<<< HEAD
-    <h2>Encuesta de satisfacción</h2>
-=======
-    <h2>Encuesta de Satisfacción</h2>
->>>>>>> 4409993e41f28849adb5357d70772e2d5b537892
->>>>>>> 0739e572f8ae0bf27f5b3069991e76000ba0ecad
+    <h2 title="Título de la encuesta">Encuesta de Satisfacción</h2>
+
     <div class="box">
         <p>Tu opinión nos ayuda a mejorar la atención.</p>
 
-        <!-- Formulario configurado con método POST hacia el script PHP -->
+        <!-- Formulario configurado con método POST hacia Encuesta.php -->
         <form action="../php/Encuesta.php" method="POST">
 
             <!-- Email Opcional -->
@@ -162,25 +26,25 @@
             <!-- Pregunta 1 -->
             <label for="atencion">1. ¿Cómo califica la atención recibida?</label>
             <select id="atencion" name="atencion" class="box-input" required>
-                <option value="">Selecciona una opción</option>
-                <option value="excelente">Excelente</option>
-                <option value="buena">Buena</option>
-                <option value="regular">Regular</option>
-                <option value="mala">Mala</option>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="Excelente">Excelente</option>
+                <option value="Buena">Buena</option>
+                <option value="Regular">Regular</option>
+                <option value="Mala">Mala</option>
             </select>
 
             <!-- Pregunta 2 -->
             <label>2. ¿El tiempo de espera fue adecuado?</label>
             <div class="radio">
-                <label><input type="radio" name="tiempo" value="si" required> Sí</label>
-                <label><input type="radio" name="tiempo" value="no"> No</label>
+                <label><input type="radio" name="tiempo" value="Sí" required> Sí</label>
+                <label><input type="radio" name="tiempo" value="No"> No</label>
             </div>
 
-            <!-- Pregunta 3 (Redacción mejorada) -->
+            <!-- Pregunta 3 -->
             <label>3. ¿Cómo accedió a esta encuesta?</label>
             <div class="radio">
-                <label><input type="radio" name="acceso" value="qr" required> Código QR impreso</label>
-                <label><input type="radio" name="acceso" value="web"> Portal del sitio web</label>
+                <label><input type="radio" name="acceso" value="Código QR" required> Código QR impreso</label>
+                <label><input type="radio" name="acceso" value="Sitio Web"> Portal del sitio web</label>
             </div>
 
             <!-- Pregunta 4 -->
@@ -192,7 +56,7 @@
         </form>
     </div>
 
-    <!-- Vincular el script JS antes de cerrar el body -->
+    <!-- Script de control JS -->
     <script src="../JavaScript/Encuesta.js"></script>
 </body>
 </html>

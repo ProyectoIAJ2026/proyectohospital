@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. OBTENER LOS ELEMENTOS PRINCIPALES DE LA PÁGINA
     const selectTipo = document.getElementById('tipoUsuario');
     const seccionFuncionario = document.getElementById('seccionFuncionario');
     const seccionPaciente = document.getElementById('seccionPaciente');
@@ -7,40 +6,39 @@ document.addEventListener('DOMContentLoaded', function() {
     const titulo = document.getElementById('tituloRegistro');
     const formRegistro = document.getElementById('formRegistro');
 
-    // 2. CAMBIAR CAMPOS VISIBLES SEGÚN EL TIPO DE USUARIO SELECCIONADO
+    // Muestra/oculta campos según rol y activa 'required' sólo en los visibles
     selectTipo.addEventListener('change', function() {
-        // Oculta todas las secciones
+        // Ocultar todas las secciones
         seccionFuncionario.classList.add('campo-oculto');
         seccionPaciente.classList.add('campo-oculto');
         seccionChofer.classList.add('campo-oculto');
 
-        // Desactiva el requisito 'obligatorio' de los campos ocultos
+        // Quitar atributo 'required' de todos los inputs ocultos
         document.querySelectorAll('.Registro-input').forEach(input => input.required = false);
         selectTipo.required = true;
 
         titulo.className = '';
 
-        // Muestra la sección correspondiente y marca sus campos como obligatorios
         switch (this.value) {
             case 'funcionario':
                 seccionFuncionario.classList.remove('campo-oculto');
                 titulo.textContent = 'Registro de Funcionario';
                 titulo.classList.add('titulo-funcionario');
-                document.querySelectorAll('#seccionFuncionario input, #seccionFuncionario select').forEach(i => i.required = true);
+                seccionFuncionario.querySelectorAll('input, select').forEach(i => i.required = true);
                 break;
 
             case 'paciente':
                 seccionPaciente.classList.remove('campo-oculto');
                 titulo.textContent = 'Registro de Paciente';
                 titulo.classList.add('titulo-paciente');
-                document.querySelectorAll('#seccionPaciente input').forEach(i => i.required = true);
+                seccionPaciente.querySelectorAll('input, select').forEach(i => i.required = true);
                 break;
 
             case 'chofer':
                 seccionChofer.classList.remove('campo-oculto');
                 titulo.textContent = 'Registro de Chofer';
                 titulo.classList.add('titulo-chofer');
-                document.querySelectorAll('#seccionChofer input, #seccionChofer select').forEach(i => i.required = true);
+                seccionChofer.querySelectorAll('input, select').forEach(i => i.required = true);
                 break;
 
             default:
@@ -50,9 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // 3. ENVIAR FORMULARIO AL PHP SIN RECARGAR LA PÁGINA
+    // Envío asíncrono con Fetch
     formRegistro.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Detiene el envío por defecto de la página
+        e.preventDefault();
 
         const rol = selectTipo.value;
         if (!rol) {
@@ -60,11 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Empaqueta los datos a enviar
         const formData = new FormData();
         formData.append('tipoUsuario', rol);
 
-        // Guarda los datos según el tipo de usuario
         if (rol === 'funcionario') {
             formData.append('cedula', document.getElementById('cedula_func').value);
             formData.append('nombre', document.getElementById('nombre_func').value);
@@ -91,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('disponibilidad', document.getElementById('disponibilidad').value);
         }
 
-        // Envía la información al archivo registro.php
         try {
             const respuesta = await fetch('../php/registro.php', {
                 method: 'POST',
@@ -100,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const resultado = await respuesta.text();
 
-            // Muestra mensaje según la respuesta del backend
             if (resultado.trim() === "ok") {
                 alert('¡Registro realizado con éxito!');
                 formRegistro.reset();

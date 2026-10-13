@@ -1,67 +1,70 @@
 <?php
-// 1. Incluir el archivo de conexión
+// 1. CONEXIÓN A LA BASE DE DATOS Y CONFIGURACIÓN
 require_once 'conexion.php';
 
-// 2. Verificar que los datos vengan por el método POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+date_default_timezone_set('America/Montevideo');
 
-    // 3. Capturar y limpiar los datos recibidos del formulario
-    $origen         = trim($_POST['origen'] ?? '');
-    $destino        = trim($_POST['destino'] ?? '');
-    $departamento   = trim($_POST['departamento'] ?? '');
-    $hora_salida    = $_POST['hora_salida'] ?? null;
-    $hora_llegada   = !empty($_POST['hora_llegada']) ? $_POST['hora_llegada'] : null;
-    $acompaniante   = !empty($_POST['acompaniante']) ? trim($_POST['acompaniante']) : null;
-    $estado         = $_POST['estado'] ?? 'Pendiente';
-    $ci_funcionario = $_POST['ci_funcionario'] ?? '';
-    $matricula      = $_POST['matricula'] ?? '';
-    $ci_chofer      = $_POST['ci_chofer'] ?? '';
+// 2. VERIFICAR QUE SE RECIBA POR POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo "Método de solicitud no permitido.";
+    exit();
+}
 
-    // 4. Validar campos obligatorios básicos
+try {
+    // 3. CAPTURA Y LIMPIEZA DE DATOS
+    $origen          = trim($_POST['origen'] ?? '');
+    $destino         = trim($_POST['destino'] ?? '');
+    $departamento    = trim($_POST['departamento'] ?? '');
+    $hora_salida     = $_POST['hora_salida'] ?? '';
+    $hora_llegada    = !empty($_POST['hora_llegada']) ? $_POST['hora_llegada'] : null;
+    $acompaniante    = !empty($_POST['acompaniante']) ? trim($_POST['acompaniante']) : null;
+    $estado          = $_POST['estado'] ?? 'Pendiente';
+    $ci_funcionario  = $_POST['ci_funcionario'] ?? '';
+    $matricula       = $_POST['matricula'] ?? '';
+    $ci_chofer       = $_POST['ci_chofer'] ?? '';
+
+    // Validar campos requeridos obligatorios
     if (empty($origen) || empty($destino) || empty($departamento) || empty($hora_salida) || empty($ci_funcionario) || empty($matricula) || empty($ci_chofer)) {
-        die("Por favor complete todos los campos obligatorios.");
+        echo "Por favor complete todos los campos obligatorios.";
+        exit();
     }
 
-    // 5. Preparar la consulta SQL
+    // 4. CONSULTA (INSERT): PREPARAR Y GUARDAR EL TRASLADO
     $sql = "INSERT INTO traslados (origen, destino, hora_salida, hora_llegada, acompaniante, estado, departamento, ci_funcionario, matricula, ci_chofer) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $con->prepare($sql);
 
-    if ($stmt) {
-        // Asignar los 10 parámetros
-        $stmt->bind_param(
-            "ssssssssss",
-            $origen,
-            $destino,
-            $hora_salida,
-            $hora_llegada,
-            $acompaniante,
-            $estado,
-            $departamento,
-            $ci_funcionario,
-            $matricula,
-            $ci_chofer
-        );
-
-        // 6. Ejecutar la consulta y verificar resultado
-        if ($stmt->execute()) {
-            echo "<script>
-                    alert('¡Traslado registrado con éxito!');
-                    window.location.href = '../html/Traslados.html';
-                  </script>";
-        } else {
-            echo "Error al guardar el traslado: " . $stmt->error;
-        }
-
-        $stmt->close();
-    } else {
+    if (!$stmt) {
         echo "Error en la preparación de la consulta: " . $con->error;
+        exit();
     }
 
+    $stmt->bind_param(
+        "ssssssssss",
+        $origen,
+        $destino,
+        $hora_salida,
+        $hora_llegada,
+        $acompaniante,
+        $estado,
+        $departamento,
+        $ci_funcionario,
+        $matricula,
+        $ci_chofer
+    );
+
+    // 5. RESPUESTA Y CONFIRMACIÓN
+    if ($stmt->execute()) {
+        echo "ok"; // Le confirma a JavaScript o al navegador que se registró correctamente
+    } else {
+        echo "Error al registrar el traslado: " . $stmt->error;
+    }
+
+    $stmt->close();
     $con->close();
-} else {
-    header("Location: ../html/Traslados.html");
-    exit();
+
+} catch (Exception $e) {
+    echo "Excepción capturada: " . $e->getMessage();
 }
 ?>

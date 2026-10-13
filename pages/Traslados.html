@@ -20,16 +20,16 @@
         <!-- COLUMNA IZQUIERDA: FORMULARIO DE REGISTRO -->
         <div class="bloque-formulario">
             <h2>Registro de traslado</h2>
-            <p>Complete los datos solicitados para coordinar y registrar el traslado de la unidad.</p>
+            <p>Complete los datos solicitados para coordinar y registrar el traslado de la ambulancia.</p>
 
             <form class="Traslados-form" id="formTraslado" action="../php/Traslados.php" method="POST">
                 
                 <!-- ORIGEN -->
                 <div>
-                    <label for="dir">Origen</label>
+                    <label for="origen">Origen</label>
                     <div class="campo-con-boton">
-                        <input class="Traslados-input" type="text" id="dir" name="origen" maxlength="255" placeholder="Ej. Hospital Paysandú" required>
-                        <button type="button" class="btn-mapa" id="ubicarOrigen">Buscar Origen</button>
+                        <input class="Traslados-input" type="text" id="origen" name="origen" maxlength="255" placeholder="Ingrese origen" required>
+                        <button type="button" class="btn-mapa" id="ubicarOrigen">Buscar origen</button>
                     </div>
                 </div>
 
@@ -37,8 +37,8 @@
                 <div>
                     <label for="destino">Destino</label>
                     <div class="campo-con-boton">
-                        <input class="Traslados-input" type="text" id="destino" name="destino" maxlength="255" placeholder="Ej. Policlínica Salto" required>
-                        <button type="button" class="btn-mapa" id="ubicarDestino">Buscar Destino</button>
+                        <input class="Traslados-input" type="text" id="destino" name="destino" maxlength="255" placeholder="Ingrese destino" required>
+                        <button type="button" class="btn-mapa" id="ubicarDestino">Buscar destino</button>
                     </div>
                 </div>
 
@@ -77,7 +77,7 @@
 
                 <!-- HORA LLEGADA -->
                 <div>
-                    <label for="hora_llegada">Hora de llegada (Opcional)</label>
+                    <label for="hora_llegada">Hora de llegada (opcional)</label>
                     <input class="Traslados-input" type="datetime-local" id="hora_llegada" name="hora_llegada">
                 </div>
 
@@ -102,16 +102,16 @@
                     <label for="ci_funcionario">Funcionario a cargo</label>
                     <select class="Traslados-select" id="ci_funcionario" name="ci_funcionario" required>
                         <option value="" disabled selected>Seleccione el funcionario</option>
-                        <option value="56473123">56473123 - Mateo Chorlo (Administrativo)</option>
+                        <option value="56473123">56473123 - Jorge Martinez (Administrativo)</option>
                     </select>
                 </div>
 
                 <!-- AMBULANCIA (MATRÍCULA) -->
                 <div>
-                    <label for="matricula">Unidad / ambulancia (matrícula)</label>
+                    <label for="matricula">Ambulancia (matrícula)</label>
                     <select class="Traslados-select" id="matricula" name="matricula" required>
                         <option value="" disabled selected>Seleccione la ambulancia</option>
-                        <option value="HA-1234">HA-1234 (Disponible)</option>
+                        <option value="IAB-1234">IAB 1234 (Disponible)</option>
                     </select>
                 </div>
 
@@ -124,7 +124,7 @@
                     </select>
                 </div>
 
-                <input class="Traslados-input Traslados-submit" type="submit" value="Guardar Traslado">
+                <input class="Traslados-input Traslados-submit" type="submit" value="Guardar traslado">
             </form>
         </div>
 
