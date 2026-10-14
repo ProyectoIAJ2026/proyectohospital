@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,15 +11,32 @@
         <h1>Cargar Documento</h1>
     </header>
 
-    <form id="formularioCarga">
-        <label for="nombreDocumento">Nombre del Documento:</label>
-        <input type="text" id="nombreDocumento" name="nombreDocumento" >
+    
+    <form class="SubidaDocumento" action="" method="POST" enctype="multipart/form-data">
+        <p>Nombre del Documento (Título)</p>
+        <input class="Documento_input" type="text" name="titulo" placeholder="Nombre de Documento" required>
 
-        <label for="archivoDocumento">Seleccionar Archivo:</label>
-        <input type="file" id="documento">
+        <p>Subir Documento (Archivo)</p>
+        <input class="Documento_input" type="file" name="archivo_url" required>
 
-        <input type="submit" value="Cargar Documento" value="subir">
+        <p>Descripción</p>
+        <textarea class="Documento_input" name="descripcion" placeholder="Descripción del documento" rows="3"></textarea>
 
+        <p>Estado</p>
+        <input class="Documento_input" type="text" name="estado" placeholder="Estado del documento">
+
+        <p>Ingresar Fecha de Carga</p>
+        <input class="Documento_input" type="date" name="fecha_carga" required>
+
+        <p>Cédula de Identidad (Paciente)</p>
+        <input class="Documento_input" type="text" name="cedula" placeholder="Cédula del paciente" required>
+
+        <p>Cédula del Funcionario</p>
+        <input class="Documento_input" type="text" name="ci_funcionario" placeholder="Cédula del funcionario" required>
+
+        <input class="Documento_input" type="submit" value="Cargar Documento">
+        <br>
+        <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
     </form>
 
     <div id="mensaje"></div>
@@ -27,6 +44,8 @@
     <section id="obtener">
         <button id="boton">Obtener Documento</button>
         <select name="listaDoc" id="listaDoc">
+            
+        </select>
     </section>
 
     <script src="../js/cargar.js"></script>

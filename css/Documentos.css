@@ -1,0 +1,154 @@
+/* Documentos.css */
+
+/* Reset básico y fuente */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f4f7fc;
+    color: #1a2b4c;
+    padding: 30px 20px;
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+/* Títulos */
+h2, header h1 {
+    color: #0000ff; /* Azul principal de la imagen */
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 1.8rem;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+}
+
+/* Formulario principal */
+.SubidaDocumento {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 5px solid #00bcff; /* Borde superior en azul cian */
+}
+
+/* Etiquetas de texto del formulario (<p>) */
+.SubidaDocumento p {
+    color: #0000d6;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-top: 5px;
+}
+
+/* Todos los inputs del formulario */
+.Documento_input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #b3d1ff;
+    border-radius: 8px;
+    background-color: #e2eeff; /* Azul pastel claro (como el fondo de las filas de la imagen) */
+    color: #00008b;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.Documento_input:focus {
+    border-color: #00bcff;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(0, 188, 255, 0.4);
+}
+
+/* Estilo específico para el botón Submit */
+.Documento_input[type="submit"] {
+    background-color: #00bcff; /* Azul cian brillante (igual a las pestañas de la imagen) */
+    color: #ffffff;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 12px;
+    border-radius: 25px; /* Bordes redondeados tipo cápsula */
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.Documento_input[type="submit"]:hover {
+    background-color: #009be3;
+}
+
+.Documento_input[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* Enlace a Inicio */
+.SubidaDocumento a {
+    text-align: center;
+    color: #0000ff;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.SubidaDocumento a:hover {
+    color: #00bcff;
+}
+
+/* Contenedor de mensajes */
+#mensaje {
+    margin: 20px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Sección inferior (Obtener documento) */
+#obtener {
+    background-color: #d8e7ff;
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#boton {
+    background-color: #00bcff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#boton:hover {
+    background-color: #009be3;
+}
+
+#listaDoc {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #b3d1ff;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #00008b;
+    outline: none;
+}
