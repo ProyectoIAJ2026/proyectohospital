@@ -97,6 +97,10 @@ ul {
     cursor: pointer;
 }
 
+.box-larga {
+    width: 210px;
+}
+
 .box:hover {
     background-color:  rgb(4, 29, 255);
 }
