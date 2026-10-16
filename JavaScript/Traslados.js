@@ -72,14 +72,14 @@ async function buscarUbicacion(direccionTexto, marcadorTarget) {
 ubicarOrigenBtn.addEventListener('click', () => buscarUbicacion(dirOrigen.value, marcadorOrigen));
 ubicarDestinoBtn.addEventListener('click', () => buscarUbicacion(dirDestino.value, marcadorDestino));
 
-// Envío del formulario sin recargar la página (captura la respuesta de Traslados.php)
+// Envío del formulario sin recargar la página (captura la respuesta de GuardarTraslado.php)
 formTraslado.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const formData = new FormData(formTraslado);
 
     try {
-        const respuesta = await fetch('../php/Traslados.php', {
+        const respuesta = await fetch('../php/GuardarTraslado.php', {
             method: 'POST',
             body: formData
         });

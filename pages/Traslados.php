@@ -1,3 +1,6 @@
+<?php
+require_once '../php/conexion.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,7 +25,8 @@
             <h2>Registro de Traslado</h2>
             <p>Complete los datos solicitados para coordinar y registrar el traslado de la ambulancia.</p>
 
-            <form class="Traslados-form" id="formTraslado" action="../php/Traslados.php" method="POST">
+            <!-- El action apunta correctamente al archivo procesador GuardarTraslado.php -->
+            <form class="Traslados-form" id="formTraslado" action="../php/GuardarTraslado.php" method="POST">
                 
                 <!-- ORIGEN -->
                 <div>
@@ -57,7 +61,7 @@
                         <option value="Lavalleja">Lavalleja</option>
                         <option value="Maldonado">Maldonado</option>
                         <option value="Montevideo">Montevideo</option>
-                        <option value="Paysandú">Paysandú</option>
+                        <option value="Paysandú" selected>Paysandú</option>
                         <option value="Río Negro">Río Negro</option>
                         <option value="Rivera">Rivera</option>
                         <option value="Rocha">Rocha</option>
@@ -97,30 +101,51 @@
                     </select>
                 </div>
 
-                <!-- FUNCIONARIO -->
+                <!-- FUNCIONARIO (DINÁMICO DESDE MYSQL) -->
                 <div>
                     <label for="ci_funcionario">Funcionario a cargo</label>
                     <select class="Traslados-select" id="ci_funcionario" name="ci_funcionario" required>
                         <option value="" disabled selected>Seleccione el funcionario</option>
-                        <option value="56473123">56473123 - Jorge Martinez (Administrativo)</option>
+                        <?php
+                        $queryFunc = $con->query("SELECT ci_funcionario, nombre, apellido, cargo FROM funcionario");
+                        if ($queryFunc) {
+                            while ($func = $queryFunc->fetch_assoc()) {
+                                echo '<option value="'.$func['ci_funcionario'].'">'.$func['ci_funcionario'].' - '.$func['nombre'].' '.$func['apellido'].' ('.$func['cargo'].')</option>';
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
 
-                <!-- AMBULANCIA (MATRÍCULA) -->
+                <!-- AMBULANCIA (MATRÍCULA DINÁMICA DESDE MYSQL) -->
                 <div>
                     <label for="matricula">Ambulancia (matrícula)</label>
                     <select class="Traslados-select" id="matricula" name="matricula" required>
                         <option value="" disabled selected>Seleccione la ambulancia</option>
-                        <option value="IAB-1234">IAB 1234</option>
+                        <?php
+                        $queryAmb = $con->query("SELECT matricula, estado FROM ambulancia");
+                        if ($queryAmb) {
+                            while ($amb = $queryAmb->fetch_assoc()) {
+                                echo '<option value="'.$amb['matricula'].'">'.$amb['matricula'].' - Estado: '.$amb['estado'].'</option>';
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
 
-                <!-- CHOFER -->
+                <!-- CHOFER (DINÁMICO DESDE MYSQL) -->
                 <div>
                     <label for="ci_chofer">Chofer asignado</label>
                     <select class="Traslados-select" id="ci_chofer" name="ci_chofer" required>
                         <option value="" disabled selected>Seleccione el chofer</option>
-                        <option value="09345721">09345721 - Pedro Giménez</option>
+                        <?php
+                        $queryChofer = $con->query("SELECT ci_chofer, nombre, apellido, disponibilidad FROM chofer");
+                        if ($queryChofer) {
+                            while ($chofer = $queryChofer->fetch_assoc()) {
+                                echo '<option value="'.$chofer['ci_chofer'].'">'.$chofer['ci_chofer'].' - '.$chofer['nombre'].' '.$chofer['apellido'].' (Estado: '.$chofer['disponibilidad'].')</option>';
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
 

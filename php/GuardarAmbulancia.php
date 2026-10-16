@@ -1,53 +1,91 @@
-<?php
-// 1. CONEXIÓN Y CONFIGURACIÓN
-require_once 'conexion.php';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.D.M.I.N. - Vehiculos e insumos</title>
+    <!-- Hoja de estilos personalizada -->
+    <link rel="stylesheet" href="../css/Recursos.css">
+</head>
+<body>
 
-date_default_timezone_set('America/Montevideo');
+    <a href="../index.html" class="box-inicio" title="Enlace a inicio">Regresar al inicio</a>
 
-// 2. VERIFICAR MÉTODO POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo "Método no permitido.";
-    exit();
-}
+    <div class="contenedor-principal">
 
-try {
-    // 3. CAPTURA Y LIMPIEZA DE DATOS
-    $matricula = trim($_POST['matricula'] ?? '');
-    $estado = trim($_POST['estado'] ?? 'Operativa');
-    $disponibilidad = trim($_POST['disponibilidad_ambulancia'] ?? 'Disponible');
-    $mantenimiento = !empty($_POST['ultimo_mantenimiento']) ? $_POST['ultimo_mantenimiento'] : null;
+        <!-- FORMULARIO 1: REGISTRO DE AMBULANCIAS -->
+        <div class="bloque-formulario">
+            <h2>Registro de Ambulancias</h2>
+            <p>Complete los datos para ingresar una nueva ambulancia al sistema.</p>
 
-    if (empty($matricula)) {
-        echo "La matrícula es obligatoria.";
-        exit();
-    }
+            <form class="Recursos-form" id="formAmbulancia" action="../php/RegistrarAmbulancia.php" method="POST">
+                
+                <div>
+                    <label for="matricula">Matrícula de la unidad</label>
+                    <input class="Recursos-input" type="text" id="matricula" name="matricula" maxlength="20" placeholder="Ingrese matricula - Ej: IAB 1234" required>
+                </div>
 
-    // 4. INSERCIÓN SQL PREPARADA
-    $sql = "INSERT INTO ambulancia (matricula, estado, disponibilidad_ambulancia, ultimo_mantenimiento) VALUES (?, ?, ?, ?)";
-    $stmt = $con->prepare($sql);
+                <div>
+                    <label for="estado">Estado técnico</label>
+                    <select class="Recursos-select" id="estado" name="estado" required>
+                        <option value="Operativa" selected>Operativa</option>
+                        <option value="En mantenimiento">En mantenimiento</option>
+                        <option value="Fuera de servicio">Fuera de servicio</option>
+                    </select>
+                </div>
 
-    if (!$stmt) {
-        echo "Error en la preparación: " . $con->error;
-        exit();
-    }
+                <div>
+                    <label for="disponibilidad_ambulancia">Disponibilidad</label>
+                    <select class="Recursos-select" id="disponibilidad_ambulancia" name="disponibilidad_ambulancia" required>
+                        <option value="Disponible" selected>Disponible</option>
+                        <option value="En traslado">En traslado</option>
+                        <option value="No disponible">No disponible</option>
+                    </select>
+                </div>
 
-    $stmt->bind_param("ssss", $matricula, $estado, $disponibilidad, $mantenimiento);
+                <div>
+                    <label for="ultimo_mantenimiento">Último mantenimiento (opcional)</label>
+                    <input class="Recursos-input" type="date" id="ultimo_mantenimiento" name="ultimo_mantenimiento">
+                </div>
 
-    // 5. RESPUESTA A JAVASCRIPT
-    if ($stmt->execute()) {
-        echo "ok";
-    } else {
-        if ($con->errno === 1062) {
-            echo "Error: La matrícula '$matricula' ya está registrada.";
-        } else {
-            echo "Error al guardar: " . $stmt->error;
-        }
-    }
+                <input class="Recursos-input Recursos-submit" type="submit" value="Registrar ambulancia">
+            </form>
+        </div>
 
-    $stmt->close();
-    $con->close();
+        <!-- FORMULARIO 2: REGISTRO DE ELEMENTOS, EQUIPAMIENTOS O INSUMOS -->
+        <div class="bloque-formulario">
+            <h2>Registro de Recursos</h2>
+            <p>Ingrese los datos del material o equipamiento para agregarlo al inventario.</p>
 
-} catch (Exception $e) {
-    echo "Excepción: " . $e->getMessage();
-}
-?>
+            <form class="Recursos-form" id="formObjeto" action="../php/GuardarObjeto.php" method="POST">
+                
+                <div>
+                    <label for="nombre_objeto">Nombre del objeto</label>
+                    <input class="Recursos-input" type="text" id="nombre_objeto" name="nombre_objeto" maxlength="100" placeholder="Ingrese nombre del objeto - Ej: silla de ruedas" required>
+                </div>
+
+                <div>
+                    <label for="tipo_recurso">Tipo de recurso</label>
+                    <select class="Recursos-select" id="tipo_recurso" name="tipo_recurso" required>
+                        <option value="" disabled selected>Seleccione el tipo</option>
+                        <option value="Equipamiento">Equipamiento</option>
+                        <option value="Objeto">Objeto</option>
+                        <option value="Insumo">Insumo médico</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="Recursos-input" id="descripcion" name="descripcion" rows="3" placeholder="Detalles de estado o especificaciones del recurso..."></textarea>
+                </div>
+
+                <input class="Recursos-input Recursos-submit" type="submit" value="Registrar recurso">
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Script de control JavaScript -->
+    <script src="../JavaScript/Recursos.js"></script>
+</body>
+</html>
