@@ -36,7 +36,7 @@ if archivo["error"] === 0) {
     }
 $nombre_unico = uniqid() . "." . $extension;
 
-$directorio = _DIR_ . "/archivos/"; 
+$directorio = _DIR_  . "/archivos/"; 
 
 if (!is_dir($directorio)) {
     if (!mkdir($directorio, 0777, true)) {
