@@ -1,91 +1,59 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A.D.M.I.N. - Vehiculos e insumos</title>
-    <!-- Hoja de estilos personalizada -->
-    <link rel="stylesheet" href="../css/Recursos.css">
-</head>
-<body>
+<?php
+// 1. CONEXIÓN A LA BASE DE DATOS Y CONFIGURACIÓN
+require_once 'conexion.php';
 
-    <a href="../index.html" class="box-inicio" title="Enlace a inicio">Regresar al inicio</a>
+// 2. VERIFICAR QUE LA SOLICITUD SEA POR POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo "Método de solicitud no permitido.";
+    exit();
+}
 
-    <div class="contenedor-principal">
+try {
+    // 3. CAPTURA Y LIMPIEZA DE LOS DATOS DEL FORMULARIO
+    $matricula               = trim($_POST['matricula'] ?? '');
+    $estado                  = $_POST['estado'] ?? 'Operativa';
+    $disponibilidad_ambulancia = $_POST['disponibilidad_ambulancia'] ?? 'Disponible';
+    
+    // El campo de mantenimiento es opcional, si viene vacío asignamos null
+    $ultimo_mantenimiento    = !empty($_POST['ultimo_mantenimiento']) ? $_POST['ultimo_mantenimiento'] : null;
 
-        <!-- FORMULARIO 1: REGISTRO DE AMBULANCIAS -->
-        <div class="bloque-formulario">
-            <h2>Registro de Ambulancias</h2>
-            <p>Complete los datos para ingresar una nueva ambulancia al sistema.</p>
+    // Validar que la matrícula no esté vacía (es la clave primaria)
+    if (empty($matricula)) {
+        echo "Por favor ingrese la matrícula de la ambulancia.";
+        exit();
+    }
 
-            <form class="Recursos-form" id="formAmbulancia" action="../php/RegistrarAmbulancia.php" method="POST">
-                
-                <div>
-                    <label for="matricula">Matrícula de la unidad</label>
-                    <input class="Recursos-input" type="text" id="matricula" name="matricula" maxlength="20" placeholder="Ingrese matricula - Ej: IAB 1234" required>
-                </div>
+    // 4. CONSULTA PREPARADA PARA INSERTAR LA AMBULANCIA
+    $sql = "INSERT INTO ambulancia (matricula, estado, disponibilidad_ambulancia, ultimo_mantenimiento) 
+            VALUES (?, ?, ?, ?)";
 
-                <div>
-                    <label for="estado">Estado técnico</label>
-                    <select class="Recursos-select" id="estado" name="estado" required>
-                        <option value="Operativa" selected>Operativa</option>
-                        <option value="En mantenimiento">En mantenimiento</option>
-                        <option value="Fuera de servicio">Fuera de servicio</option>
-                    </select>
-                </div>
+    $stmt = $con->prepare($sql);
 
-                <div>
-                    <label for="disponibilidad_ambulancia">Disponibilidad</label>
-                    <select class="Recursos-select" id="disponibilidad_ambulancia" name="disponibilidad_ambulancia" required>
-                        <option value="Disponible" selected>Disponible</option>
-                        <option value="En traslado">En traslado</option>
-                        <option value="No disponible">No disponible</option>
-                    </select>
-                </div>
+    if (!$stmt) {
+        echo "Error en la preparación de la consulta: " . $con->error;
+        exit();
+    }
 
-                <div>
-                    <label for="ultimo_mantenimiento">Último mantenimiento (opcional)</label>
-                    <input class="Recursos-input" type="date" id="ultimo_mantenimiento" name="ultimo_mantenimiento">
-                </div>
+    // Vincular los parámetros (4 cadenas de texto, el último puede ser null)
+    $stmt->bind_param(
+        "ssss",
+        $matricula,
+        $estado,
+        $disponibilidad_ambulancia,
+        $ultimo_mantenimiento
+    );
 
-                <input class="Recursos-input Recursos-submit" type="submit" value="Registrar ambulancia">
-            </form>
-        </div>
+    // 5. EJECUTAR Y RESPONDER
+    if ($stmt->execute()) {
+        echo "ok"; // Respuesta para que tu JavaScript detecte el éxito
+    } else {
+        echo "Error al registrar la ambulancia: " . $stmt->error;
+    }
 
-        <!-- FORMULARIO 2: REGISTRO DE ELEMENTOS, EQUIPAMIENTOS O INSUMOS -->
-        <div class="bloque-formulario">
-            <h2>Registro de Recursos</h2>
-            <p>Ingrese los datos del material o equipamiento para agregarlo al inventario.</p>
+    $stmt->close();
+    $con->close();
 
-            <form class="Recursos-form" id="formObjeto" action="../php/GuardarObjeto.php" method="POST">
-                
-                <div>
-                    <label for="nombre_objeto">Nombre del objeto</label>
-                    <input class="Recursos-input" type="text" id="nombre_objeto" name="nombre_objeto" maxlength="100" placeholder="Ingrese nombre del objeto - Ej: silla de ruedas" required>
-                </div>
-
-                <div>
-                    <label for="tipo_recurso">Tipo de recurso</label>
-                    <select class="Recursos-select" id="tipo_recurso" name="tipo_recurso" required>
-                        <option value="" disabled selected>Seleccione el tipo</option>
-                        <option value="Equipamiento">Equipamiento</option>
-                        <option value="Objeto">Objeto</option>
-                        <option value="Insumo">Insumo médico</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="descripcion">Descripción</label>
-                    <textarea class="Recursos-input" id="descripcion" name="descripcion" rows="3" placeholder="Detalles de estado o especificaciones del recurso..."></textarea>
-                </div>
-
-                <input class="Recursos-input Recursos-submit" type="submit" value="Registrar recurso">
-            </form>
-        </div>
-
-    </div>
-
-    <!-- Script de control JavaScript -->
-    <script src="../JavaScript/Recursos.js"></script>
-</body>
-</html>
+} catch (Exception $e) {
+    echo "Excepción capturada: " . $e->getMessage();
+}
+?>

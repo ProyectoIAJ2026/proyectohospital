@@ -78,7 +78,7 @@ select.box-input {
 }
 
 textarea.box-input {
-    resize: vertical;
+    resize: none;
 }
 
 .radio {

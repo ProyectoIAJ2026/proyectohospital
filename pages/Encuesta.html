@@ -1,12 +1,62 @@
 <!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>A.D.M.I.N. - Encuesta</title>
-    <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.I.G.S.M. - Encuesta de Satisfacción</title>
+    <!-- Hoja de estilos -->
+    <link rel="stylesheet" href="../css/Encuesta.css">
 </head>
 <body>
-    <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
-    <h2>Encuesta</h2>
 
+    <a href="../index.html" class="box-inicio" title="Enlace a inicio">Regresar al inicio</a>
 
+    <h2 title="Título de la encuesta">Encuesta de Satisfacción</h2>
+    <p>Tu opinión nos ayuda a mejorar la atención.</p>
+
+    <div class="box">
+
+        <!-- Formulario configurado con método POST hacia Encuesta.php -->
+        <form action="../php/Encuesta.php" method="POST">
+
+            <!-- Email Opcional -->
+            <label for="email">Email (opcional):</label>
+            <input type="email" id="email" name="email" class="box-input" placeholder="Ingrese email">
+
+            <!-- Pregunta 1 -->
+            <label for="atencion">1. ¿Cómo califica la atención recibida?</label>
+            <select id="atencion" name="atencion" class="box-input" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="Excelente">Excelente</option>
+                <option value="Buena">Buena</option>
+                <option value="Regular">Regular</option>
+                <option value="Mala">Mala</option>
+            </select>
+
+            <!-- Pregunta 2 -->
+            <label>2. ¿El tiempo de espera fue adecuado?</label>
+            <div class="radio">
+                <label><input type="radio" name="tiempo" value="Sí" required> Sí</label>
+                <label><input type="radio" name="tiempo" value="No"> No</label>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <label>3. ¿Cómo accedió a esta encuesta?</label>
+            <div class="radio">
+                <label><input type="radio" name="acceso" value="Código QR" required> Código QR impreso</label>
+                <label><input type="radio" name="acceso" value="Sitio Web"> Portal del sitio web</label>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <label for="comentarios">4. Comentarios o sugerencias:</label>
+            <textarea id="comentarios" name="comentarios" class="box-input" rows="3" placeholder="Escribe aquí..." required></textarea>
+
+            <!-- Botón de Envío -->
+            <button type="submit" class="box-submit">Enviar encuesta</button>
+        </form>
+    </div>
+
+    <!-- Script de control JS -->
+    <script src="../JavaScript/Encuesta.js"></script>
 </body>
 </html>

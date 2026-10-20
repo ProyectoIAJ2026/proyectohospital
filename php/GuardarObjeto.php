@@ -1,54 +1,40 @@
 <?php
-require_once 'conexion.php';
+// Requerir el archivo de conexión (asegúrate de que la ruta sea correcta desde la carpeta php)
+require_once 'conexion.php'; 
 
-date_default_timezone_set('America/Montevideo');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = trim($_POST['nombre_objeto']);
+    $tipo = trim($_POST['tipo_recurso']);
+    $descripcion = trim($_POST['descripcion']);
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo "Método no permitido.";
-    exit();
+    if (empty($nombre) || empty($tipo)) {
+        echo "Error: Completa todos los campos obligatorios.";
+        exit;
+    }
+
+    try {
+        // 1. Insertar primero en la tabla 'elemento' usando consultas preparadas de mysqli
+        $stmtElemento = $con->prepare("INSERT INTO elemento (tipo) VALUES (?)");
+        $stmtElemento->bind_param("s", $tipo);
+        $stmtElemento->execute();
+
+        // Obtener el ID generado automáticamente en 'elemento'
+        $id_elemento = $con->insert_id;
+        $stmtElemento->close();
+
+        // 2. Insertar en la tabla 'objeto'
+        $stmtObjeto = $con->prepare("INSERT INTO objeto (id_elemento, nombre, descripcion) VALUES (?, ?, ?)");
+        $stmtObjeto->bind_param("iss", $id_elemento, $nombre, $descripcion);
+        $stmtObjeto->execute();
+        $stmtObjeto->close();
+
+        // Si todo sale bien, devolvemos "ok" para que el JS muestre la alerta
+        echo "ok";
+
+    } catch (Exception $e) {
+        echo "Error en la base de datos: " . $e->getMessage();
+    }
+} else {
+    echo "Método de solicitud no válido.";
 }
-
-// Captura de variables del formulario
-$tipo = trim($_POST['tipo_recurso'] ?? 'Objeto');
-$nombre = trim($_POST['nombre_objeto'] ?? '');
-$descripcion = trim($_POST['descripcion'] ?? '');
-
-if (empty($nombre)) {
-    echo "El nombre del recurso es obligatorio.";
-    exit();
-}
-
-// Iniciar transacción para garantizar consistencia entre las tablas
-$con->begin_transaction();
-
-try {
-    // 1. Insertar primero en la tabla PADRE (elemento)
-    // Nota: Asegúrate de que en la tabla 'elemento' el campo 'id_traslados' permita NULL si no se asigna en este momento.
-    $sqlElemento = "INSERT INTO elemento (tipo) VALUES (?)";
-    $stmt1 = $con->prepare($sqlElemento);
-    $stmt1->bind_param("s", $tipo);
-    $stmt1->execute();
-
-    // Obtener el ID de elemento recién creado
-    $idElemento = $con->insert_id;
-    $stmt1->close();
-
-    // 2. Insertar en la tabla HIJA (objeto) utilizando las columnas separadas
-    $sqlObjeto = "INSERT INTO objeto (id_elemento, nombre, descripcion) VALUES (?, ?, ?)";
-    $stmt2 = $con->prepare($sqlObjeto);
-    $stmt2->bind_param("iss", $idElemento, $nombre, $descripcion);
-    $stmt2->execute();
-    $stmt2->close();
-
-    // Confirmar los cambios si todo salió bien
-    $con->commit();
-    echo "ok";
-
-} catch (Exception $e) {
-    // Si algo falla, revertimos la transacción
-    $con->rollback();
-    echo "Error al registrar el recurso: " . $e->getMessage();
-}
-
-$con->close();
 ?>

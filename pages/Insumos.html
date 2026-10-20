@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.I.G.S.M. - Insumos</title>
+    <link rel="stylesheet" href="../css/Insumos.css">
+</head>
+<body>
+
+    <a href="../index.html" class="box-inicio" title="Enlace a inicio">Regresar al inicio</a>
+
+    <h2 class="titulo-pagina">Registro de Insumos</h2>
+    <p>Ingrese los datos del material o equipamiento para agregarlo al inventario.</p>
+
+
+    <div class="contenedor-principal">
+        <!-- FORMULARIO: REGISTRO DE INSUMOS, OBJETOS Y EQUIPAMIENTO -->
+        <div class="bloque-formulario">
+
+            <form class="Insumos-form" id="formObjeto" action="../php/GuardarObjeto.php" method="POST">
+                
+                <div>
+                    <label for="nombre_objeto">Nombre del objeto</label>
+                    <input class="Insumos-input" type="text" id="nombre_objeto" name="nombre_objeto" maxlength="100" placeholder="Ej: Silla de ruedas, Monitor cardíaco..." required>
+                </div>
+
+                <div>
+                    <label for="tipo_recurso">Tipo de recurso</label>
+                    <select class="Insumos-select" id="tipo_recurso" name="tipo_recurso" required>
+                        <option value="" disabled selected>Seleccione el tipo</option>
+                        <option value="Equipamiento">Equipamiento</option>
+                        <option value="Objeto">Objeto</option>
+                        <option value="Insumo médico">Insumo médico</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="Insumos-input" id="descripcion" name="descripcion" rows="3" placeholder="Detalles de estado o especificaciones del recurso..."></textarea>
+                </div>
+
+                <input class="Insumos-input Insumos-submit" type="submit" value="Registrar insumo">
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Carga del JavaScript para manejar el envío asíncrono con fetch -->
+    <script src="../JavaScript/Insumos.js"></script>
+</body>
+</html>
