@@ -37,7 +37,14 @@ h1 {
     text-align: center;
     font-weight: 800;
     margin: 10px;
-    padding: 20px;
+    padding: 0 0 5px 0;
+}
+
+.subtitulo-sistema {
+    color: rgb(4, 29, 255);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 15px 0;
 }
 
 h2 {
@@ -47,6 +54,12 @@ h2 {
     font-weight: 600; 
     margin: 10px 0;
     padding: 10px;
+}
+
+.contenedor-titulos {
+overflow: hidden; /* Evita que choque con el float del logo */
+    text-align: center;
+    padding: 10px 0;
 }
 
 .servicios-li {

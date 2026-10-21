@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";      // Usuario por defecto de XAMPP
 $pass = "";          // Contraseña por defecto de XAMPP (vacía)
-$db   = "hospital";  // Nombre de tu base de datos en phpMyAdmin
+$db   = "hospital";  // Nombre de base de datos en phpMyAdmin
 
 $con = new mysqli($host, $user, $pass, $db);
 
