@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.I.G.S.M. - Expedientes</title>
+    <title>Cargar Documento</title>
     <link rel="stylesheet" href="../css/Documentos.css">
 </head>
 <body>
@@ -11,43 +11,43 @@
         <h1>Cargar Documento</h1>
     </header>
 
-    <form class="SubidaDocumento" action="" method="POST" enctype="multipart/form-data">
+    <form class="SubidaDocumento" id="formularioCarga" enctype="multipart/form-data">
         <p>Nombre del Documento (Título)</p>
-        <input class="Documento_input" type="text" name="titulo" placeholder="Nombre de Documento" required>
+        <input class="Documento_input" type="text" id="titulo" name="titulo" placeholder="Nombre de Documento" required>
 
         <p>Subir Documento (Archivo)</p>
-        <input class="Documento_input" type="file" name="archivo_url" required>
+        <input class="Documento_input" type="file" id="archivo_url" name="archivo_url" required>
 
         <p>Descripción</p>
-        <textarea class="Documento_input" name="descripcion" placeholder="Descripción del documento" rows="3"></textarea>
+        <textarea class="Documento_input" id="descripcion" name="descripcion" placeholder="Descripción del documento" rows="3"></textarea>
 
         <p>Estado</p>
-        <input class="Documento_input" type="text" name="estado" placeholder="Estado del documento">
+        <input class="Documento_input" type="text" id="estado" name="estado" placeholder="Estado del documento">
 
         <p>Ingresar Fecha de Carga</p>
-        <input class="Documento_input" type="date" name="fecha_carga" required>
+        <input class="Documento_input" type="date" id="fecha_carga" name="fecha_carga" required>
 
         <p>Cédula de Identidad (Paciente)</p>
-        <input class="Documento_input" type="text" name="cedula" placeholder="Cédula del paciente" required>
+        <input class="Documento_input" type="text" id="cedula" name="cedula" placeholder="Cédula del paciente" required>
 
         <p>Cédula del Funcionario</p>
-        <input class="Documento_input" type="text" name="ci_funcionario" placeholder="Cédula del funcionario" required>
+        <input class="Documento_input" type="text" id="ci_funcionario" name="ci_funcionario" placeholder="Cédula del funcionario" required>
 
-        <input class="Documento_input" type="submit" value="Cargar Documento">
+        <input class="Documento_input" type="submit" id="subir" value="Cargar Documento">
         <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
     </form>
 
     <div id="mensaje"></div>
 
     <section id="obtener">
-        <button id="boton">Obtener Documento</button>
+        <button id="boton">Obtener Documentos</button>
         <select name="listaDoc" id="listaDoc">
-            <!-- Opciones cargadas dinámicamente -->
-
-
-
+            <option value="">Seleccione un documento...</option>
         </select>
     </section>
+
+    <!-- Vista previa (opcional) -->
+    <iframe id="previsualizacion" style="width: 100%; height: 400px; display: none; margin-top: 20px;"></iframe>
 
     <script src="../js/cargar.js"></script>
 </body>

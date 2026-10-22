@@ -1,62 +1,68 @@
-const nombreDocumento = document.getElementById("nombreDocumento");
-const archivo = document.getElementById("documento");
-const subir = document.getElementById("subir");
-const mensaje = document.getElementById("mensaje");
-const boton = document.getElementById("boton");
-
-subir.addEventListener("click",  async (e) => {
-    e.preventDefault();
-
-    let doc = new FormData();
-    doc.append("nombreDocumento", nombreDocumento.value);
-    doc.append("documento", archivo.files[0]);
-    
-    let respuesta = await fetch("../php/documento.php", {
-        method: "POST",
-        body: doc
-    });
-
-    let mensaje = await respuesta.json();
-    
-    if (mensaje.exito) {
-        alert("Archivo Guardado Correctamente");
-        document.GetElementByID("formularioCarga").reset();
-    }else{
-        alert(mensaje.mensaje);
-    }
-    })
-
-    boton.addEventListener("click", async () => {
-let dato = await fetch("../php/documento.php");
-let documentos = await dato.json();
-
-const listaDocumentos = document.getElementById("listaDocumentos");
-listaDocumentos.name = "nombreDocumento";
-
-listaDocumentos.innerHTML = "";
-
-console.log("Documentos: ", documentos);
-console.log("Primer Elemento: ", documentos[0]);
-console.log("Tipo de nombre: ", typeof documentos[0].nombreDocumento);
-
-documentos.forEach((documento) => {
-    let option = document.createElement("option");
-    option.textContent = documento.nombreDocumento;
-    option.value = documento.nombreDocumento;
-
-    listaDocumentos.appendChild(option);
-    });
-
+document.addEventListener("DOMContentLoaded", () => {
+    const formulario = document.getElementById("formularioCarga");
+    const mensajeDiv = document.getElementById("mensaje");
+    const botonObtener = document.getElementById("boton");
+    const listaDoc = document.getElementById("listaDoc");
     const preview = document.getElementById("previsualizacion");
 
-    ListaDocumentos.addEventListener("change", function ()  {
-        let id = this.value;
-        let documentoSeleccionado = documentos.find(documento => documento.nombreDocumento === id);
+    // Guardar Documento (POST)
+    formulario.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-        if (documentoSeleccionado) {
-            prev.src = documentoSeleccionado.ruta;
+        const formData = new FormData(formulario);
 
+        try {
+            const respuesta = await fetch("../php/documento.php", {
+                method: "POST",
+                body: formData
+            });
+
+            const resultado = await respuesta.json();
+
+            if (resultado.exito) {
+                alert("Archivo guardado correctamente.");
+                formulario.reset();
+            } else {
+                alert("Error: " + resultado.mensaje);
+            }
+        } catch (error) {
+            console.error("Error al procesar la solicitud:", error);
+            alert("Ocurrió un error inesperado al subir el documento.");
         }
-    })
-})
+    });
 
+    // Obtener Documentos (GET)
+    botonObtener.addEventListener("click", async () => {
+        try {
+            const respuesta = await fetch("../php/documento.php");
+            const documentos = await respuesta.json();
+
+            listaDoc.innerHTML = '<option value="">Seleccione un documento...</option>';
+
+            if (Array.isArray(documentos) && documentos.length > 0) {
+                documentos.forEach((documento) => {
+                    const option = document.createElement("option");
+                    option.value = documento.archivo_url;
+                    option.textContent = documento.titulo;
+                    listaDoc.appendChild(option);
+                });
+            } else {
+                alert("No se encontraron documentos registrados.");
+            }
+
+            // Manejador para previsualizar al cambiar la selección
+            listaDoc.onchange = function () {
+                if (this.value) {
+                    preview.src = "../" + this.value;
+                    preview.style.display = "block";
+                } else {
+                    preview.style.display = "none";
+                }
+            };
+
+        } catch (error) {
+            console.error("Error al cargar la lista de documentos:", error);
+            alert("No se pudo obtener la lista de documentos.");
+        }
+    });
+});
