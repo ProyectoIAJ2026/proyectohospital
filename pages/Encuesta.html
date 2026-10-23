@@ -3,60 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.I.G.S.M. - Encuesta de Satisfacción</title>
-    <!-- Hoja de estilos -->
+    <title>Encuesta de Satisfacción - S.I.G.S.M.</title>
+    <!-- Tus estilos CSS -->
     <link rel="stylesheet" href="../css/Encuesta.css">
 </head>
 <body>
 
-    <a href="../index.html" class="box-inicio" title="Enlace a inicio">Regresar al inicio</a>
+    <h2>Encuesta de Satisfacción del Paciente</h2>
 
-    <h2 title="Título de la encuesta">Encuesta de Satisfacción</h2>
-    <p>Tu opinión nos ayuda a mejorar la atención.</p>
-
+    <!-- Contenedor con la clase 'box' para aplicar el diseño de tarjeta con bordes y fondo -->
     <div class="box">
+        
+        <!-- El formulario con su ID para el script asíncrono -->
+        <form action="../php/Encuesta.php" method="POST" id="formEncuesta">
+            
+            <!-- Campo oculto para el ID de la encuesta -->
+            <input type="hidden" name="id_encuesta" value="1">
 
-        <!-- Formulario configurado con método POST hacia Encuesta.php -->
-        <form action="../php/Encuesta.php" method="POST">
-
-            <!-- Email Opcional -->
-            <label for="email">Email (opcional):</label>
-            <input type="email" id="email" name="email" class="box-input" placeholder="Ingrese email">
-
-            <!-- Pregunta 1 -->
-            <label for="atencion">1. ¿Cómo califica la atención recibida?</label>
-            <select id="atencion" name="atencion" class="box-input" required>
-                <option value="" disabled selected>Selecciona una opción</option>
-                <option value="Excelente">Excelente</option>
-                <option value="Buena">Buena</option>
-                <option value="Regular">Regular</option>
-                <option value="Mala">Mala</option>
-            </select>
-
-            <!-- Pregunta 2 -->
-            <label>2. ¿El tiempo de espera fue adecuado?</label>
-            <div class="radio">
-                <label><input type="radio" name="tiempo" value="Sí" required> Sí</label>
-                <label><input type="radio" name="tiempo" value="No"> No</label>
+            <div class="form-group">
+                <label for="email">Correo electrónico (opcional para vincular su registro):</label>
+                <input type="email" id="email" name="email" class="box-input" placeholder="correo@ejemplo.com">
             </div>
 
-            <!-- Pregunta 3 -->
-            <label>3. ¿Cómo accedió a esta encuesta?</label>
-            <div class="radio">
-                <label><input type="radio" name="acceso" value="Código QR" required> Código QR impreso</label>
-                <label><input type="radio" name="acceso" value="Sitio Web"> Portal del sitio web</label>
+            <div class="form-group">
+                <label for="atencion">1. ¿Cómo califica la atención recibida?:</label>
+                <select id="atencion" name="atencion" class="box-input" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="Excelente">Excelente</option>
+                    <option value="Buena">Buena</option>
+                    <option value="Regular">Regular</option>
+                    <option value="Mala">Mala</option>
+                </select>
             </div>
 
-            <!-- Pregunta 4 -->
-            <label for="comentarios">4. Comentarios o sugerencias:</label>
-            <textarea id="comentarios" name="comentarios" class="box-input" rows="3" placeholder="Escribe aquí..." required></textarea>
+            <div class="form-group">
+                <label for="tiempo">2. ¿El tiempo de espera fue adecuado?:</label>
+                <select id="tiempo" name="tiempo" class="box-input" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
 
-            <!-- Botón de Envío -->
+            <div class="form-group">
+                <label for="acceso">3. ¿Cómo accedió a esta encuesta?:</label>
+                <select id="acceso" name="acceso" class="box-input" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="Código QR impreso">Código QR impreso</option>
+                    <option value="Portal del sitio web">Portal del sitio web</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="comentarios">4. Comentarios o sugerencias:</label>
+                <textarea id="comentarios" name="comentarios" class="box-input" rows="4" required placeholder="Escriba sus comentarios aquí..."></textarea>
+            </div>
+
+            <!-- Botón con la clase 'box-submit' sincronizada con tu CSS -->
             <button type="submit" class="box-submit">Enviar encuesta</button>
         </form>
     </div>
 
-    <!-- Script de control JS -->
+    <!-- Vinculación del archivo JavaScript asíncrono -->
     <script src="../JavaScript/Encuesta.js"></script>
 </body>
 </html>
