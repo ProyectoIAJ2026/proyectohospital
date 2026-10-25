@@ -6,16 +6,24 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_M
 }).addTo(mapa);
 
 // DOM
-const departamento = document.getElementById('departamento');
+const departamentoOrigen = document.getElementById('departamento_origen');
+const departamentoDestino = document.getElementById('departamento_destino');
 const dirOrigen = document.getElementById('origen');
 const dirDestino = document.getElementById('destino');
 
 const ubicarOrigenBtn = document.getElementById('ubicarOrigen');
 const ubicarDestinoBtn = document.getElementById('ubicarDestino');
+const ubicarGpsBtn = document.getElementById('btnGpsOrigen');
 const formTraslado = document.getElementById('formTraslado');
 const formAmbulancia = document.getElementById('formAmbulancia');
+const btnSimular = document.getElementById('btnSimularRecorrido');
 
-// Iconos
+// --- VARIABLES GLOBALES PARA LA ANIMACIÓN ---
+let rutaCoordenadas = [];     // Almacenará los puntos [lat, lng] de la ruta calculada
+let marcadorAnimacion = null; // Instancia del marcador animado de la ambulancia
+let animacionTimer = null;    // Control del temporizador de movimiento
+
+// Iconos (Cada uno con su imagen correcta)
 const iconoOrigen = L.icon({
     iconUrl: '../img/Ambulancia.png',
     iconSize: [38, 45],
@@ -28,7 +36,7 @@ const iconoDestino = L.icon({
     iconAnchor: [17, 45]
 });
 
-// Marcadores iniciales
+// Marcadores iniciales (Origen = Ambulancia, Destino = Pin rojo)
 const marcadorOrigen = L.marker([-32.3214, -58.0756], {
     draggable: true,
     icon: iconoOrigen
@@ -69,23 +77,80 @@ async function calcularYMostrarRuta() {
 
             const coordenadasDibujo = route.geometry.coordinates[0].map(([lon, lat]) => [lat, lon]);
 
+            // Guardamos las coordenadas globalmente para la simulación
+            rutaCoordenadas = coordenadasDibujo;
+
             capaRuta = L.polyline(coordenadasDibujo, { color: 'blue', weight: 5 }).addTo(mapa);
 
             mapa.fitBounds(capaRuta.getBounds(), { padding: [50, 50] });
+
+            // Habilitar el botón de simulación una vez que la ruta está lista
+            if (btnSimular) {
+                btnSimular.disabled = false;
+                btnSimular.style.backgroundColor = '#28a745'; // Color verde de éxito
+                btnSimular.style.cursor = 'pointer';
+            }
         }
     } catch (error) {
         console.error('Error al calcular la ruta:', error);
     }
 }
 
-// --- FUNCIÓN 2: GEOCODIFICACIÓN (BUSCAR DIRECCIÓN) ---
-async function buscarUbicacion(direccionTexto, marcadorTarget) {
-    if (!direccionTexto || !departamento.value) {
+// --- FUNCIÓN DE ANIMACIÓN DE LA AMBULANCIA ---
+function iniciarSimulacionAmbulancia() {
+    if (!rutaCoordenadas || rutaCoordenadas.length === 0) return;
+
+    // Si hay una simulación previa corriendo, la detenemos
+    if (animacionTimer) {
+        clearInterval(animacionTimer);
+        animacionTimer = null;
+    }
+
+    // 1. Ocultamos temporalmente el marcador estático de origen para que la unidad "salga"
+    if (mapa.hasLayer(marcadorOrigen)) {
+        mapa.removeLayer(marcadorOrigen);
+    }
+
+    // Nota: Dejamos intacto el `marcadorDestino` (pin rojo) para que permanezca visible en el mapa
+
+    // Si el marcador animado no existe, lo creamos en el punto inicial
+    if (!marcadorAnimacion) {
+        marcadorAnimacion = L.marker(rutaCoordenadas[0], { icon: iconoOrigen }).addTo(mapa);
+    } else {
+        marcadorAnimacion.setLatLng(rutaCoordenadas[0]);
+        if (!mapa.hasLayer(marcadorAnimacion)) {
+            marcadorAnimacion.addTo(mapa);
+        }
+    }
+
+    let pasoActual = 0;
+    const totalPasos = rutaCoordenadas.length;
+
+    // Ejecutamos el movimiento paso a paso
+    animacionTimer = setInterval(() => {
+        if (pasoActual < totalPasos) {
+            marcadorAnimacion.setLatLng(rutaCoordenadas[pasoActual]);
+            pasoActual++;
+        } else {
+            // Fin del recorrido: la ambulancia llegó a destino
+            clearInterval(animacionTimer);
+            animacionTimer = null;
+        }
+    }, 50); // Velocidad del movimiento (menor número = más rápido)
+}
+
+// --- FUNCIÓN 2: GEOCODIFICACIÓN (LIMPIA TEXTO Y BUSCA EN EL MAPA) ---
+async function buscarUbicacion(direccionTexto, marcadorTarget, selectDepto) {
+    if (!direccionTexto || !selectDepto.value) {
         alert('Por favor ingrese la dirección y seleccione un departamento.');
         return;
     }
 
-    const consulta = `${direccionTexto}, ${departamento.value}, Uruguay`;
+    let textoLimpio = direccionTexto
+        .replace(/Ubicación por defecto|Ubicación GPS|\(|\)/g, '')
+        .trim();
+
+    const consulta = `${textoLimpio}, ${selectDepto.value}, Uruguay`;
     const url = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(consulta)}&filter=countrycode:uy&lang=es&limit=1&format=json&apiKey=${apiKey}`;
 
     try {
@@ -94,6 +159,16 @@ async function buscarUbicacion(direccionTexto, marcadorTarget) {
 
         if (dato.results && dato.results.length > 0) {
             const resultado = dato.results[0];
+            
+            // Si el origen estaba oculto por la simulación, nos aseguramos de mostrarlo
+            if (marcadorTarget === marcadorOrigen && !mapa.hasLayer(marcadorOrigen)) {
+                marcadorOrigen.addTo(mapa);
+            }
+            // Nos aseguramos de que el destino también esté visible
+            if (marcadorTarget === marcadorDestino && !mapa.hasLayer(marcadorDestino)) {
+                marcadorDestino.addTo(mapa);
+            }
+
             marcadorTarget.setLatLng([resultado.lat, resultado.lon]);
 
             await calcularYMostrarRuta();
@@ -106,9 +181,72 @@ async function buscarUbicacion(direccionTexto, marcadorTarget) {
     }
 }
 
-// Eventos de los botones de búsqueda en el mapa
-ubicarOrigenBtn.addEventListener('click', () => buscarUbicacion(dirOrigen.value, marcadorOrigen));
-ubicarDestinoBtn.addEventListener('click', () => buscarUbicacion(dirDestino.value, marcadorDestino));
+// --- FUNCIÓN 3: OBTENER UBICACIÓN GPS NATIVA CON RESPALDO DE EMERGENCIA ---
+function obtenerUbicacionGps() {
+    if (!navigator.geolocation) {
+        alert('Tu navegador no soporta geolocalización.');
+        return;
+    }
+
+    dirOrigen.value = "Obteniendo ubicación GPS...";
+
+    navigator.geolocation.getCurrentPosition(
+        async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            if (!mapa.hasLayer(marcadorOrigen)) {
+                marcadorOrigen.addTo(mapa);
+            }
+
+            marcadorOrigen.setLatLng([lat, lon]);
+            mapa.setView([lat, lon], 16);
+
+            dirOrigen.value = `Ubicación GPS (${lat.toFixed(4)}, ${lon.toFixed(4)})`;
+
+            await calcularYMostrarRuta();
+            
+            console.log(`GPS obtenido con éxito -> Lat: ${lat}, Lon: ${lon}`);
+        },
+        (error) => {
+            console.warn('Aviso: No se pudo obtener la ubicación automática del navegador, aplicando ubicación por defecto de Paysandú:', error);
+            
+            const latDefault = -32.3214;
+            const lonDefault = -58.0756;
+
+            if (!mapa.hasLayer(marcadorOrigen)) {
+                marcadorOrigen.addTo(mapa);
+            }
+
+            marcadorOrigen.setLatLng([latDefault, lonDefault]);
+            mapa.setView([latDefault, lonDefault], 16);
+            dirOrigen.value = `Ubicación por defecto (${latDefault}, ${lonDefault})`;
+            
+            calcularYMostrarRuta();
+        },
+        { 
+            enableHighAccuracy: false, 
+            timeout: 20000,            
+            maximumAge: 60000          
+        }
+    );
+}
+
+// Eventos de los botones de búsqueda (Origen y Destino simétricos)
+ubicarOrigenBtn.addEventListener('click', () => buscarUbicacion(dirOrigen.value, marcadorOrigen, departamentoOrigen));
+ubicarDestinoBtn.addEventListener('click', () => buscarUbicacion(dirDestino.value, marcadorDestino, departamentoDestino));
+
+// Evento para el botón de GPS
+if (ubicarGpsBtn) {
+    ubicarGpsBtn.addEventListener('click', obtenerUbicacionGps);
+}
+
+// Evento para el botón de simulación
+if (btnSimular) {
+    btnSimular.addEventListener('click', () => {
+        iniciarSimulacionAmbulancia();
+    });
+}
 
 marcadorOrigen.on('dragend', calcularYMostrarRuta);
 marcadorDestino.on('dragend', calcularYMostrarRuta);
@@ -141,7 +279,7 @@ if (formTraslado) {
     });
 }
 
-// --- ENVÍO DEL FORMULARIO DE AMBULANCIAS (MOVIDO A TRASLADOS) ---
+// --- ENVÍO DEL FORMULARIO DE AMBULANCIAS ---
 if (formAmbulancia) {
     formAmbulancia.addEventListener('submit', async (e) => {
         e.preventDefault();

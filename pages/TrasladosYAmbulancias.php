@@ -33,7 +33,36 @@ require_once '../php/conexion.php';
                     <div class="campo-con-boton">
                         <input class="TrasladosAmbulancias-input" type="text" id="origen" name="origen" maxlength="255" placeholder="Ingrese origen" required>
                         <button type="button" class="btn-mapa" id="ubicarOrigen">Buscar origen</button>
+                        <!-- BOTÓN DE GPS INTEGRADO -->
+                        <button type="button" class="btn-mapa" id="btnGpsOrigen" style="background-color: #28a745;" title="Usar mi ubicación GPS actual">Mi GPS</button>
                     </div>
+                </div>
+
+                <!-- DEPARTAMENTO DE ORIGEN -->
+                <div>
+                    <label for="departamento_origen">Departamento de origen</label>
+                    <select class="TrasladosAmbulancias-select" id="departamento_origen" name="departamento" required>
+                        <option value="" disabled selected>Seleccione un departamento</option>
+                        <option value="Artigas">Artigas</option>
+                        <option value="Canelones">Canelones</option>
+                        <option value="Cerro Largo">Cerro Largo</option>
+                        <option value="Colonia">Colonia</option>
+                        <option value="Durazno">Durazno</option>
+                        <option value="Flores">Flores</option>
+                        <option value="Florida">Florida</option>
+                        <option value="Lavalleja">Lavalleja</option>
+                        <option value="Maldonado">Maldonado</option>
+                        <option value="Montevideo">Montevideo</option>
+                        <option value="Paysandú" selected>Paysandú</option>
+                        <option value="Río Negro">Río Negro</option>
+                        <option value="Rivera">Rivera</option>
+                        <option value="Rocha">Rocha</option>
+                        <option value="Salto">Salto</option>
+                        <option value="San José">San José</option>
+                        <option value="Soriano">Soriano</option>
+                        <option value="Tacuarembó">Tacuarembó</option>
+                        <option value="Treinta y Tres">Treinta y Tres</option>
+                    </select>
                 </div>
 
                 <!-- DESTINO -->
@@ -45,10 +74,10 @@ require_once '../php/conexion.php';
                     </div>
                 </div>
 
-                <!-- DEPARTAMENTO -->
+                <!-- DEPARTAMENTO DE DESTINO -->
                 <div>
-                    <label for="departamento">Departamento</label>
-                    <select class="TrasladosAmbulancias-select" id="departamento" name="departamento" required>
+                    <label for="departamento_destino">Departamento de destino</label>
+                    <select class="TrasladosAmbulancias-select" id="departamento_destino" name="departamento_destino">
                         <option value="" disabled selected>Seleccione un departamento</option>
                         <option value="Artigas">Artigas</option>
                         <option value="Canelones">Canelones</option>
@@ -106,7 +135,7 @@ require_once '../php/conexion.php';
                     <select class="TrasladosAmbulancias-select" id="ci_funcionario" name="ci_funcionario" required>
                         <option value="" disabled selected>Seleccione el operador</option>
                         <?php
-                        $queryFunc = $con->query("SELECT ci_funcionario, nombre, apellido, cargo FROM funcionario WHERE cargo = 'Operador Logístico'");
+                        $queryFunc = $con->query("SELECT ci_funcionario, nombre, apellido, cargo FROM funcionario WHERE cargo = 'Operador logístico'");
                         if ($queryFunc) {
                             while ($func = $queryFunc->fetch_assoc()) {
                                 echo '<option value="'.$func['ci_funcionario'].'">'.$func['ci_funcionario'].' - '.$func['nombre'].' '.$func['apellido'].' ('.$func['cargo'].')</option>';
@@ -188,9 +217,15 @@ require_once '../php/conexion.php';
             </form>
         </div>
 
-        <!-- COLUMNA DERECHA: MAPA -->
+        <!-- COLUMNA DERECHA: MAPA Y BOTÓN DE SIMULACIÓN -->
         <div class="bloque-mapa">
             <div id="visualizar"></div>
+            <!-- Botón para simular recorrido (inicialmente deshabilitado) -->
+            <div style="margin-top: 15px;">
+                <button type="button" id="btnSimularRecorrido" class="TrasladosAmbulancias-input TrasladosAmbulancias-submit" style="background-color: #6c757d; cursor: not-allowed;" disabled>
+                    🚑 Simular Recorrido de Ambulancia
+                </button>
+            </div>
         </div>
 
     </div>

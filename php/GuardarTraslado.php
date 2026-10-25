@@ -1,89 +1,83 @@
 <?php
-// 1. CONEXIÓN A LA BASE DE DATOS Y CONFIGURACIÓN
 require_once 'conexion.php';
 
-date_default_timezone_set('America/Montevideo');
+// Capturar los datos del formulario POST
+$origen               = trim($_POST['origen'] ?? '');
+$destino              = trim($_POST['destino'] ?? '');
+$hora_salida          = $_POST['hora_salida'] ?? null;
+$hora_llegada         = !empty($_POST['hora_llegada']) ? $_POST['hora_llegada'] : null;
+$acompaniante         = !empty($_POST['acompaniante']) ? trim($_POST['acompaniante']) : null;
+$estado               = $_POST['estado'] ?? 'Pendiente';
 
-// 2. VERIFICAR QUE LA SOLICITUD SEA POR POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo "Método de solicitud no permitido.";
-    exit();
+// Capturar origen y destino independientes
+$departamento_origen  = trim($_POST['departamento'] ?? ''); // Viene del select id="departamento_origen" con name="departamento"
+$departamento_destino = trim($_POST['departamento_destino'] ?? ''); // Viene del select id="departamento_destino" con name="departamento_destino"
+
+$ci_funcionario       = $_POST['ci_funcionario'] ?? null;
+$matricula            = $_POST['matricula'] ?? null;
+$ci_chofer            = $_POST['ci_chofer'] ?? null;
+
+// Validar campos obligatorios
+if (empty($origen) || empty($destino) || empty($hora_salida) || empty($departamento_origen) || empty($departamento_destino) || empty($ci_funcionario) || empty($matricula) || empty($ci_chofer)) {
+    echo "Por favor complete todos los campos obligatorios.";
+    exit;
 }
+
+// Iniciar transacción
+$con->begin_transaction();
 
 try {
-    // 3. CAPTURA Y LIMPIEZA DE LOS DATOS DEL FORMULARIO
-    $origen          = trim($_POST['origen'] ?? '');
-    $destino         = trim($_POST['destino'] ?? '');
-    $departamento    = trim($_POST['departamento'] ?? '');
-    $hora_salida     = $_POST['hora_salida'] ?? '';
-    $hora_llegada    = !empty($_POST['hora_llegada']) ? $_POST['hora_llegada'] : null;
-    $acompaniante    = !empty($_POST['acompaniante']) ? trim($_POST['acompaniante']) : null;
-    $estado          = $_POST['estado'] ?? 'Pendiente';
-    $ci_funcionario  = $_POST['ci_funcionario'] ?? '';
-    $matricula       = $_POST['matricula'] ?? '';
-    $ci_chofer       = $_POST['ci_chofer'] ?? '';
-
-    // Validar campos obligatorios
-    if (empty($origen) || empty($destino) || empty($departamento) || empty($hora_salida) || empty($ci_funcionario) || empty($matricula) || empty($ci_chofer)) {
-        echo "Por favor complete todos los campos obligatorios.";
-        exit();
-    }
-
-    // Iniciar transacción para asegurar que todas las operaciones se realicen correctamente
-    $con->begin_transaction();
-
-    // 4. CONSULTA PREPARADA PARA INSERTAR EL TRASLADO
-    $sql = "INSERT INTO traslados (origen, destino, hora_salida, hora_llegada, acompaniante, estado, departamento, ci_funcionario, matricula, ci_chofer) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $con->prepare($sql);
-
-    if (!$stmt) {
-        throw new Exception("Error en la preparación de la consulta: " . $con->error);
-    }
-
-    $stmt->bind_param(
-        "ssssssssss",
-        $origen,
-        $destino,
-        $hora_salida,
-        $hora_llegada,
-        $acompaniante,
-        $estado,
-        $departamento,
-        $ci_funcionario,
-        $matricula,
+    // 1. Insertar el registro de traslado con ambos departamentos
+    $sqlTraslado = "INSERT INTO traslados (origen, destino, hora_salida, hora_llegada, acompaniante, estado, departamento_origen, departamento_destino, ci_funcionario, matricula, ci_chofer) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    $stmtTraslado = $con->prepare($sqlTraslado);
+    
+    // 11 tipos string ("sssssssssss")
+    $stmtTraslado->bind_param(
+        "sssssssssss", 
+        $origen, 
+        $destino, 
+        $hora_salida, 
+        $hora_llegada, 
+        $acompaniante, 
+        $estado, 
+        $departamento_origen, 
+        $departamento_destino, 
+        $ci_funcionario, 
+        $matricula, 
         $ci_chofer
     );
-
-    if (!$stmt->execute()) {
-        throw new Exception("Error al registrar el traslado: " . $stmt->error);
+    
+    if (!$stmtTraslado->execute()) {
+        throw new Exception("Error al registrar el traslado: " . $stmtTraslado->error);
     }
 
-    // 5. ACTUALIZAR DISPONIBILIDAD DE AMBULANCIA Y CHOFER
-    // Marcamos la ambulancia como 'En traslado'
-    $stmtAmb = $con->prepare("UPDATE ambulancia SET disponibilidad_ambulancia = 'En traslado' WHERE matricula = ?");
-    $stmtAmb->bind_param("s", $matricula);
-    $stmtAmb->execute();
-    $stmtAmb->close();
+    // 2. Actualizar disponibilidad de la ambulancia
+    $sqlAmbulancia = "UPDATE ambulancia SET disponibilidad_ambulancia = 'En traslado' WHERE matricula = ?";
+    $stmtAmbulancia = $con->prepare($sqlAmbulancia);
+    $stmtAmbulancia->bind_param("s", $matricula);
+    if (!$stmtAmbulancia->execute()) {
+        throw new Exception("Error al actualizar la ambulancia: " . $stmtAmbulancia->error);
+    }
 
-    // Marcamos el chofer como 'No disponible'
-    $stmtChofer = $con->prepare("UPDATE chofer SET disponibilidad = 'No Disponible' WHERE ci_chofer = ?");
+    // 3. Actualizar disponibilidad del chofer
+    $sqlChofer = "UPDATE chofer SET disponibilidad = 'No Disponible' WHERE ci_chofer = ?";
+    $stmtChofer = $con->prepare($sqlChofer);
     $stmtChofer->bind_param("s", $ci_chofer);
-    $stmtChofer->execute();
-    $stmtChofer->close();
+    if (!$stmtChofer->execute()) {
+        throw new Exception("Error al actualizar la disponibilidad del chofer: " . $stmtChofer->error);
+    }
 
-    // Confirmar los cambios en la base de datos
+    // Confirmar cambios
     $con->commit();
-
     echo "ok";
 
-    $stmt->close();
-    $con->close();
-
 } catch (Exception $e) {
-    // Si algo falla, se deshacen los cambios
+    // Revertir en caso de error
     $con->rollback();
-    echo "Excepción capturada: " . $e->getMessage();
+    echo $e->getMessage();
 }
+
+$con->close();
 ?>
