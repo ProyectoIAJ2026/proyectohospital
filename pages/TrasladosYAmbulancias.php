@@ -1,3 +1,6 @@
+<?php
+require_once '../php/conexion.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -106,7 +109,7 @@
                         $queryFunc = $con->query("SELECT ci_funcionario, nombre, apellido, cargo FROM funcionario WHERE cargo = 'Operador Logístico'");
                         if ($queryFunc) {
                             while ($func = $queryFunc->fetch_assoc()) {
-                                echo '<option value="'.$func['ci_funcionario'].' - '.$func['ci_funcionario'].' - '.$func['nombre'].' '.$func['apellido'].' ('.$func['cargo'].')"></option>';
+                                echo '<option value="'.$func['ci_funcionario'].'">'.$func['ci_funcionario'].' - '.$func['nombre'].' '.$func['apellido'].' ('.$func['cargo'].')</option>';
                             }
                         }
                         ?>

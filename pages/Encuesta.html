@@ -9,7 +9,9 @@
 </head>
 <body>
 
-    <h2>Encuesta de Satisfacción del Paciente</h2>
+    <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
+
+    <h2>Encuesta de Satisfacción</h2>
 
     <!-- Contenedor con la clase 'box' para aplicar el diseño de tarjeta con bordes y fondo -->
     <div class="box">
@@ -21,12 +23,12 @@
             <input type="hidden" name="id_encuesta" value="1">
 
             <div class="form-group">
-                <label for="email">Correo electrónico (opcional para vincular su registro):</label>
+                <label for="email">Email (opcional para vincular su registro)</label>
                 <input type="email" id="email" name="email" class="box-input" placeholder="correo@ejemplo.com">
             </div>
 
             <div class="form-group">
-                <label for="atencion">1. ¿Cómo califica la atención recibida?:</label>
+                <label for="atencion">1. ¿Cómo califica la atención recibida?</label>
                 <select id="atencion" name="atencion" class="box-input" required>
                     <option value="">Seleccione una opción</option>
                     <option value="Excelente">Excelente</option>
@@ -37,7 +39,7 @@
             </div>
 
             <div class="form-group">
-                <label for="tiempo">2. ¿El tiempo de espera fue adecuado?:</label>
+                <label for="tiempo">2. ¿El tiempo de espera fue adecuado?</label>
                 <select id="tiempo" name="tiempo" class="box-input" required>
                     <option value="">Seleccione una opción</option>
                     <option value="Sí">Sí</option>
@@ -46,7 +48,7 @@
             </div>
 
             <div class="form-group">
-                <label for="acceso">3. ¿Cómo accedió a esta encuesta?:</label>
+                <label for="acceso">3. ¿Cómo accedió a esta encuesta?</label>
                 <select id="acceso" name="acceso" class="box-input" required>
                     <option value="">Seleccione una opción</option>
                     <option value="Código QR impreso">Código QR impreso</option>
@@ -55,7 +57,7 @@
             </div>
 
             <div class="form-group">
-                <label for="comentarios">4. Comentarios o sugerencias:</label>
+                <label for="comentarios">4. Comentarios o sugerencias</label>
                 <textarea id="comentarios" name="comentarios" class="box-input" rows="4" required placeholder="Escriba sus comentarios aquí..."></textarea>
             </div>
 
