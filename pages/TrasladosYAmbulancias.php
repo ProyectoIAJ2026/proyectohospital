@@ -213,7 +213,7 @@ require_once '../php/conexion.php';
                     <input class="TrasladosAmbulancias-input" type="date" id="ultimo_mantenimiento" name="ultimo_mantenimiento">
                 </div>
 
-                <input class="TrasladosAmbulancias-input TrasladosAmbulancias-submit" type="submit" value="Registrar ambulancia">
+                <input class="TrasladosAmbulancias-input TrasladosAmbulancias-submit" type="submit" value="Guardar ambulancia">
             </form>
         </div>
 

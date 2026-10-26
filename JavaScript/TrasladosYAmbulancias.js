@@ -1,5 +1,5 @@
-// Inicializar el mapa centrado en Paysandú
-const mapa = L.map('visualizar', { attributionControl: false }).setView([-32.3214, -58.0756], 15);
+// Inicializar el mapa centrado en el Hospital de Clínicas (Montevideo)
+const mapa = L.map('visualizar', { attributionControl: false }).setView([-34.8911, -56.1557], 15);
 
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 18
@@ -19,11 +19,11 @@ const formAmbulancia = document.getElementById('formAmbulancia');
 const btnSimular = document.getElementById('btnSimularRecorrido');
 
 // --- VARIABLES GLOBALES PARA LA ANIMACIÓN ---
-let rutaCoordenadas = [];     // Almacenará los puntos [lat, lng] de la ruta calculada
-let marcadorAnimacion = null; // Instancia del marcador animado de la ambulancia
-let animacionTimer = null;    // Control del temporizador de movimiento
+let rutaCoordenadas = [];     
+let marcadorAnimacion = null; 
+let animacionTimer = null;    
 
-// Iconos (Cada uno con su imagen correcta)
+// Iconos personalizados (Ambulancia y tu Marcador rojo guardado)
 const iconoOrigen = L.icon({
     iconUrl: '../img/Ambulancia.png',
     iconSize: [38, 45],
@@ -36,16 +36,18 @@ const iconoDestino = L.icon({
     iconAnchor: [17, 45]
 });
 
-// Marcadores iniciales (Origen = Ambulancia, Destino = Pin rojo)
-const marcadorOrigen = L.marker([-32.3214, -58.0756], {
+// Marcadores iniciales en Montevideo:
+// 1. Origen: Ambulancia en el Hospital de Clínicas (Por defecto)
+const marcadorOrigen = L.marker([-34.8911, -56.1557], { 
     draggable: true,
     icon: iconoOrigen
-}).addTo(mapa).bindPopup("Origen del traslado");
+}).addTo(mapa).bindPopup("Origen del traslado (Hospital de Clínicas)");
 
-const marcadorDestino = L.marker([-32.3150, -58.0800], {
+// 2. Destino: Pin rojo personalizado ubicado en Cornelio Cantera 2749
+const marcadorDestino = L.marker([-34.8868, -56.1575], { 
     draggable: true,
     icon: iconoDestino
-}).addTo(mapa).bindPopup("Destino del traslado");
+}).addTo(mapa).bindPopup("Destino del traslado (Cornelio Cantera 2749)");
 
 // Variable global para almacenar la capa de la ruta actual y evitar que se encimen
 let capaRuta = null;
@@ -77,17 +79,15 @@ async function calcularYMostrarRuta() {
 
             const coordenadasDibujo = route.geometry.coordinates[0].map(([lon, lat]) => [lat, lon]);
 
-            // Guardamos las coordenadas globalmente para la simulación
             rutaCoordenadas = coordenadasDibujo;
 
             capaRuta = L.polyline(coordenadasDibujo, { color: 'blue', weight: 5 }).addTo(mapa);
 
             mapa.fitBounds(capaRuta.getBounds(), { padding: [50, 50] });
 
-            // Habilitar el botón de simulación una vez que la ruta está lista
             if (btnSimular) {
                 btnSimular.disabled = false;
-                btnSimular.style.backgroundColor = '#28a745'; // Color verde de éxito
+                btnSimular.style.backgroundColor = '#28a745'; 
                 btnSimular.style.cursor = 'pointer';
             }
         }
@@ -96,24 +96,22 @@ async function calcularYMostrarRuta() {
     }
 }
 
+// Ejecutamos el cálculo de la ruta automáticamente al cargar la página
+calcularYMostrarRuta();
+
 // --- FUNCIÓN DE ANIMACIÓN DE LA AMBULANCIA ---
 function iniciarSimulacionAmbulancia() {
     if (!rutaCoordenadas || rutaCoordenadas.length === 0) return;
 
-    // Si hay una simulación previa corriendo, la detenemos
     if (animacionTimer) {
         clearInterval(animacionTimer);
         animacionTimer = null;
     }
 
-    // 1. Ocultamos temporalmente el marcador estático de origen para que la unidad "salga"
     if (mapa.hasLayer(marcadorOrigen)) {
         mapa.removeLayer(marcadorOrigen);
     }
 
-    // Nota: Dejamos intacto el `marcadorDestino` (pin rojo) para que permanezca visible en el mapa
-
-    // Si el marcador animado no existe, lo creamos en el punto inicial
     if (!marcadorAnimacion) {
         marcadorAnimacion = L.marker(rutaCoordenadas[0], { icon: iconoOrigen }).addTo(mapa);
     } else {
@@ -126,20 +124,18 @@ function iniciarSimulacionAmbulancia() {
     let pasoActual = 0;
     const totalPasos = rutaCoordenadas.length;
 
-    // Ejecutamos el movimiento paso a paso
     animacionTimer = setInterval(() => {
         if (pasoActual < totalPasos) {
             marcadorAnimacion.setLatLng(rutaCoordenadas[pasoActual]);
             pasoActual++;
         } else {
-            // Fin del recorrido: la ambulancia llegó a destino
             clearInterval(animacionTimer);
             animacionTimer = null;
         }
-    }, 50); // Velocidad del movimiento (menor número = más rápido)
+    }, 50); 
 }
 
-// --- FUNCIÓN 2: GEOCODIFICACIÓN (LIMPIA TEXTO Y BUSCA EN EL MAPA) ---
+// --- FUNCIÓN 2: GEOCODIFICACIÓN ---
 async function buscarUbicacion(direccionTexto, marcadorTarget, selectDepto) {
     if (!direccionTexto || !selectDepto.value) {
         alert('Por favor ingrese la dirección y seleccione un departamento.');
@@ -160,11 +156,9 @@ async function buscarUbicacion(direccionTexto, marcadorTarget, selectDepto) {
         if (dato.results && dato.results.length > 0) {
             const resultado = dato.results[0];
             
-            // Si el origen estaba oculto por la simulación, nos aseguramos de mostrarlo
             if (marcadorTarget === marcadorOrigen && !mapa.hasLayer(marcadorOrigen)) {
                 marcadorOrigen.addTo(mapa);
             }
-            // Nos aseguramos de que el destino también esté visible
             if (marcadorTarget === marcadorDestino && !mapa.hasLayer(marcadorDestino)) {
                 marcadorDestino.addTo(mapa);
             }
@@ -181,7 +175,7 @@ async function buscarUbicacion(direccionTexto, marcadorTarget, selectDepto) {
     }
 }
 
-// --- FUNCIÓN 3: OBTENER UBICACIÓN GPS NATIVA CON RESPALDO DE EMERGENCIA ---
+// --- FUNCIÓN 3: OBTENER UBICACIÓN GPS NATIVA CON RESPALDO ---
 function obtenerUbicacionGps() {
     if (!navigator.geolocation) {
         alert('Tu navegador no soporta geolocalización.');
@@ -200,27 +194,25 @@ function obtenerUbicacionGps() {
             }
 
             marcadorOrigen.setLatLng([lat, lon]);
-            mapa.setView([lat, lon], 16);
+            mapa.setView([lat, lon], 15);
 
             dirOrigen.value = `Ubicación GPS (${lat.toFixed(4)}, ${lon.toFixed(4)})`;
 
             await calcularYMostrarRuta();
-            
-            console.log(`GPS obtenido con éxito -> Lat: ${lat}, Lon: ${lon}`);
         },
         (error) => {
-            console.warn('Aviso: No se pudo obtener la ubicación automática del navegador, aplicando ubicación por defecto de Paysandú:', error);
+            console.warn('Aviso: No se pudo obtener la ubicación automática, aplicando Hospital de Clínicas por defecto:', error);
             
-            const latDefault = -32.3214;
-            const lonDefault = -58.0756;
+            const latDefault = -34.8911;
+            const lonDefault = -56.1557;
 
             if (!mapa.hasLayer(marcadorOrigen)) {
                 marcadorOrigen.addTo(mapa);
             }
 
             marcadorOrigen.setLatLng([latDefault, lonDefault]);
-            mapa.setView([latDefault, lonDefault], 16);
-            dirOrigen.value = `Ubicación por defecto (${latDefault}, ${lonDefault})`;
+            mapa.setView([latDefault, lonDefault], 15);
+            dirOrigen.value = `Hospital de Clínicas (${latDefault}, ${lonDefault})`;
             
             calcularYMostrarRuta();
         },
@@ -232,16 +224,14 @@ function obtenerUbicacionGps() {
     );
 }
 
-// Eventos de los botones de búsqueda (Origen y Destino simétricos)
+// Eventos
 ubicarOrigenBtn.addEventListener('click', () => buscarUbicacion(dirOrigen.value, marcadorOrigen, departamentoOrigen));
 ubicarDestinoBtn.addEventListener('click', () => buscarUbicacion(dirDestino.value, marcadorDestino, departamentoDestino));
 
-// Evento para el botón de GPS
 if (ubicarGpsBtn) {
     ubicarGpsBtn.addEventListener('click', obtenerUbicacionGps);
 }
 
-// Evento para el botón de simulación
 if (btnSimular) {
     btnSimular.addEventListener('click', () => {
         iniciarSimulacionAmbulancia();
