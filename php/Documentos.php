@@ -58,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Crear directorio si no existe
-    $directorio = _DIR_ . "/archivos/";
+    // Corrección crítica: Uso de __DIR__ con doble guion bajo
+    $directorio = __DIR__ . "/archivos/";
     if (!is_dir($directorio)) {
         if (!mkdir($directorio, 0777, true)) {
             echo json_encode([
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ruta_bd = "php/archivos/" . $nombre_unico;
 
     if (move_uploaded_file($archivo['tmp_name'], $ruta_completa)) {
-        $codigo_qr = "QR_" . $nombre_unico; // Marcador o cadena para el QR
+        $codigo_qr = "QR_" . $nombre_unico;
 
         $stmt = $con->prepare("INSERT INTO documento (titulo, archivo_url, descripcion, estado, codigo_qr, fecha_carga, ci_funcionario, cedula) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         

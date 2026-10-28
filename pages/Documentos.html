@@ -3,52 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cargar Documento</title>
+    <title>S.I.G.S.M - Cargar Documento</title>
     <link rel="stylesheet" href="../css/Documentos.css">
 </head>
 <body>
-    <header>
-        <h1>Cargar Documento</h1>
-    </header>
 
-    <form class="SubidaDocumento" id="formularioCarga" enctype="multipart/form-data">
-        <p>Nombre del Documento (Título)</p>
-        <input class="Documento_input" type="text" id="titulo" name="titulo" placeholder="Nombre de Documento" required>
+    <h2>Cargar Documento</h2>
 
-        <p>Subir Documento (Archivo)</p>
-        <input class="Documento_input" type="file" id="archivo_url" name="archivo_url" required>
+    <form class="box" id="formularioCarga" method="POST" enctype="multipart/form-data">
+        <label for="titulo">Nombre del Documento (Título)</label>
+        <input class="box-input" type="text" id="titulo" name="titulo" placeholder="Nombre de Documento" required>
 
-        <p>Descripción</p>
-        <textarea class="Documento_input" id="descripcion" name="descripcion" placeholder="Descripción del documento" rows="3"></textarea>
+        <label for="archivo_url">Subir Documento (Archivo)</label>
+        <input class="box-input" type="file" id="archivo_url" name="archivo_url" required>
 
-        <p>Estado</p>
-        <input class="Documento_input" type="text" id="estado" name="estado" placeholder="Estado del documento">
+        <label for="descripcion">Descripción</label>
+        <textarea class="box-input" id="descripcion" name="descripcion" placeholder="Descripción del documento" rows="3"></textarea>
 
-        <p>Ingresar Fecha de Carga</p>
-        <input class="Documento_input" type="date" id="fecha_carga" name="fecha_carga" required>
+        <label for="estado">Estado</label>
+        <input class="box-input" type="text" id="estado" name="estado" placeholder="Estado del documento">
 
-        <p>Cédula de Identidad (Paciente)</p>
-        <input class="Documento_input" type="text" id="cedula" name="cedula" placeholder="Cédula del paciente" required>
+        <label for="fecha_carga">Ingresar Fecha de Carga</label>
+        <input class="box-input" type="date" id="fecha_carga" name="fecha_carga" required>
 
-        <p>Cédula del Funcionario</p>
-        <input class="Documento_input" type="text" id="ci_funcionario" name="ci_funcionario" placeholder="Cédula del funcionario" required>
+        <label for="cedula">Cédula de Identidad (Paciente)</label>
+        <input class="box-input" type="text" id="cedula" name="cedula" placeholder="Cédula del paciente">
 
-        <input class="Documento_input" type="submit" id="subir" value="Cargar Documento">
+        <label for="ci_funcionario">Cédula del Funcionario</label>
+        <input class="box-input" type="text" id="ci_funcionario" name="ci_funcionario" placeholder="Cédula del funcionario" required>
+
+        <button type="submit" id="subir" class="box-submit">Cargar Documento</button>
         <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
     </form>
 
     <div id="mensaje"></div>
 
-    <section id="obtener">
-        <button id="boton">Obtener Documentos</button>
-        <select name="listaDoc" id="listaDoc">
+    <div class="box" id="obtener" style="text-align: center;">
+        <button id="boton" class="box-submit" style="margin-top: 0;">Obtener Documentos</button>
+        <select name="listaDoc" id="listaDoc" class="box-input">
             <option value="">Seleccione un documento...</option>
         </select>
-    </section>
+    </div>
 
-    <!-- Vista previa (opcional) -->
-    <iframe id="previsualizacion" style="width: 100%; height: 400px; display: none; margin-top: 20px;"></iframe>
+    <!-- Contenedor para mostrar la imagen del Código QR generado -->
+    <div class="box" id="contenedorQR" style="display: none; text-align: center;">
+        <p>Código QR del Documento:</p>
+        <img id="imagenQR" src="" alt="Código QR del documento" style="width: 150px; height: 150px; border: 1px solid #ccc; padding: 5px; background: white; border-radius: 10px; margin-top: 10px;">
+    </div>
 
-    <script src="../js/cargar.js"></script>
+    <!-- Vista previa -->
+    <iframe id="previsualizacion" style="width: 100%; max-width: 450px; height: 400px; display: none; margin: 10px auto; border-radius: 15px; border: 5px solid rgb(0, 97, 177); box-sizing: border-box; display: block;"></iframe>
+    
+    <script src="../JavaScript/Documentos.js"></script>
 </body>
 </html>

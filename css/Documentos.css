@@ -1,164 +1,121 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 body {
-    background-color: #f4f7fc;
-    color: #1a2b4c;
-    padding: 30px 20px;
-    max-width: 550px;
-    margin: 0 auto;
-}
-
-/* Títulos */
-h2, header h1 {
-    color: #0000ff; /* Azul principal de la imagen */
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
+    background-color: rgb(252, 252, 252);
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px;
+    margin: 0;
 }
 
 h2 {
-    font-size: 1.8rem;
-}
-
-header h1 {
-    font-size: 1.5rem;
-    margin-top: 10px;
-}
-
-/* Formulario principal */
-.SubidaDocumento {
-    background-color: #ffffff;
-    padding: 25px 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-top: 5px solid #00bcff; /* Borde superior en azul cian */
-}
-
-/* Etiquetas de texto del formulario (<p>) */
-.SubidaDocumento p {
-    color: #0000d6;
-    font-weight: bold;
-    font-size: 0.95rem;
-    margin-top: 5px;
-}
-
-/* Todos los inputs del formulario y textarea */
-.Documento_input {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid #b3d1ff;
-    border-radius: 8px;
-    background-color: #e2eeff; /* Azul pastel claro */
-    color: #00008b;
-    font-size: 0.95rem;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-/* Soporte específico para textarea */
-textarea.Documento_input {
-    resize: vertical;
-    min-height: 80px;
-}
-
-/* Soporte estético para input file */
-input[type="file"].Documento_input {
-    padding: 8px;
-    cursor: pointer;
-}
-
-.Documento_input:focus {
-    border-color: #00bcff;
-    background-color: #ffffff;
-    box-shadow: 0 0 5px rgba(0, 188, 255, 0.4);
-}
-
-/* Estilo específico para el botón Submit */
-.Documento_input[type="submit"] {
-    background-color: #00bcff; /* Azul cian brillante */
-    color: #ffffff;
-    border: none;
-    font-weight: bold;
-    font-size: 1rem;
-    padding: 12px;
-    border-radius: 25px; /* Bordes redondeados tipo cápsula */
-    cursor: pointer;
-    margin-top: 15px;
-}
-
-.Documento_input[type="submit"]:hover {
-    background-color: #009be3;
-}
-
-.Documento_input[type="submit"]:active {
-    transform: scale(0.98);
-}
-
-/* Enlace a Inicio */
-.SubidaDocumento a {
-    text-align: center;
-    color: #0000ff;
+    color: rgb(4, 29, 255);
+    background-color: rgb(189, 217, 250);
     text-decoration: underline;
-    font-size: 0.9rem;
-    margin-top: 5px;
-    font-weight: bold;
-    transition: color 0.2s;
-}
-
-.SubidaDocumento a:hover {
-    color: #00bcff;
-}
-
-/* Contenedor de mensajes */
-#mensaje {
-    margin: 20px 0;
     text-align: center;
+    font-size: 24px;
+    width: 100%;
+    max-width: 450px;
+    margin: 20px auto 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+p {
+    color: rgb(0, 60, 130);
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(4, 176, 255);
     font-weight: bold;
-}
-
-/* Sección inferior (Obtener documento) */
-#obtener {
-    background-color: #d8e7ff;
-    padding: 20px;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-    margin-top: 20px;
-}
-
-#boton {
-    background-color: #00bcff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 22px;
+    padding: 12px 15px;
+    margin: 15px 0 5px 0;
     border-radius: 25px;
-    font-weight: bold;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+    width: 100%;
 }
 
-#boton:hover {
-    background-color: #009be3;
+a:hover {
+    background-color: rgb(4, 29, 255);
 }
 
-#listaDoc {
+.box {
+    background-color: rgb(189, 217, 250);
+    padding: 20px;
+    width: 100%;
+    max-width: 450px;
+    margin: 15px auto;
+    border: 10px solid rgb(0, 97, 177);
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+label {
+    color: rgb(4, 29, 255);
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 15px;
+    display: block;
+}
+
+.box-input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #b3d1ff;
-    border-radius: 8px;
-    background-color: #ffffff;
-    color: #00008b;
-    outline: none;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+select.box-input {
+    background-color: white;
     cursor: pointer;
+}
+
+textarea.box-input {
+    resize: none;
+}
+
+.box-submit {
+    width: 100%;
+    background-color: rgb(4, 176, 255);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.box-submit:hover {
+    background-color: rgb(4, 29, 255);
+}
+
+/* Estilos específicos para la sección del QR y el Visor */
+#contenedorQR img {
+    border: 3px solid rgb(0, 97, 177);
+    padding: 5px;
+    background: white;
+    border-radius: 10px;
+}
+
+#previsualizacion {
+    width: 100%;
+    max-width: 450px;
+    height: 400px;
+    margin: 15px auto;
+    border-radius: 25px;
+    border: 10px solid rgb(0, 97, 177);
+    box-sizing: border-box;
+    background: white;
+    display: block;
 }
