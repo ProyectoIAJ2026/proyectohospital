@@ -1,121 +1,137 @@
+/* Estilos generales de la página */
 body {
-    background-color: rgb(252, 252, 252);
-    font-family: 'Montserrat', sans-serif;
-    padding: 10px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
     margin: 0;
+    padding: 20px;
 }
 
 h2 {
-    color: rgb(4, 29, 255);
-    background-color: rgb(189, 217, 250);
-    text-decoration: underline;
     text-align: center;
-    font-size: 24px;
-    width: 100%;
-    max-width: 450px;
-    margin: 20px auto 10px auto;
-    padding: 10px;
-    border-radius: 10px;
+    color: #0056b3;
+    margin-bottom: 25px;
 }
 
-p {
-    color: rgb(0, 60, 130);
-    text-align: center;
-    font-weight: 500;
-    margin-bottom: 10px;
-}
-
+/* Enlace de regreso */
 a {
     text-decoration: none;
     color: white;
     background-color: rgb(4, 176, 255);
     font-weight: bold;
-    padding: 12px 15px;
-    margin: 15px 0 5px 0;
+    padding: 15px;
+    margin: 5px;
     border-radius: 25px;
     box-sizing: border-box;
-    display: block;
+    display: inline-block;
     text-align: center;
-    width: 100%;
 }
-
 a:hover {
     background-color: rgb(4, 29, 255);
 }
 
-.box {
-    background-color: rgb(189, 217, 250);
-    padding: 20px;
-    width: 100%;
-    max-width: 450px;
-    margin: 15px auto;
-    border: 10px solid rgb(0, 97, 177);
-    border-radius: 25px;
-    box-sizing: border-box;
+/* CONTENEDOR PRINCIPAL EN DOS COLUMNAS (Flexbox) */
+.contenedor-principal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Columna izquierda (Formulario de Carga) */
+.columna-izquierda {
+    flex: 1;
+    min-width: 350px;
+    max-width: 550px;
+}
+
+/* Columna derecha (Consultas, QR y Vista Previa) */
+.columna-derecha {
+    flex: 1;
+    min-width: 350px;
+    max-width: 550px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Tarjetas (.box) */
+.box {
+    background-color: #ffffff;
+    border: 3px solid #0056b3;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Elementos internos de los formularios y cajas */
 label {
-    color: rgb(4, 29, 255);
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 15px;
     display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
 }
 
 .box-input {
     width: 100%;
     padding: 10px;
-    margin-top: 5px;
-    border: none;
-    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     box-sizing: border-box;
-    font-family: inherit;
     font-size: 14px;
 }
 
-select.box-input {
-    background-color: white;
-    cursor: pointer;
-}
-
-textarea.box-input {
-    resize: none;
-}
-
 .box-submit {
-    width: 100%;
-    background-color: rgb(4, 176, 255);
+    background-color: #00bfff;
     color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
-    padding: 12px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 25px;
     cursor: pointer;
-    font-family: inherit;
+    transition: background-color 0.3s ease;
 }
 
 .box-submit:hover {
-    background-color: rgb(4, 29, 255);
+    background-color: #009acd;
 }
 
-/* Estilos específicos para la sección del QR y el Visor */
-#contenedorQR img {
-    border: 3px solid rgb(0, 97, 177);
+/* Imagen del Código QR */
+#contenedorQR {
+    text-align: center;
+}
+
+#imagenQR {
+    max-width: 160px;
+    height: auto;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     padding: 5px;
-    background: white;
-    border-radius: 10px;
+    background: #fff;
 }
 
+/* Visor (Iframe) */
 #previsualizacion {
     width: 100%;
-    max-width: 450px;
-    height: 400px;
-    margin: 15px auto;
-    border-radius: 25px;
-    border: 10px solid rgb(0, 97, 177);
-    box-sizing: border-box;
-    background: white;
-    display: block;
+    height: 280px;
+    border: 2px solid #0056b3;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+/* Mensaje de respuesta */
+#mensaje {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
 }

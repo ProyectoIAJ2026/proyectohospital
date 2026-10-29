@@ -1,81 +1,97 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const formulario = document.getElementById("formularioCarga");
-    const mensajeDiv = document.getElementById("mensaje");
-    const botonObtener = document.getElementById("boton");
-    const listaDoc = document.getElementById("listaDoc");
-    const preview = document.getElementById("previsualizacion");
-    const contenedorQR = document.getElementById("contenedorQR");
-    const imagenQR = document.getElementById("imagenQR");
+document.addEventListener('DOMContentLoaded', function() {
+    const formulario = document.getElementById('formularioCarga');
+    const imagenQR = document.getElementById('imagenQR');
+    const iframePrevia = document.getElementById('previsualizacion');
+    
+    const btnObtener = document.getElementById('boton'); // Botón "Obtener documentos"
+    const listaDoc = document.getElementById('listaDoc'); // Selector <select> de documentos
 
-    // Guardar Documento (POST)
-    formulario.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(formulario);
-
-        try {
-            const respuesta = await fetch("../php/Documentos.php", {
-                method: "POST",
-                body: formData
-            });
-
-            const resultado = await respuesta.json();
-
-            if (resultado.exito) {
-                alert("Archivo guardado correctamente.");
-                formulario.reset();
-            } else {
-                alert("Error: " + resultado.mensaje);
-            }
-        } catch (error) {
-            console.error("Error al procesar la solicitud:", error);
-            alert("Ocurrió un error inesperado al subir el documento.");
-        }
-    });
-
-    // Obtener Documentos (GET)
-    botonObtener.addEventListener("click", async () => {
-        try {
-            const respuesta = await fetch("../php/Documentos.php");
-            const documentos = await respuesta.json();
-
-            listaDoc.innerHTML = '<option value="">Seleccione un documento...</option>';
-
-            if (Array.isArray(documentos) && documentos.length > 0) {
-                documentos.forEach((documento) => {
-                    const option = document.createElement("option");
-                    option.value = documento.archivo_url;
-                    option.textContent = documento.titulo;
-                    listaDoc.appendChild(option);
-                });
-            } else {
-                alert("No se encontraron documentos registrados.");
-            }
-        } catch (error) {
-            console.error("Error al cargar la lista de documentos:", error);
-            alert("No se pudo obtener la lista de documentos.");
-        }
-    });
-
-    // Manejador para previsualizar y generar el QR al cambiar la selección del select
-    listaDoc.addEventListener("change", function () {
-        if (this.value) {
-            // 1. Mostrar la previsualización del documento en el iframe
-            preview.src = "../" + this.value;
-            preview.style.display = "block";
-
-            // 2. Construir la URL completa usando la IP de la PC para que el celular pueda acceder
-            const urlCompleta = "http://192.168.1.5/ProyectoFinal/proyectohospital/" + this.value;
-
-            // 3. Generar la imagen del QR dinámicamente mediante la API pública
-            imagenQR.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlCompleta)}`;
+    // 1. Lógica para cargar un documento nuevo mediante formulario
+    if (formulario) {
+        formulario.addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // 4. Mostrar el bloque del código QR en pantalla
-            contenedorQR.style.display = "block";
-        } else {
-            // Ocultar si se deselecciona
-            preview.style.display = "none";
-            contenedorQR.style.display = "none";
-        }
-    });
+            const formData = new FormData(formulario);
+
+            fetch('../php/CargarDocumento.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    
+                    if (data.texto_qr) {
+                        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(data.texto_qr)}`;
+                        imagenQR.src = qrUrl;
+                    }
+
+                    if (data.archivo_url) {
+                        iframePrevia.src = '../' + data.archivo_url;
+                    }
+
+                    formulario.reset();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error en la petición:', error);
+                alert("Error de conexión con el servidor.");
+            });
+        });
+    }
+
+    // 2. Lógica para el botón "Obtener documentos" (llenar el <select> con "ID:")
+    if (btnObtener && listaDoc) {
+        btnObtener.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            fetch('../php/ObtenerDocumentos.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    listaDoc.innerHTML = '<option value="">Seleccione un documento</option>';
+
+                    data.documentos.forEach(doc => {
+                        const option = document.createElement('option');
+                        option.value = doc.archivo_url; 
+                        option.dataset.qr = doc.codigo_qr; 
+                        // AQUÍ SE AGREGA LA ETIQUETA "ID:"
+                        option.textContent = `ID: ${doc.id_documento} - ${doc.titulo}`;
+                        listaDoc.appendChild(option);
+                    });
+
+                    alert("¡Lista de documentos actualizada!");
+                } else {
+                    alert("Error al cargar los documentos.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Error de conexión al obtener los documentos.");
+            });
+        });
+
+        // 3. Lógica al cambiar de opción en el selector para mostrar QR y vista previa
+        listaDoc.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const archivoUrl = this.value;
+            const textoQr = selectedOption.dataset.qr;
+
+            if (archivoUrl) {
+                iframePrevia.src = '../' + archivoUrl;
+            } else {
+                iframePrevia.src = '';
+            }
+
+            if (textoQr) {
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(textoQr)}`;
+                imagenQR.src = qrUrl;
+            } else {
+                imagenQR.src = ''; 
+            }
+        });
+    }
 });
