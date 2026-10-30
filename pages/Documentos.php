@@ -12,7 +12,7 @@ require_once '../php/conexion.php';
 </head>
 <body>
 
-    <a href="../index.html" title="Enlace a inicio">Regresar al inicio</a>
+    <a href="../index.html" class="btn-regresar" title="Enlace a inicio">Regresar al inicio</a>
 
     <!-- Contenedor Principal en Dos Columnas -->
     <div class="contenedor-principal">

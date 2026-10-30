@@ -13,19 +13,20 @@ h2 {
 }
 
 /* Enlace de regreso */
-a {
+.btn-regresar {
     text-decoration: none;
     color: white;
     background-color: rgb(4, 176, 255);
     font-weight: bold;
-    padding: 15px;
-    margin: 5px;
-    border-radius: 25px;
-    box-sizing: border-box;
+    padding: 10px 20px; 
+    margin: 0 auto 20px auto; 
+    border-radius: 20px;
     display: inline-block;
     text-align: center;
+    transition: background-color 0.3s ease;
 }
-a:hover {
+
+.btn-regresar:hover {
     background-color: rgb(4, 29, 255);
 }
 
