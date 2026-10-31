@@ -187,5 +187,10 @@ label {
     .bloque-formulario,
     .bloque-mapa {
         max-width: 100%;
+        margin-top: 20px;
+    }
+
+    #visualizar {
+        height: 350px;
     }
 }

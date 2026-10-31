@@ -114,3 +114,37 @@ textarea.box-input {
 .box-submit:hover {
     background-color: rgb(4, 29, 255);
 }
+
+/* --- ESTILOS PARA LA SECCIÓN DEL CÓDIGO QR --- */
+.qr-contenedor {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    border-top: 2px dashed #007bff;
+}
+
+.qr-titulo {
+    font-size: 14px;
+    color: #003c82;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.qr-imagen {
+    width: 140px;
+    height: 140px;
+    border-radius: 8px;
+}
+
+.qr-descripcion {
+    font-size: 12px;
+    color: #555;
+    margin-top: 5px;
+}
+
+/* --- ADAPTABILIDAD A PANTALLAS PEQUEÑAS (RESPONSIVE) --- */
+@media (max-width: 850px) {
+    .box {
+        max-width: 90%;
+    }
+}

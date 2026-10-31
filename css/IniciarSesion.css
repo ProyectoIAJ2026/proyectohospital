@@ -75,3 +75,11 @@ label {
 .IniciarSesion-submit:hover {
     background-color: rgb(4, 29, 255);
 }
+
+/* --- ADAPTABILIDAD A PANTALLAS PEQUEÑAS (RESPONSIVE) --- */
+@media (max-width: 400px) {
+    .IniciarSesion {
+        width: 90%;
+        padding: 15px;
+    }
+}

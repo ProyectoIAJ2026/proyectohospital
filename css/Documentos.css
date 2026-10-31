@@ -12,6 +12,15 @@ h2 {
     margin-bottom: 25px;
 }
 
+/* Título específico para la caja de gestión */
+.titulo-gestion {
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #0056b3;
+    font-size: 22px;
+}
+
 /* Enlace de regreso */
 .btn-regresar {
     text-decoration: none;
@@ -67,6 +76,23 @@ h2 {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     box-sizing: border-box;
     width: 100%;
+}
+
+/* Modificador para la caja de vista previa */
+.box-preview {
+    padding: 15px;
+}
+
+.preview-titulo {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo específico para el select de la lista de documentos */
+.select-lista {
+    margin-top: 15px;
+    margin-bottom: 0;
 }
 
 /* Elementos internos de los formularios y cajas */
@@ -135,4 +161,18 @@ label {
     margin-top: 15px;
     text-align: center;
     font-weight: bold;
+}
+
+/* --- ADAPTABILIDAD A PANTALLAS PEQUEÑAS (RESPONSIVE) --- */
+@media (max-width: 850px) {
+    .contenedor-principal {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .columna-izquierda,
+    .columna-derecha {
+        max-width: 100%;
+        width: 100%;
+    }
 }

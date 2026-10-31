@@ -20,7 +20,7 @@ require_once '../php/conexion.php';
         <!-- COLUMNA IZQUIERDA: Formulario de Carga -->
         <div class="columna-izquierda">
             <div class="box">
-                <h2 style="text-align: left; margin-top: 0; margin-bottom: 20px; color: #0056b3; font-size: 22px;">Gestión de Documentos Médicos</h2>
+                <h2 class="titulo-gestion">Gestión de Documentos Médicos</h2>
                 
                 <form id="formularioCarga" action="../php/CargarDocumento.php" method="POST" enctype="multipart/form-data">
 
@@ -83,7 +83,7 @@ require_once '../php/conexion.php';
             
             <div class="box" id="obtener">
                 <button id="boton" class="box-submit">Obtener documentos</button>
-                <select name="listaDoc" id="listaDoc" class="box-input" style="margin-top: 15px; margin-bottom: 0;">
+                <select name="listaDoc" id="listaDoc" class="box-input select-lista">
                     <option value="">Seleccione un documento</option>
                 </select>
             </div>
@@ -93,8 +93,8 @@ require_once '../php/conexion.php';
                 <img id="imagenQR" src="" alt="Código QR del documento">
             </div>
 
-            <div class="box" style="padding: 15px;">
-                <p style="margin: 0 0 10px 0; font-weight: bold; color: #333;">Vista previa:</p>
+            <div class="box box-preview">
+                <p class="preview-titulo">Vista previa:</p>
                 <!-- Vista previa -->
                 <iframe id="previsualizacion"></iframe>
             </div>
