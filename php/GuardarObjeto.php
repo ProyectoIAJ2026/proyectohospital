@@ -1,6 +1,10 @@
 <?php
-// Requerir el archivo de conexión (asegúrate de que la ruta sea correcta desde la carpeta php)
+session_start();
+require_once 'ControlAcceso.php';
 require_once 'conexion.php'; 
+
+// Restringir acceso exclusivamente a Operador Logístico y Gerencia
+restringirAcceso(['Operador Logístico', 'Gerencia']);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = trim($_POST['nombre_objeto']);
@@ -13,12 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     try {
-        // 1. Insertar primero en la tabla 'elemento' usando consultas preparadas de mysqli
+        // 1. Insertar primero en la tabla 'elemento'
         $stmtElemento = $con->prepare("INSERT INTO elemento (tipo) VALUES (?)");
         $stmtElemento->bind_param("s", $tipo);
         $stmtElemento->execute();
 
-        // Obtener el ID generado automáticamente en 'elemento'
         $id_elemento = $con->insert_id;
         $stmtElemento->close();
 
@@ -28,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmtObjeto->execute();
         $stmtObjeto->close();
 
-        // Si todo sale bien, devolvemos "ok" para que el JS muestre la alerta
         echo "ok";
 
     } catch (Exception $e) {

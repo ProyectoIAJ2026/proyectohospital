@@ -29,7 +29,7 @@ if (!$con) {
 
 $rolEncontrado = '';
 
-// --- PASO 1: Consultar la tabla "paciente" (los pacientes entran libremente) ---
+// --- PASO 1: Consultar la tabla "paciente" ---
 $stmt = $con->prepare("SELECT cedula, nombre, apellido, email, contrasenia FROM paciente WHERE cedula = ? OR email = ?");
 
 if (!$stmt) {
@@ -47,7 +47,7 @@ if ($resultado->num_rows > 0) {
 } else {
     $stmt->close();
     
-    // --- PASO 2: Consultar la tabla "chofer" (incluyendo el estado) ---
+    // --- PASO 2: Consultar la tabla "chofer" ---
     $stmt = $con->prepare("SELECT ci_chofer AS cedula, nombre, apellido, email, contrasenia, estado FROM chofer WHERE ci_chofer = ? OR email = ?");
     if (!$stmt) {
         ob_end_clean();
@@ -64,7 +64,7 @@ if ($resultado->num_rows > 0) {
     } else {
         $stmt->close();
         
-        // --- PASO 3: Consultar la tabla "funcionario" (incluyendo el estado) ---
+        // --- PASO 3: Consultar la tabla "funcionario" ---
         $stmt = $con->prepare("SELECT ci_funcionario AS cedula, nombre, apellido, email, usuario, cargo, contrasenia, estado FROM funcionario WHERE ci_funcionario = ? OR email = ? OR usuario = ?");
         if (!$stmt) {
             ob_end_clean();
@@ -82,7 +82,7 @@ if ($resultado->num_rows > 0) {
     }
 }
 
-// 3. Verificar si se encontró el usuario en alguna tabla
+// 3. Verificar si se encontró el usuario
 if ($resultado->num_rows === 0 || $rolEncontrado === '') {
     ob_end_clean();
     echo json_encode(['error' => 'Usuario, cédula o correo no registrado']);
@@ -102,7 +102,7 @@ if (($rolEncontrado === 'funcionario' || $rolEncontrado === 'chofer') && isset($
     exit;
 }
 
-// 5. Validar contraseña (compatible con password_hash y texto plano)
+// 5. Validar contraseña
 $passGuardada = $fila['contrasenia'];
 $passwordValida = false;
 
@@ -112,7 +112,7 @@ if (strpos($passGuardada, '$2y$') === 0 || strpos($passGuardada, '$2a$') === 0) 
     $passwordValida = ($contrasenia === $passGuardada);
 }
 
-// 6. Enviar respuesta final en JSON
+// 6. Enviar respuesta final en JSON con la redirección inteligente (RBAC)
 ob_end_clean();
 
 if ($passwordValida) {
@@ -123,14 +123,33 @@ if ($passwordValida) {
     $_SESSION['email'] = $fila['email'];
     $_SESSION['rol'] = $rolEncontrado;
 
-    // Datos extra específicos para funcionario
+    // Determinar la URL de destino según el rol y el cargo específico
+    $redirectUrl = '../index.html'; // Destino por defecto
+
     if ($rolEncontrado === 'funcionario') {
         $_SESSION['cargo'] = $fila['cargo'];
         $_SESSION['usuario_nombre'] = $fila['usuario'];
+
+        switch ($fila['cargo']) {
+            case 'Gerencia':
+                $redirectUrl = 'PanelAdmin.php';
+                break;
+            case 'Medicina General':
+            case 'Enfermero':
+                $redirectUrl = 'Expedientes.php';
+                break;
+            case 'Administrativo':
+                $redirectUrl = 'Pacientes.php';
+                break;
+            case 'Operador logístico':
+                $redirectUrl = 'Traslados.php';
+                break;
+        }
     }
 
     echo json_encode([
         'exito' => true,
+        'redirect' => $redirectUrl, // <-- URL que usará JavaScript para redirigir
         'usuario' => [
             'cedula' => $fila['cedula'],
             'nombre' => $fila['nombre'],

@@ -27,7 +27,8 @@ formulario.addEventListener('submit', async (e) => {
         if (objetoJSON.error) {
             alert(objetoJSON.error);
         } else if (objetoJSON.exito) {
-            window.location.href = '../index.html';
+            // Utiliza la URL que determinó el PHP según el rol y el cargo exacto
+            window.location.href = objetoJSON.redirect;
         }
     } catch (error) {
         console.error('Error en la solicitud:', error);

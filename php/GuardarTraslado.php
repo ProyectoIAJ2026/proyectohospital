@@ -1,5 +1,10 @@
 <?php
+session_start();
+require_once 'ControlAcceso.php';
 require_once 'conexion.php';
+
+// Restringir acceso exclusivamente a Operador logístico
+restringirAcceso(['Operador logístico', 'Gerencia']);
 
 // Capturar los datos del formulario POST
 $origen               = trim($_POST['origen'] ?? '');
@@ -10,8 +15,8 @@ $acompaniante         = !empty($_POST['acompaniante']) ? trim($_POST['acompanian
 $estado               = $_POST['estado'] ?? 'Pendiente';
 
 // Capturar origen y destino independientes
-$departamento_origen  = trim($_POST['departamento'] ?? ''); // Viene del select id="departamento_origen" con name="departamento"
-$departamento_destino = trim($_POST['departamento_destino'] ?? ''); // Viene del select id="departamento_destino" con name="departamento_destino"
+$departamento_origen  = trim($_POST['departamento'] ?? ''); 
+$departamento_destino = trim($_POST['departamento_destino'] ?? ''); 
 
 $ci_funcionario       = $_POST['ci_funcionario'] ?? null;
 $matricula            = $_POST['matricula'] ?? null;

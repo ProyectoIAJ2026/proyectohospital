@@ -1,6 +1,12 @@
 <?php
-// Incluimos la conexión a la base de datos
+session_start();
+require_once 'ControlAcceso.php';
 require_once 'conexion.php';
+
+// Restringir acceso exclusivamente a personal clínico autorizado
+restringirAcceso(['Medicina General', 'Enfermero', 'Gerencia']);
+
+header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
@@ -32,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(move_uploaded_file($fileTmpPath, $dest_path)) {
             
             // Texto descriptivo para el código QR
-            $texto_qr = "http://192.168.1.5/ProyectoFinal/proyectohospital/" . $archivo_url;
+            $texto_qr = "http://192.168.1.9/ProyectoFinal/proyectohospital/" . $archivo_url;
 
             // Inserción en la base de datos
             $query = "INSERT INTO documento (titulo, archivo_url, descripcion, estado, codigo_qr, fecha_carga, ci_funcionario, cedula) 

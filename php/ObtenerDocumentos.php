@@ -1,5 +1,12 @@
 <?php
+session_start();
+require_once 'ControlAcceso.php';
 require_once 'conexion.php';
+
+// Restringir acceso exclusivamente a personal clínico autorizado
+restringirAcceso(['Medicina General', 'Enfermero', 'Gerencia']);
+
+header('Content-Type: application/json; charset=utf-8');
 
 $query = "SELECT id_documento, titulo, archivo_url, codigo_qr FROM documento ORDER BY id_documento DESC";
 $resultado = mysqli_query($con, $query);

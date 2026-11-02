@@ -1,12 +1,10 @@
 <?php
 session_start();
 require_once 'conexion.php';
+require_once 'ControlAcceso.php';
 
-// Seguridad: Verificar que el usuario esté logueado y sea Gerencia (o administrador)
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'funcionario' || $_SESSION['cargo'] !== 'Gerencia') {
-    echo "<script>alert('Acceso denegado. Solo la gerencia puede acceder al panel.'); window.location.href = '../html/IniciarSesion.html';</script>";
-    exit();
-}
+// Seguridad centralizada: Solo permite el acceso al cargo 'Gerencia'
+restringirAcceso('Gerencia');
 
 // Obtener funcionarios pendientes
 $queryFunc = "SELECT ci_funcionario AS cedula, nombre, apellido, email, cargo, 'funcionario' AS tabla FROM funcionario WHERE estado = 'pendiente'";

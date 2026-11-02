@@ -60,15 +60,16 @@ require_once '../php/conexion.php';
 
                     <label for="ci_funcionario">Cédula de identidad (funcionario)</label>
                     <select class="box-input" id="ci_funcionario" name="ci_funcionario" required>
-                        <option value="">Seleccione un funcionario</option>
-                        <?php
-                        $query_func = "SELECT ci_funcionario, nombre, apellido FROM funcionario WHERE cargo = 'Administrativo'";
-                        $resultado_func = mysqli_query($con, $query_func);
+                       <option value="">Seleccione un funcionario</option>
+                       <?php
+                       // Filtramos para que traiga al personal clínico (Medicina General y Enfermero)
+                       $query_func = "SELECT ci_funcionario, nombre, apellido, cargo FROM funcionario WHERE LOWER(cargo) IN ('medicina general', 'enfermero', 'medicina general')";
+                       $resultado_func = mysqli_query($con, $query_func);
 
                         if ($resultado_func) {
                             while ($row = mysqli_fetch_assoc($resultado_func)) {
-                                echo "<option value='" . $row['ci_funcionario'] . "'>C.I: " . $row['ci_funcionario'] . " - " . $row['nombre'] . " " . $row['apellido'] . " - Administrativo</option>";
-                            }
+                                echo "<option value='" . $row['ci_funcionario'] . "'>C.I: " . $row['ci_funcionario'] . " - " . $row['nombre'] . " " . $row['apellido'] . " (" . $row['cargo'] . ")</option>";
+                            } 
                         }
                         ?>
                     </select>

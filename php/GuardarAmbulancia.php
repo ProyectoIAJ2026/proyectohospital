@@ -1,6 +1,11 @@
 <?php
+session_start();
+require_once 'ControlAcceso.php';
 // 1. CONEXIÓN A LA BASE DE DATOS Y CONFIGURACIÓN
 require_once 'conexion.php';
+
+// Restringir acceso exclusivamente a Operador logístico
+restringirAcceso(['Operador logístico', 'Gerencia']);
 
 // 2. VERIFICAR QUE LA SOLICITUD SEA POR POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -10,12 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 try {
     // 3. CAPTURA Y LIMPIEZA DE LOS DATOS DEL FORMULARIO
-    $matricula               = trim($_POST['matricula'] ?? '');
-    $estado                  = $_POST['estado'] ?? 'Operativa';
+    $matricula                 = trim($_POST['matricula'] ?? '');
+    $estado                    = $_POST['estado'] ?? 'Operativa';
     $disponibilidad_ambulancia = $_POST['disponibilidad_ambulancia'] ?? 'Disponible';
     
     // El campo de mantenimiento es opcional, si viene vacío asignamos null
-    $ultimo_mantenimiento    = !empty($_POST['ultimo_mantenimiento']) ? $_POST['ultimo_mantenimiento'] : null;
+    $ultimo_mantenimiento      = !empty($_POST['ultimo_mantenimiento']) ? $_POST['ultimo_mantenimiento'] : null;
 
     // Validar que la matrícula no esté vacía (es la clave primaria)
     if (empty($matricula)) {
