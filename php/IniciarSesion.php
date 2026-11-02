@@ -29,7 +29,7 @@ if (!$con) {
 
 $rolEncontrado = '';
 
-// --- PASO 1: Consultar la tabla "paciente" ---
+// --- PASO 1: Consultar la tabla "paciente" (los pacientes entran libremente) ---
 $stmt = $con->prepare("SELECT cedula, nombre, apellido, email, contrasenia FROM paciente WHERE cedula = ? OR email = ?");
 
 if (!$stmt) {
@@ -47,8 +47,8 @@ if ($resultado->num_rows > 0) {
 } else {
     $stmt->close();
     
-    // --- PASO 2: Consultar la tabla "chofer" ---
-    $stmt = $con->prepare("SELECT ci_chofer AS cedula, nombre, apellido, email, contrasenia FROM chofer WHERE ci_chofer = ? OR email = ?");
+    // --- PASO 2: Consultar la tabla "chofer" (incluyendo el estado) ---
+    $stmt = $con->prepare("SELECT ci_chofer AS cedula, nombre, apellido, email, contrasenia, estado FROM chofer WHERE ci_chofer = ? OR email = ?");
     if (!$stmt) {
         ob_end_clean();
         echo json_encode(['error' => 'Error en la consulta: ' . $con->error]);
@@ -64,8 +64,8 @@ if ($resultado->num_rows > 0) {
     } else {
         $stmt->close();
         
-        // --- PASO 3: Consultar la tabla "funcionario" ---
-        $stmt = $con->prepare("SELECT ci_funcionario AS cedula, nombre, apellido, email, usuario, cargo, contrasenia FROM funcionario WHERE ci_funcionario = ? OR email = ? OR usuario = ?");
+        // --- PASO 3: Consultar la tabla "funcionario" (incluyendo el estado) ---
+        $stmt = $con->prepare("SELECT ci_funcionario AS cedula, nombre, apellido, email, usuario, cargo, contrasenia, estado FROM funcionario WHERE ci_funcionario = ? OR email = ? OR usuario = ?");
         if (!$stmt) {
             ob_end_clean();
             echo json_encode(['error' => 'Error en la consulta: ' . $con->error]);
@@ -93,7 +93,16 @@ if ($resultado->num_rows === 0 || $rolEncontrado === '') {
 
 $fila = $resultado->fetch_assoc();
 
-// 4. Validar contraseña (compatible con password_hash y texto plano)
+// 4. Validar si la cuenta requiere aprobación (Funcionarios y Choferes pendientes)
+if (($rolEncontrado === 'funcionario' || $rolEncontrado === 'chofer') && isset($fila['estado']) && $fila['estado'] === 'pendiente') {
+    ob_end_clean();
+    echo json_encode(['error' => 'Su cuenta se encuentra pendiente de aprobación por la administración del hospital.']);
+    $stmt->close();
+    $con->close();
+    exit;
+}
+
+// 5. Validar contraseña (compatible con password_hash y texto plano)
 $passGuardada = $fila['contrasenia'];
 $passwordValida = false;
 
@@ -103,7 +112,7 @@ if (strpos($passGuardada, '$2y$') === 0 || strpos($passGuardada, '$2a$') === 0) 
     $passwordValida = ($contrasenia === $passGuardada);
 }
 
-// 5. Enviar respuesta final en JSON
+// 6. Enviar respuesta final en JSON
 ob_end_clean();
 
 if ($passwordValida) {

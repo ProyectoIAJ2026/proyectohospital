@@ -78,18 +78,12 @@ try {
         $usuario = $_POST['usuario'];
         $contrasenia = $_POST['contrasenia'];
         $cargo = $_POST['cargo'];
+        $estado = 'pendiente'; // Los funcionarios quedan pendientes de aprobación
 
-        if ($cargo === 'Medico' || $cargo === 'Medicina General') {
-            $cargo = 'Medicina General';
-        } else if ($cargo === 'Administrador' || $cargo === 'Gerencia') {
-            $cargo = 'Gerencia';
-        }
-
-        // Encripta la contraseña por seguridad
         $hash = password_hash($contrasenia, PASSWORD_BCRYPT);
 
-        $stmt = $con->prepare("INSERT INTO funcionario (ci_funcionario, nombre, apellido, email, cargo, usuario, contrasenia) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssss", $cedula, $nombre, $apellido, $email, $cargo, $usuario, $hash);
+        $stmt = $con->prepare("INSERT INTO funcionario (ci_funcionario, nombre, apellido, email, cargo, usuario, contrasenia, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssss", $cedula, $nombre, $apellido, $email, $cargo, $usuario, $hash, $estado);
 
     } else if ($tipoUsuario === 'paciente') {
         $nombre = $_POST['nombre'];
@@ -109,16 +103,17 @@ try {
         $email = $_POST['email'];
         $contrasenia = $_POST['contrasenia'];
         $disponibilidad = $_POST['disponibilidad'];
+        $estado = 'pendiente'; // Los choferes también requieren aprobación
 
         $hash = password_hash($contrasenia, PASSWORD_BCRYPT);
 
-        $stmt = $con->prepare("INSERT INTO chofer (ci_chofer, nombre, apellido, email, contrasenia, disponibilidad) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $cedula, $nombre, $apellido, $email, $hash, $disponibilidad);
+        $stmt = $con->prepare("INSERT INTO chofer (ci_chofer, nombre, apellido, email, contrasenia, disponibilidad, estado) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $cedula, $nombre, $apellido, $email, $hash, $disponibilidad, $estado);
     }
 
     // 5. RESPUESTA AL JAVASCRIPT
     if ($stmt->execute()) {
-        echo "ok"; // Le confirma a JS que se guardó correctamente
+        echo "ok"; 
     } else {
         echo "Error al registrar: " . $stmt->error;
     }
