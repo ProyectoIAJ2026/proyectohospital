@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S.I.G.S.M. - Hospital de Clínicas</title>
     <link rel="stylesheet" href="./css/index.css">
+    <!-- Vinculamos el archivo JS externo respetando la carpeta JavaScript -->
+    <script src="./JavaScript/VerificarSesion.js" defer></script>
 </head>
 <body>
     <img src="./img/img1.png" alt="Logo" title="Logo de la empresa" class="img-logo">
@@ -14,13 +16,20 @@
     <p class="subtitulo-sistema">S.I.G.S.M. - Sistema de Gestión de Servicios Médicos</p>
     </div>
 
-    <div class="box"><a href="./pages/Registro.html" title="Enlace para crear cuenta">Crear cuenta</a></div>
-    <div class="box"><a href="./pages/IniciarSesion.html" title="Enlace a iniciar sesion">Iniciar sesión</a></div>
+    <!-- Accesos principales con ID para controlarlos dinámicamente -->
+    <div class="box" id="btnCrearCuenta"><a href="./pages/Registro.html" title="Enlace para crear cuenta">Crear cuenta</a></div>
+    <div class="box" id="btnIniciarSesion"><a href="./pages/IniciarSesion.html" title="Enlace a iniciar sesion">Iniciar sesión</a></div>
+    
     <div class="box"><a href="./pages/Pacientes.html" title="Enlace a pacientes">Pacientes</a></div>
     <div class="box"><a href="./pages/Documentos.php" title="Enlace a expedientes">Expedientes</a></div>
     <div class="box"><a href="./pages/Insumos.html" title="Enlace a insumos">Insumos</a></div>
     <div class="box box-larga"><a href="./pages/TrasladosYAmbulancias.php" title="Enlace a traslados y ambulancias">Traslados y ambulancias</a></div>
     <div class="box"><a href="./pages/Encuesta.html" title="Enlace a encuesta">Encuesta</a></div>
+
+    <!-- Botón de Cerrar sesión -->
+    <div class="box box-cerrar" id="btnCerrarSesion" style="display: none;">
+        <a href="./php/CerrarSesion.php" title="Cerrar sesión actual">Cerrar sesión</a>
+    </div>
 
     <main>
         <section class="servicios">

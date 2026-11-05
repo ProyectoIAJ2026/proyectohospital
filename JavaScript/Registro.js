@@ -8,12 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Muestra/oculta campos según rol y activa 'required' sólo en los visibles
     selectTipo.addEventListener('change', function() {
-        // Ocultar todas las secciones
         seccionFuncionario.classList.add('campo-oculto');
         seccionPaciente.classList.add('campo-oculto');
         seccionChofer.classList.add('campo-oculto');
 
-        // Quitar atributo 'required' de todos los inputs ocultos
         document.querySelectorAll('.Registro-input').forEach(input => input.required = false);
         selectTipo.required = true;
 
@@ -88,15 +86,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const respuesta = await fetch('../php/registro.php', {
+            const respuesta = await fetch('../php/Registro.php', {
                 method: 'POST',
                 body: formData
             });
 
             const resultado = await respuesta.text();
 
-            if (resultado.trim() === "ok") {
-                alert('¡Registro realizado con éxito!');
+            // Verificamos si comienza con "ok" o incluye el mensaje de pendiente
+            if (resultado.trim().startsWith("ok")) {
+                // Si es chofer o funcionario, le informamos del estado pendiente; si es paciente, éxito normal
+                if (rol === 'chofer' || rol === 'funcionario') {
+                    alert('¡Registro realizado con éxito! Su cuenta se encuentra pendiente de aprobación por la administración del hospital.');
+                } else {
+                    alert('¡Registro realizado con éxito!');
+                }
                 formRegistro.reset();
                 selectTipo.dispatchEvent(new Event('change'));
             } else {

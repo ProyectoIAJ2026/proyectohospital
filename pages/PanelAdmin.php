@@ -1,17 +1,14 @@
 <?php
 session_start();
-require_once 'conexion.php';
-require_once 'ControlAcceso.php';
+require_once '../php/conexion.php';
+require_once '../php/ControlAcceso.php'; // Esto ya valida sesión y estado activo automáticamente
 
-// Seguridad centralizada: Solo permite el acceso al cargo 'Gerencia'
-restringirAcceso('Gerencia');
-
-// Obtener funcionarios pendientes
-$queryFunc = "SELECT ci_funcionario AS cedula, nombre, apellido, email, cargo, 'funcionario' AS tabla FROM funcionario WHERE estado = 'pendiente'";
+// Obtener funcionarios pendientes (con 'Pendiente' en mayúscula)
+$queryFunc = "SELECT ci_funcionario AS cedula, nombre, apellido, email, cargo, 'funcionario' AS tabla FROM funcionario WHERE estado = 'Pendiente'";
 $resFunc = $con->query($queryFunc);
 
-// Obtener choferes pendientes
-$queryChofer = "SELECT ci_chofer AS cedula, nombre, apellido, email, 'Chofer' AS cargo, 'chofer' AS tabla FROM chofer WHERE estado = 'pendiente'";
+// Obtener choferes pendientes (con 'Pendiente' en mayúscula)
+$queryChofer = "SELECT ci_chofer AS cedula, nombre, apellido, email, 'Chofer' AS cargo, 'chofer' AS tabla FROM chofer WHERE estado = 'Pendiente'";
 $resChofer = $con->query($queryChofer);
 ?>
 

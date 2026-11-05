@@ -1,37 +1,30 @@
-const formulario = document.querySelector('#formInicioSesion');
+document.addEventListener("DOMContentLoaded", function () {
+    const formInicio = document.getElementById("formInicioSesion");
 
-formulario.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    if (formInicio) {
+        formInicio.addEventListener("submit", function (e) {
+            e.preventDefault(); // Evita la recarga tradicional de la página
 
-    const datosI = new FormData();
-    datosI.append('usuario', formulario.usuario.value.trim());
-    datosI.append('contrasenia', formulario.contrasenia.value.trim());
+            const formData = new FormData(formInicio);
 
-    try {
-        const respuesta = await fetch('../php/IniciarSesion.php', {
-            method: 'POST',
-            body: datosI
+            fetch(formInicio.action, {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.exito) {
+                    // Redirige al usuario a la URL provista por el PHP (index.html o PanelAdmin.php)
+                    window.location.href = data.redirect;
+                } else {
+                    // Muestra el mensaje de error (credenciales incorrectas o cuenta pendiente)
+                    alert(data.error || "Ocurrió un error al iniciar sesión.");
+                }
+            })
+            .catch(error => {
+                console.error("Error en la solicitud:", error);
+                alert("Hubo un problema de conexión con el servidor.");
+            });
         });
-
-        const textoRespuesta = await respuesta.text();
-
-        let objetoJSON;
-        try {
-            objetoJSON = JSON.parse(textoRespuesta);
-        } catch (e) {
-            console.error('El servidor no devolvió JSON válido:', textoRespuesta);
-            alert('Error en la ruta del archivo o en la respuesta del servidor.');
-            return;
-        }
-
-        if (objetoJSON.error) {
-            alert(objetoJSON.error);
-        } else if (objetoJSON.exito) {
-            // Utiliza la URL que determinó el PHP según el rol y el cargo exacto
-            window.location.href = objetoJSON.redirect;
-        }
-    } catch (error) {
-        console.error('Error en la solicitud:', error);
-        alert('Ocurrió un error de conexión con el servidor.');
     }
 });

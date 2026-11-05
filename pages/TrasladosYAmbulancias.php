@@ -22,7 +22,7 @@ require_once '../php/conexion.php';
 
         <!-- COLUMNA IZQUIERDA: FORMULARIO DE REGISTRO DE TRASLADOS -->
         <div class="bloque-formulario">
-            <h2>Registro de Traslado</h2>
+            <h2>Registro de Traslados</h2>
             <p>Complete los datos solicitados para coordinar y registrar el traslado de la ambulancia.</p>
 
             <form class="TrasladosAmbulancias-form" id="formTraslado" action="../php/GuardarTraslado.php" method="POST">

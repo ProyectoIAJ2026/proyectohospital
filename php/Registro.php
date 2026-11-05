@@ -1,7 +1,5 @@
 <?php
-// 1. CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
-
 date_default_timezone_set('America/Montevideo');
 
 $tipoUsuario = $_POST['tipoUsuario'] ?? '';
@@ -19,7 +17,6 @@ try {
         exit();
     }
 
-    // 2. CONSULTA (SELECT): COMPROBAR SI LA CÉDULA YA EXISTE
     $tabla = '';
     $columnaCi = '';
 
@@ -40,7 +37,6 @@ try {
         $checkCiStmt->execute();
         $checkCiStmt->store_result();
 
-        // Cancela si la cédula ya está registrada
         if ($checkCiStmt->num_rows > 0) {
             echo "Error: La cédula $cedula ya se encuentra registrada.";
             $checkCiStmt->close();
@@ -50,10 +46,8 @@ try {
         $checkCiStmt->close();
     }
 
-    // 3. CONSULTA (SELECT): COMPROBAR SI EL NOMBRE DE USUARIO YA EXISTE (solo funcionarios)
     if ($tipoUsuario === 'funcionario') {
         $usuario = $_POST['usuario'] ?? '';
-
         if (!empty($usuario)) {
             $checkUserStmt = $con->prepare("SELECT usuario FROM funcionario WHERE usuario = ?");
             $checkUserStmt->bind_param("s", $usuario);
@@ -70,7 +64,6 @@ try {
         }
     }
 
-    // 4. CONSULTA (INSERT): PREPARAR Y GUARDAR LOS DATOS
     if ($tipoUsuario === 'funcionario') {
         $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
@@ -78,7 +71,7 @@ try {
         $usuario = $_POST['usuario'];
         $contrasenia = $_POST['contrasenia'];
         $cargo = $_POST['cargo'];
-        $estado = 'pendiente'; // Los funcionarios quedan pendientes de aprobación
+        $estado = 'pendiente';
 
         $hash = password_hash($contrasenia, PASSWORD_BCRYPT);
 
@@ -103,7 +96,7 @@ try {
         $email = $_POST['email'];
         $contrasenia = $_POST['contrasenia'];
         $disponibilidad = $_POST['disponibilidad'];
-        $estado = 'pendiente'; // Los choferes también requieren aprobación
+        $estado = 'pendiente';
 
         $hash = password_hash($contrasenia, PASSWORD_BCRYPT);
 
@@ -111,7 +104,6 @@ try {
         $stmt->bind_param("sssssss", $cedula, $nombre, $apellido, $email, $hash, $disponibilidad, $estado);
     }
 
-    // 5. RESPUESTA AL JAVASCRIPT
     if ($stmt->execute()) {
         echo "ok"; 
     } else {

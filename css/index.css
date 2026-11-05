@@ -122,6 +122,20 @@ a {
     color: inherit;
 }
 
+/* Botón especial para cerrar sesión */
+.box-cerrar {
+    background-color: #dc3545; /* Rojo de alerta para salir */
+}
+
+.box-cerrar:hover {
+    background-color: #bd2130; /* Un tono más oscuro al pasar el cursor */
+}
+
+/* El botón de cerrar sesión comienza oculto por defecto */
+.box-cerrar {
+    display: none;
+}
+
 /* ========================================== */
 /* AJUSTES RESPONSIVOS PARA CELULARES Y MÓVILES */
 /* ========================================== */

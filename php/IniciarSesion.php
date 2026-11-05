@@ -6,11 +6,9 @@ ini_set('display_errors', 0);
 
 header('Content-Type: application/json; charset=utf-8');
 
-// Incluir conexión a la base de datos
 require_once 'conexion.php';
 session_start();
 
-// 1. Obtener datos enviados desde JavaScript
 $usuario = isset($_POST['usuario']) ? trim($_POST['usuario']) : '';
 $contrasenia = isset($_POST['contrasenia']) ? trim($_POST['contrasenia']) : '';
 
@@ -20,7 +18,6 @@ if ($usuario === '' || $contrasenia === '') {
     exit;
 }
 
-// 2. Verificar conexión
 if (!$con) {
     ob_end_clean();
     echo json_encode(['error' => 'Error de conexión a la base de datos']);
@@ -82,7 +79,6 @@ if ($resultado->num_rows > 0) {
     }
 }
 
-// 3. Verificar si se encontró el usuario
 if ($resultado->num_rows === 0 || $rolEncontrado === '') {
     ob_end_clean();
     echo json_encode(['error' => 'Usuario, cédula o correo no registrado']);
@@ -93,8 +89,8 @@ if ($resultado->num_rows === 0 || $rolEncontrado === '') {
 
 $fila = $resultado->fetch_assoc();
 
-// 4. Validar si la cuenta requiere aprobación (Funcionarios y Choferes pendientes)
-if (($rolEncontrado === 'funcionario' || $rolEncontrado === 'chofer') && isset($fila['estado']) && $fila['estado'] === 'pendiente') {
+// --- PASO 4: Validar si la cuenta requiere aprobación (Choferes y Funcionarios pendientes) ---
+if (($rolEncontrado === 'funcionario' || $rolEncontrado === 'chofer') && isset($fila['estado']) && strtolower($fila['estado']) === 'pendiente') {
     ob_end_clean();
     echo json_encode(['error' => 'Su cuenta se encuentra pendiente de aprobación por la administración del hospital.']);
     $stmt->close();
@@ -112,19 +108,18 @@ if (strpos($passGuardada, '$2y$') === 0 || strpos($passGuardada, '$2a$') === 0) 
     $passwordValida = ($contrasenia === $passGuardada);
 }
 
-// 6. Enviar respuesta final en JSON con la redirección inteligente (RBAC)
+// 6. Enviar respuesta final en JSON
 ob_end_clean();
 
 if ($passwordValida) {
-    // Guardar variables de sesión
+    // Guardar variables clave en la sesión
     $_SESSION['cedula'] = $fila['cedula'];
     $_SESSION['nombre'] = $fila['nombre'];
     $_SESSION['apellido'] = $fila['apellido'];
     $_SESSION['email'] = $fila['email'];
-    $_SESSION['rol'] = $rolEncontrado;
+    $_SESSION['rol'] = $rolEncontrado; // Guarda 'paciente', 'chofer' o 'funcionario'
 
-    // Determinar la URL de destino según el rol y el cargo específico
-    $redirectUrl = '../index.html'; // Destino por defecto
+    $redirectUrl = '../index.html'; 
 
     if ($rolEncontrado === 'funcionario') {
         $_SESSION['cargo'] = $fila['cargo'];
@@ -132,24 +127,17 @@ if ($passwordValida) {
 
         switch ($fila['cargo']) {
             case 'Gerencia':
-                $redirectUrl = 'PanelAdmin.php';
+                $redirectUrl = '../pages/PanelAdmin.php';
                 break;
-            case 'Medicina General':
-            case 'Enfermero':
-                $redirectUrl = 'Expedientes.php';
-                break;
-            case 'Administrativo':
-                $redirectUrl = 'Pacientes.php';
-                break;
-            case 'Operador logístico':
-                $redirectUrl = 'Traslados.php';
+            default:
+                $redirectUrl = '../index.html';
                 break;
         }
     }
 
     echo json_encode([
         'exito' => true,
-        'redirect' => $redirectUrl, // <-- URL que usará JavaScript para redirigir
+        'redirect' => $redirectUrl,
         'usuario' => [
             'cedula' => $fila['cedula'],
             'nombre' => $fila['nombre'],
