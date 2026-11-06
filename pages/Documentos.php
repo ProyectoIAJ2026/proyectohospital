@@ -63,7 +63,7 @@ require_once '../php/conexion.php';
                        <option value="">Seleccione un funcionario</option>
                        <?php
                        // Filtramos para que traiga al personal clínico (Medicina General y Enfermero)
-                       $query_func = "SELECT ci_funcionario, nombre, apellido, cargo FROM funcionario WHERE LOWER(cargo) IN ('medicina general', 'enfermero', 'medicina general')";
+                       $query_func = "SELECT ci_funcionario, nombre, apellido, cargo FROM funcionario WHERE LOWER(cargo) IN ('medicina general', 'enfermero')";
                        $resultado_func = mysqli_query($con, $query_func);
 
                         if ($resultado_func) {

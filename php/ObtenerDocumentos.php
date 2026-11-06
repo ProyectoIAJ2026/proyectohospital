@@ -15,8 +15,9 @@ $documentos = [];
 
 if ($resultado) {
     while ($row = mysqli_fetch_assoc($resultado)) {
+        $row['codigo_qr'] = $base_url . $row['archivo_url'];
         $documentos[] = $row;
-    }
+}
     echo json_encode([
         "success" => true,
         "documentos" => $documentos

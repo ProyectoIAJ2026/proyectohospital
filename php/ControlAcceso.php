@@ -5,28 +5,47 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once 'conexion.php';
 
-if (!isset($_SESSION['cedula'])) {
-    header('Location: ../index.html');
+function responderNoAutorizado($mensaje) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(["success" => false, "message" => $mensaje]);
     exit;
 }
 
+// 1. Verificar que haya sesión iniciada
+if (!isset($_SESSION['cedula'])) {
+    responderNoAutorizado("Sesión no iniciada. Volvé a iniciar sesión.");
+}
+
+// 2. Verificar que el funcionario exista y esté activo
 $cedula = $_SESSION['cedula'];
-$stmt = $con->prepare("SELECT estado FROM funcionario WHERE ci_funcionario = ?");
+$stmt = $con->prepare("SELECT estado, cargo FROM funcionario WHERE ci_funcionario = ?");
 $stmt->bind_param("s", $cedula);
 $stmt->execute();
 $res = $stmt->get_result();
+
+$cargoActual = null;
 
 if ($row = $res->fetch_assoc()) {
     if ($row['estado'] !== 'Activo') {
         session_unset();
         session_destroy();
-        header('Location: ../index.html?error=cuenta_pendiente');
-        exit;
+        responderNoAutorizado("Tu cuenta está pendiente de activación.");
     }
+    $cargoActual = $row['cargo'];
 } else {
     session_unset();
     session_destroy();
-    header('Location: ../index.html');
-    exit;
+    responderNoAutorizado("Usuario no encontrado.");
+}
+
+// 3. Función que usan CargarDocumento.php y ObtenerDocumentos.php
+function restringirAcceso(array $cargosPermitidos) {
+    global $cargoActual;
+
+    $permitidos = array_map('mb_strtolower', $cargosPermitidos);
+
+    if (!in_array(mb_strtolower((string)$cargoActual), $permitidos, true)) {
+        responderNoAutorizado("No tenés permisos para realizar esta acción.");
+    }
 }
 ?>
