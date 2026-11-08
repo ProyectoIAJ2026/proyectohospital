@@ -1,13 +1,19 @@
 <?php
 session_start();
 require_once '../php/conexion.php';
-require_once '../php/ControlAcceso.php'; // Esto ya valida sesión y estado activo automáticamente
+require_once '../php/ControlAcceso.php'; // Valida sesión y estado activo
 
-// Obtener funcionarios pendientes (con 'Pendiente' en mayúscula)
+// Solo Gerencia puede ver el panel de aprobación
+if (($_SESSION['cargo'] ?? '') !== 'Gerencia') {
+    header("Location: ../index.html");
+    exit();
+}
+
+// Obtener funcionarios pendientes
 $queryFunc = "SELECT ci_funcionario AS cedula, nombre, apellido, email, cargo, 'funcionario' AS tabla FROM funcionario WHERE estado = 'Pendiente'";
 $resFunc = $con->query($queryFunc);
 
-// Obtener choferes pendientes (con 'Pendiente' en mayúscula)
+// Obtener choferes pendientes
 $queryChofer = "SELECT ci_chofer AS cedula, nombre, apellido, email, 'Chofer' AS cargo, 'chofer' AS tabla FROM chofer WHERE estado = 'Pendiente'";
 $resChofer = $con->query($queryChofer);
 ?>
@@ -74,7 +80,7 @@ $resChofer = $con->query($queryChofer);
                     echo "<td>" . htmlspecialchars($row['nombre'] . " " . $row['apellido']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['cargo']) . "</td>";
-                    echo "<td><a class='btn-aprobar' href='aprobar.php?tabla=funcionario&ci=" . urlencode($row['cedula']) . "'>Aprobar</a></td>";
+                    echo "<td><a class='btn-aprobar' href='../php/aprobar.php?tabla=funcionario&ci=" . urlencode($row['cedula']) . "'>Aprobar</a></td>";
                     echo "</tr>";
                 }
             }
@@ -88,7 +94,7 @@ $resChofer = $con->query($queryChofer);
                     echo "<td>" . htmlspecialchars($row['nombre'] . " " . $row['apellido']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['cargo']) . "</td>";
-                    echo "<td><a class='btn-aprobar' href='aprobar.php?tabla=chofer&ci=" . urlencode($row['cedula']) . "'>Aprobar</a></td>";
+                    echo "<td><a class='btn-aprobar' href='../php/aprobar.php?tabla=chofer&ci=" . urlencode($row['cedula']) . "'>Aprobar</a></td>";
                     echo "</tr>";
                 }
             }

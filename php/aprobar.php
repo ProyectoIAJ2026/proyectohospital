@@ -2,27 +2,26 @@
 session_start();
 require_once 'conexion.php';
 
-// Verificar que sea la gerencia quien realiza la acción
+// Solo Gerencia puede aprobar cuentas
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'funcionario' || $_SESSION['cargo'] !== 'Gerencia') {
-    header("Location: ../html/IniciarSesion.html");
+    header("Location: ../pages/IniciarSesion.html");
     exit();
 }
 
 $tabla = $_GET['tabla'] ?? '';
-$ci = $_GET['ci'] ?? '';
+$ci    = $_GET['ci'] ?? '';
 
 if (($tabla === 'funcionario' || $tabla === 'chofer') && !empty($ci)) {
-    
+
     $columnaCi = ($tabla === 'funcionario') ? 'ci_funcionario' : 'ci_chofer';
 
-    $stmt = $con->prepare("UPDATE $tabla SET estado = 'activo' WHERE $columnaCi = ?");
+    $stmt = $con->prepare("UPDATE $tabla SET estado = 'Activo' WHERE $columnaCi = ?");
     $stmt->bind_param("s", $ci);
 
     if ($stmt->execute()) {
         $stmt->close();
         $con->close();
-        // Redirigir de vuelta al panel con éxito
-        header("Location: PanelAdmin.php?exito=aprobado");
+        header("Location: ../pages/PanelAdmin.php?exito=aprobado");
         exit();
     } else {
         echo "Error al actualizar el estado: " . $stmt->error;
