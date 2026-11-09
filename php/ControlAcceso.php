@@ -26,7 +26,8 @@ $res = $stmt->get_result();
 $cargoActual = null;
 
 if ($row = $res->fetch_assoc()) {
-    if ($row['estado'] !== 'Activo') {
+    // Validamos el estado de forma flexible ante mayúsculas/minúsculas o espacios
+    if (strtolower(trim($row['estado'])) !== 'activo') {
         session_unset();
         session_destroy();
         responderNoAutorizado("Tu cuenta está pendiente de activación.");
@@ -38,7 +39,7 @@ if ($row = $res->fetch_assoc()) {
     responderNoAutorizado("Usuario no encontrado.");
 }
 
-// 3. Función que usan CargarDocumento.php y ObtenerDocumentos.php
+// 3. Función que restringe el acceso recibiendo un array de cargos
 function restringirAcceso(array $cargosPermitidos) {
     global $cargoActual;
 

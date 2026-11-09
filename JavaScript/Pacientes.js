@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Realiza la petición asíncrona al archivo PHP de búsqueda
             fetch('../php/BuscarPaciente.php', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                credentials: 'include'
             })
             .then(response => response.text())
             .then(data => {

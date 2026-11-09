@@ -24,7 +24,7 @@ if (isset($_SESSION['cedula'])) {
     $res = $stmt->get_result();
     
     if ($row = $res->fetch_assoc()) {
-        if ($row['estado'] === 'Activo') {
+        if (strtolower($row['estado']) === 'activo') {
             $response['activo'] = true;
             $response['cargo'] = isset($row['cargo']) ? $row['cargo'] : '';
             $response['rol'] = 'funcionario';
@@ -40,7 +40,7 @@ if (isset($_SESSION['cedula'])) {
         $resChofer = $stmtChofer->get_result();
         
         if ($rowChofer = $resChofer->fetch_assoc()) {
-            if ($rowChofer['estado'] === 'Activo') {
+            if (strtolower($rowChofer['estado']) === 'activo') {
                 $response['activo'] = true;
                 $response['cargo'] = 'Chofer';
                 $response['rol'] = 'chofer';
@@ -58,7 +58,7 @@ if (isset($_SESSION['cedula'])) {
             if ($rowPaciente = $resPaciente->fetch_assoc()) {
                 $response['activo'] = true;
                 $response['cargo'] = 'Paciente';
-                $response['rol'] = 'paciente'; // Clave para que el JS oculte los menús administrativos
+                $response['rol'] = 'paciente';
             } else {
                 session_unset();
                 session_destroy();

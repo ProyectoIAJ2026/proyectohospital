@@ -3,8 +3,8 @@ session_start();
 require_once 'ControlAcceso.php';
 require_once 'conexion.php';
 
-// Validar que únicamente el personal Administrativo pueda realizar esta consulta
-restringirAcceso('Administrativo', 'Gerencia');
+// Validar pasando los roles permitidos en un array (Administrativo o Gerencia)
+restringirAcceso(['Administrativo', 'Gerencia']);
 
 // Verificamos si se recibió la cédula por POST
 if (isset($_POST['cedula'])) {

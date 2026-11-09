@@ -119,7 +119,8 @@ if ($passwordValida) {
     $_SESSION['email'] = $fila['email'];
     $_SESSION['rol'] = $rolEncontrado; // Guarda 'paciente', 'chofer' o 'funcionario'
 
-    $redirectUrl = '../index.html'; 
+    // Usamos la ruta absoluta desde la raíz del servidor local para evitar el 404
+    $redirectUrl = '/ProyectoFinal/proyectohospital/index.html'; 
 
     if ($rolEncontrado === 'funcionario') {
         $_SESSION['cargo'] = $fila['cargo'];
@@ -127,10 +128,10 @@ if ($passwordValida) {
 
         switch ($fila['cargo']) {
             case 'Gerencia':
-                $redirectUrl = '../pages/PanelAdmin.php';
+                $redirectUrl = '/ProyectoFinal/proyectohospital/pages/PanelAdmin.php';
                 break;
             default:
-                $redirectUrl = '../index.html';
+                $redirectUrl = '/ProyectoFinal/proyectohospital/index.html';
                 break;
         }
     }

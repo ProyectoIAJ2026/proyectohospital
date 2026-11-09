@@ -10,28 +10,31 @@
 </head>
 <body>
     <img src="./img/img1.png" alt="Logo" title="Logo de la empresa" class="img-logo">
-     
+      
     <div class="contenedor-titulos">
-    <h1 title="Titulo de la pagina">Hospital de Clínicas Dr. Manuel Quintela</h1>
-    <p class="subtitulo-sistema">S.I.G.S.M. - Sistema de Gestión de Servicios Médicos</p>
+        <h1 title="Titulo de la pagina">Hospital de Clínicas Dr. Manuel Quintela</h1>
+        <p class="subtitulo-sistema">S.I.G.S.M. - Sistema de Gestión de Servicios Médicos</p>
     </div>
 
-    <!-- Accesos principales con ID para controlarlos dinámicamente -->
-    <div class="box" id="btnCrearCuenta"><a href="./pages/Registro.html" title="Enlace para crear cuenta">Crear cuenta</a></div>
-    <!-- Botón de Ver Perfil (inicialmente oculto hasta que inicie sesión) -->
-    <div class="box" id="btnVerPerfil" style="display: none;"><a href="./pages/Perfil.php" title="Ver perfil de usuario">Ver perfil</a></div>
-    <div class="box" id="btnIniciarSesion"><a href="./pages/IniciarSesion.html" title="Enlace a iniciar sesion">Iniciar sesión</a></div>
-    
-    <div class="box"><a href="./pages/Pacientes.html" title="Enlace a pacientes">Pacientes</a></div>
-    <div class="box"><a href="./pages/Documentos.php" title="Enlace a expedientes">Expedientes</a></div>
-    <div class="box"><a href="./pages/Insumos.html" title="Enlace a insumos">Insumos</a></div>
-    <div class="box box-larga"><a href="./pages/TrasladosYAmbulancias.php" title="Enlace a traslados y ambulancias">Traslados y ambulancias</a></div>
-    <div class="box"><a href="./pages/Encuesta.html" title="Enlace a encuesta">Encuesta</a></div>
+    <!-- Contenedor flexible para alinear los botones horizontalmente -->
+    <nav class="menu-navegacion">
+        <!-- Accesos principales con ID para controlarlos dinámicamente -->
+        <div class="box" id="btnCrearCuenta"><a href="./pages/Registro.html" title="Enlace para crear cuenta">Crear cuenta</a></div>
+        <!-- Botón de Ver Perfil (inicialmente oculto hasta que inicie sesión) -->
+        <div class="box" id="btnVerPerfil" style="display: none;"><a href="./pages/Perfil.php" title="Ver perfil de usuario">Ver perfil</a></div>
+        <div class="box" id="btnIniciarSesion"><a href="./pages/IniciarSesion.html" title="Enlace a iniciar sesion">Iniciar sesión</a></div>
+        
+        <div class="box"><a href="./pages/Pacientes.html" title="Enlace a pacientes">Pacientes</a></div>
+        <div class="box"><a href="./pages/Documentos.php" title="Enlace a expedientes">Expedientes</a></div>
+        <div class="box"><a href="./pages/Insumos.html" title="Enlace a insumos">Insumos</a></div>
+        <div class="box box-larga"><a href="./pages/TrasladosYAmbulancias.php" title="Enlace a traslados y ambulancias">Traslados y ambulancias</a></div>
+        <div class="box"><a href="./pages/Encuesta.html" title="Enlace a encuesta">Encuesta</a></div>
 
-    <!-- Botón de Cerrar sesión -->
-    <div class="box box-cerrar" id="btnCerrarSesion" style="display: none;">
-        <a href="./php/CerrarSesion.php" title="Cerrar sesión actual">Cerrar sesión</a>
-    </div>
+        <!-- Botón de Cerrar sesión -->
+        <div class="box box-cerrar" id="btnCerrarSesion" style="display: none;">
+            <a href="./php/CerrarSesion.php" title="Cerrar sesión actual">Cerrar sesión</a>
+        </div>
+    </nav>
 
     <main>
         <section class="servicios">
@@ -53,27 +56,27 @@
         </section>
 
         <section class="contacto">
-        <img src="./img/img3.png?v=2" alt="Recepción" class="img-recepcion">
+            <img src="./img/img3.png?v=2" alt="Recepción" class="img-recepcion">
 
-        <h2>Contacto</h2>
-        <ul>
-             <li class="contacto-li">
-                <strong>Dirección: </strong>Av. Italia s/n, Montevideo, Uruguay
-            </li>
-            <li class="contacto-li">
-                <strong>Horarios: </strong> Abierto todos los dias las 24 horas
-            </li>
-            <li class="contacto-li">
-                <strong>Teléfono: </strong>2487 1515
-            </li>
-            <li class="contacto-li">
-                <strong>Mail: </strong>hospitaldeclinicas@gmail.com.uy
-            </li>
-        </ul>
+            <h2>Contacto</h2>
+            <ul>
+                <li class="contacto-li">
+                    <strong>Dirección: </strong>Av. Italia s/n, Montevideo, Uruguay
+                </li>
+                <li class="contacto-li">
+                    <strong>Horarios: </strong> Abierto todos los dias las 24 horas
+                </li>
+                <li class="contacto-li">
+                    <strong>Teléfono: </strong>2487 1515
+                </li>
+                <li class="contacto-li">
+                    <strong>Mail: </strong>hospitaldeclinicas@gmail.com.uy
+                </li>
+            </ul>
         </section>
 
-    <img src="./img/img2.png" alt="Edificio del hospital" title="Edificio del hospital" class="img-edificio">
-</main>
+        <img src="./img/img2.png" alt="Edificio del hospital" title="Edificio del hospital" class="img-edificio">
+    </main>
     
 </body>
 </html>

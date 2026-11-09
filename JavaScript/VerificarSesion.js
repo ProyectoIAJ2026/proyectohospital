@@ -8,96 +8,108 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.json();
         })
         .then(data => {
-            const btnCerrar = document.getElementById('btnCerrarSesion');
-            const btnIniciar = document.getElementById('btnIniciarSesion');
-            const btnCrear = document.getElementById('btnCrearCuenta');
-            const btnPerfil = document.getElementById('btnVerPerfil'); // Selector para el botón de perfil
+            // Seleccionamos los DIVs contenedores directos que tienen los IDs en el index.html
+            const boxCerrar = document.getElementById('btnCerrarSesion');
+            const boxIniciar = document.getElementById('btnIniciarSesion');
+            const boxCrear = document.getElementById('btnCrearCuenta');
+            const boxPerfil = document.getElementById('btnVerPerfil');
 
-            // Selectores para todos los módulos internos basados en tu HTML
+            // Selectores de los módulos de la página principal
             const linkPacientes = document.querySelector('a[href*="Pacientes"]');
             const linkExpedientes = document.querySelector('a[href*="Documentos"]'); 
             const linkInsumos = document.querySelector('a[href*="Insumos"]');
-            const linkTraslados = document.querySelector('a[href*="Traslados"]');
+            const linkTraslados = document.querySelector('a[href*="TrasladosYAmbulancias"]');
             const linkEncuesta = document.querySelector('a[href*="Encuesta"]');
 
             if (data.activo) {
-                // Hay sesión activa (Paciente, Chofer o Funcionario)
-                if (btnCerrar) btnCerrar.style.display = 'inline-block';
-                if (btnIniciar) btnIniciar.style.display = 'none';
-                if (btnPerfil) btnPerfil.style.display = 'inline-block'; // Mostramos el botón de perfil a cualquier usuario logueado
+                // Hay sesión activa
+                if (boxCerrar) boxCerrar.style.display = 'inline-block';
+                if (boxIniciar) boxIniciar.style.display = 'none';
+                if (boxPerfil) boxPerfil.style.display = 'inline-block';
 
                 const cargoUsuario = data.cargo ? data.cargo.toLowerCase() : '';
                 
-                // Mostrar "Crear cuenta" únicamente a Gerencia o Administrativo con rango de gestión
+                // Mostrar "Crear cuenta" únicamente a Administrativos o Gerencia
                 if (
                     cargoUsuario.includes('administrativo') || 
                     cargoUsuario.includes('admin') || 
                     cargoUsuario.includes('gerencia') || 
                     cargoUsuario.includes('gerente')
                 ) {
-                    if (btnCrear) btnCrear.style.display = 'inline-block';
+                    if (boxCrear) boxCrear.style.display = 'inline-block';
                 } else {
-                    if (btnCrear) btnCrear.style.display = 'none';
-                }
-
-                // --- RESTRICCIÓN PARA PACIENTE ---
-                if (data.rol === 'paciente') {
-                    if (linkPacientes) linkPacientes.closest('.box').style.display = 'none';
-                    if (linkExpedientes) linkExpedientes.closest('.box').style.display = 'none';
-                    if (linkInsumos) linkInsumos.closest('.box').style.display = 'none';
-                    if (linkTraslados) linkTraslados.closest('.box').style.display = 'none';
+                    if (boxCrear) boxCrear.style.display = 'none';
                 }
 
                 // --- RESTRICCIÓN PARA CHOFER ---
                 if (data.rol === 'chofer') {
-                    if (linkPacientes) linkPacientes.closest('.box').style.display = 'none';
-                    if (linkExpedientes) linkExpedientes.closest('.box').style.display = 'none';
-                    if (linkInsumos) linkInsumos.closest('.box').style.display = 'none';
-                    if (linkEncuesta) linkEncuesta.closest('.box').style.display = 'none';
+                    linkPacientes?.closest('.box')?.style.setProperty('display', 'none');
+                    linkExpedientes?.closest('.box')?.style.setProperty('display', 'none');
+                    linkInsumos?.closest('.box')?.style.setProperty('display', 'none');
+                    linkEncuesta?.closest('.box')?.style.setProperty('display', 'none');
+                    // Traslados y ambulancias se MANTIENE visible para el chofer
                 }
 
-                // --- RESTRICCIÓN PARA FUNCIONARIO SEGÚN SU CARGO ---
-                if (data.rol === 'funcionario') {
-                    const esMedicoEnfermero = cargoUsuario.includes('medicina') || cargoUsuario.includes('enfermer');
-                    const esAdministrativo = cargoUsuario.includes('administrativo') || cargoUsuario.includes('admin');
-                    const esOperador = cargoUsuario.includes('operador') || cargoUsuario.includes('logístico') || cargoUsuario.includes('logistico');
-                    const esGerencia = cargoUsuario.includes('gerencia') || cargoUsuario.includes('gerente');
+                // --- RESTRICCIÓN PARA PACIENTE ---
+                if (data.rol === 'paciente') {
+                    linkPacientes?.closest('.box')?.style.setProperty('display', 'none');
+                    linkExpedientes?.closest('.box')?.style.setProperty('display', 'none');
+                    linkInsumos?.closest('.box')?.style.setProperty('display', 'none');
+                    linkTraslados?.closest('.box')?.style.setProperty('display', 'none');
+                    // La encuesta SE MANTIENE visible para el paciente
+                    linkEncuesta?.closest('.box')?.style.setProperty('display', 'inline-block'); 
+                }
 
-                    if (esGerencia) {
-                        // Gerencia ve todo
-                    } else if (esMedicoEnfermero) {
-                        // Medicina / Enfermería: Solo ven Expedientes médicos
-                        if (linkPacientes) linkPacientes.closest('.box').style.display = 'none';
-                        if (linkInsumos) linkInsumos.closest('.box').style.display = 'none';
-                        if (linkTraslados) linkTraslados.closest('.box').style.display = 'none';
-                        if (linkEncuesta) linkEncuesta.closest('.box').style.display = 'none';
-                    } else if (esAdministrativo) {
-                        // Administrativo: Solo ven Pacientes
-                        if (linkExpedientes) linkExpedientes.closest('.box').style.display = 'none';
-                        if (linkInsumos) linkInsumos.closest('.box').style.display = 'none';
-                        if (linkTraslados) linkTraslados.closest('.box').style.display = 'none';
-                        if (linkEncuesta) linkEncuesta.closest('.box').style.display = 'none';
-                    } else if (esOperador) {
-                        // Operador Logístico: Ven Traslados e Insumos
-                        if (linkPacientes) linkPacientes.closest('.box').style.display = 'none';
-                        if (linkExpedientes) linkExpedientes.closest('.box').style.display = 'none';
-                        if (linkEncuesta) linkEncuesta.closest('.box').style.display = 'none';
+                // --- RESTRICCIÓN PARA FUNCIONARIOS ---
+                if (data.rol === 'funcionario') {
+                    const esGerencia = cargoUsuario.includes('gerencia') || cargoUsuario.includes('gerente');
+                    const esOperador = cargoUsuario.includes('operador') || cargoUsuario.includes('logístico') || cargoUsuario.includes('logistico');
+                    const esClinico = cargoUsuario.includes('medicina general') || cargoUsuario.includes('enfermero') || cargoUsuario.includes('enfermera');
+                    const esAdministrativo = cargoUsuario.includes('administrativo') || cargoUsuario.includes('admin');
+                    
+                    if (esClinico) {
+                        // Personal Clínico: Solo Expedientes visible
+                        linkPacientes?.closest('.box')?.style.setProperty('display', 'none');
+                        linkExpedientes?.closest('.box')?.style.setProperty('display', 'inline-block');
+                        linkInsumos?.closest('.box')?.style.setProperty('display', 'none');
+                        linkTraslados?.closest('.box')?.style.setProperty('display', 'none');
+                        linkEncuesta?.closest('.box')?.style.setProperty('display', 'none');
+                    } 
+                    else if (esAdministrativo) {
+                        // Administrativo: Solo Pacientes visible (junto a Crear cuenta, Ver perfil y Cerrar sesión)
+                        linkPacientes?.closest('.box')?.style.setProperty('display', 'inline-block');
+                        linkExpedientes?.closest('.box')?.style.setProperty('display', 'none');
+                        linkInsumos?.closest('.box')?.style.setProperty('display', 'none');
+                        linkTraslados?.closest('.box')?.style.setProperty('display', 'none');
+                        linkEncuesta?.closest('.box')?.style.setProperty('display', 'none');
+                    } 
+                    else if (esOperador) {
+                        // Operador Logístico: Insumos y Traslados visibles (junto a Ver perfil y Cerrar sesión)
+                        linkPacientes?.closest('.box')?.style.setProperty('display', 'none');
+                        linkExpedientes?.closest('.box')?.style.setProperty('display', 'none');
+                        linkInsumos?.closest('.box')?.style.setProperty('display', 'inline-block');
+                        linkTraslados?.closest('.box')?.style.setProperty('display', 'inline-block');
+                        linkEncuesta?.closest('.box')?.style.setProperty('display', 'none');
+                    }
+                    else if (!esGerencia) {
+                        // Si es otro funcionario sin permisos específicos, ocultamos traslados por defecto
+                        linkTraslados?.closest('.box')?.style.setProperty('display', 'none');
                     }
                 }
 
             } else {
-                // Sin sesión activa (visitante / registrado sin iniciar sesión)
-                if (btnCerrar) btnCerrar.style.display = 'none';
-                if (btnIniciar) btnIniciar.style.display = 'inline-block';
-                if (btnCrear) btnCrear.style.display = 'inline-block';
-                if (btnPerfil) btnPerfil.style.display = 'none'; // Ocultamos el perfil al visitante
+                // Sin sesión activa (Visitante / Anónimo) -> Ocultamos módulos internos por seguridad
+                if (boxCerrar) boxCerrar.style.display = 'none';
+                if (boxIniciar) boxIniciar.style.display = 'inline-block';
+                if (boxCrear) boxCrear.style.display = 'inline-block';
+                if (boxPerfil) boxPerfil.style.display = 'none';
 
-                // Ocultar todas las cajas de los módulos internos para los visitantes
-                if (linkPacientes) linkPacientes.closest('.box').style.display = 'none';
-                if (linkExpedientes) linkExpedientes.closest('.box').style.display = 'none';
-                if (linkInsumos) linkInsumos.closest('.box').style.display = 'none';
-                if (linkTraslados) linkTraslados.closest('.box').style.display = 'none';
-                if (linkEncuesta) linkEncuesta.closest('.box').style.display = 'none';
+                // Ocultar todos los módulos internos a los visitantes anónimos
+                linkPacientes?.closest('.box')?.style.setProperty('display', 'none');
+                linkExpedientes?.closest('.box')?.style.setProperty('display', 'none');
+                linkInsumos?.closest('.box')?.style.setProperty('display', 'none');
+                linkTraslados?.closest('.box')?.style.setProperty('display', 'none');
+                linkEncuesta?.closest('.box')?.style.setProperty('display', 'none');
             }
         })
         .catch(error => console.error('Error al verificar la sesión:', error));
